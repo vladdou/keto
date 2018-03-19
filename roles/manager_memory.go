@@ -31,51 +31,51 @@ import (
 
 func NewMemoryManager() *MemoryManager {
 	return &MemoryManager{
-		Groups: map[string]Group{},
+		Roles: map[string]Role{},
 	}
 }
 
 type MemoryManager struct {
-	Groups map[string]Group
+	Roles map[string]Role
 	sync.RWMutex
 }
 
-func (m *MemoryManager) CreateGroup(g *Group) error {
+func (m *MemoryManager) CreateRole(g *Role) error {
 	if g.ID == "" {
 		g.ID = uuid.New()
 	}
-	if m.Groups == nil {
-		m.Groups = map[string]Group{}
+	if m.Roles == nil {
+		m.Roles = map[string]Role{}
 	}
 
-	m.Groups[g.ID] = *g
+	m.Roles[g.ID] = *g
 	return nil
 }
 
-func (m *MemoryManager) GetGroup(id string) (*Group, error) {
-	if g, ok := m.Groups[id]; !ok {
+func (m *MemoryManager) GetRole(id string) (*Role, error) {
+	if g, ok := m.Roles[id]; !ok {
 		return nil, errors.WithStack(pkg.ErrNotFound)
 	} else {
 		return &g, nil
 	}
 }
 
-func (m *MemoryManager) DeleteGroup(id string) error {
-	delete(m.Groups, id)
+func (m *MemoryManager) DeleteRole(id string) error {
+	delete(m.Roles, id)
 	return nil
 }
 
-func (m *MemoryManager) AddGroupMembers(group string, subjects []string) error {
-	g, err := m.GetGroup(group)
+func (m *MemoryManager) AddRoleMembers(group string, subjects []string) error {
+	g, err := m.GetRole(group)
 	if err != nil {
 		return err
 	}
 	g.Members = append(g.Members, subjects...)
-	return m.CreateGroup(g)
+	return m.CreateRole(g)
 }
 
-func (m *MemoryManager) RemoveGroupMembers(group string, subjects []string) error {
-	g, err := m.GetGroup(group)
+func (m *MemoryManager) RemoveRoleMembers(group string, subjects []string) error {
+	g, err := m.GetRole(group)
 	if err != nil {
 		return err
 	}
@@ -95,18 +95,18 @@ func (m *MemoryManager) RemoveGroupMembers(group string, subjects []string) erro
 	}
 
 	g.Members = subs
-	return m.CreateGroup(g)
+	return m.CreateRole(g)
 }
 
-func (m *MemoryManager) FindGroupsByMember(subject string, limit, offset int) ([]Group, error) {
-	if m.Groups == nil {
-		m.Groups = map[string]Group{}
+func (m *MemoryManager) FindRolesByMember(member string, limit, offset int) ([]Role, error) {
+	if m.Roles == nil {
+		m.Roles = map[string]Role{}
 	}
 
-	res := make([]Group, 0)
-	for _, g := range m.Groups {
+	res := make([]Role, 0)
+	for _, g := range m.Roles {
 		for _, s := range g.Members {
-			if s == subject {
+			if s == member {
 				res = append(res, g)
 				break
 			}
@@ -117,14 +117,14 @@ func (m *MemoryManager) FindGroupsByMember(subject string, limit, offset int) ([
 	return res[start:end], nil
 }
 
-func (m *MemoryManager) ListGroups(limit, offset int) ([]Group, error) {
-	if m.Groups == nil {
-		m.Groups = map[string]Group{}
+func (m *MemoryManager) ListRoles(limit, offset int) ([]Role, error) {
+	if m.Roles == nil {
+		m.Roles = map[string]Role{}
 	}
 
 	i := 0
-	res := make([]Group, len(m.Groups))
-	for _, g := range m.Groups {
+	res := make([]Role, len(m.Roles))
+	for _, g := range m.Roles {
 		res[i] = g
 		i++
 	}

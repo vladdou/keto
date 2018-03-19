@@ -31,53 +31,53 @@ func TestHelperManagers(m Manager) func(t *testing.T) {
 	return func(t *testing.T) {
 		t.Parallel()
 
-		_, err := m.GetGroup("4321")
+		_, err := m.GetRole("4321")
 		assert.NotNil(t, err)
 
-		c := &Group{
+		c := &Role{
 			ID:      "1",
 			Members: []string{"bar", "foo"},
 		}
-		assert.NoError(t, m.CreateGroup(c))
-		assert.NoError(t, m.CreateGroup(&Group{
+		assert.NoError(t, m.CreateRole(c))
+		assert.NoError(t, m.CreateRole(&Role{
 			ID:      "2",
 			Members: []string{"foo"},
 		}))
 
-		d, err := m.GetGroup("1")
+		d, err := m.GetRole("1")
 		require.NoError(t, err)
 		assert.EqualValues(t, c.Members, d.Members)
 		assert.EqualValues(t, c.ID, d.ID)
 
-		ds, err := m.FindGroupsByMember("foo", 100, 0)
+		ds, err := m.FindRolesByMember("foo", 100, 0)
 		require.NoError(t, err)
 		assert.Len(t, ds, 2)
 
-		ds, err = m.FindGroupsByMember("foo", 1, 0)
+		ds, err = m.FindRolesByMember("foo", 1, 0)
 		require.NoError(t, err)
 		assert.Len(t, ds, 1)
 
-		ds, err = m.ListGroups(100, 0)
+		ds, err = m.ListRoles(100, 0)
 		require.NoError(t, err)
 		assert.Len(t, ds, 2)
 
-		ds, err = m.ListGroups(1, 0)
+		ds, err = m.ListRoles(1, 0)
 		require.NoError(t, err)
 		assert.Len(t, ds, 1)
 
-		assert.NoError(t, m.AddGroupMembers("1", []string{"baz"}))
+		assert.NoError(t, m.AddRoleMembers("1", []string{"baz"}))
 
-		ds, err = m.FindGroupsByMember("baz", 100, 0)
+		ds, err = m.FindRolesByMember("baz", 100, 0)
 		require.NoError(t, err)
 		assert.Len(t, ds, 1)
 
-		assert.NoError(t, m.RemoveGroupMembers("1", []string{"baz"}))
-		ds, err = m.FindGroupsByMember("baz", 100, 0)
+		assert.NoError(t, m.RemoveRoleMembers("1", []string{"baz"}))
+		ds, err = m.FindRolesByMember("baz", 100, 0)
 		require.NoError(t, err)
 		assert.Len(t, ds, 0)
 
-		assert.NoError(t, m.DeleteGroup("1"))
-		_, err = m.GetGroup("1")
+		assert.NoError(t, m.DeleteRole("1"))
+		_, err = m.GetRole("1")
 		require.NotNil(t, err)
 	}
 }

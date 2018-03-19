@@ -29,7 +29,7 @@ package roles
 type swaggerListGroupsResponse struct {
 	// in: body
 	// type: array
-	Body []Group
+	Body []Role
 }
 
 // swagger:parameters listGroups
@@ -50,7 +50,7 @@ type swaggerListGroupsParameters struct {
 // swagger:parameters createGroup
 type swaggerCreateGroupParameters struct {
 	// in: body
-	Body Group
+	Body Role
 }
 
 // swagger:parameters getGroup deleteGroup

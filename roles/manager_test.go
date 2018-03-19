@@ -28,13 +28,13 @@ import (
 	"testing"
 
 	_ "github.com/lib/pq"
-	"github.com/ory/hydra/integration"
-	. "github.com/ory/hydra/warden/group"
+	. "github.com/ory/hades/roles"
+	"github.com/jmoiron/sqlx"
 )
 
 var clientManagers = map[string]Manager{
 	"memory": &MemoryManager{
-		Groups: map[string]Group{},
+		Roles: map[string]Role{},
 	},
 }
 
@@ -45,30 +45,31 @@ func TestMain(m *testing.M) {
 		connectToMySQL()
 	}
 
-	s := m.Run()
-	integration.KillAll()
-	os.Exit(s)
+	os.Exit(m.Run())
 }
 
 func connectToMySQL() {
-	var db = integration.ConnectToMySQL()
-	s := &SQLManager{DB: db}
-	if _, err := s.CreateSchemas(); err != nil {
-		log.Fatalf("Could not create postgres schema: %v", err)
+	db, err := sqlx.Open("postgres", os.Getenv("TEST_POSTGRES_URL"))
+	if err != nil {
+		panic(err)
 	}
-
-	clientManagers["mysql"] = s
-}
-
-func connectToPG() {
-	var db = integration.ConnectToPostgres()
 	s := &SQLManager{DB: db}
-
 	if _, err := s.CreateSchemas(); err != nil {
 		log.Fatalf("Could not create postgres schema: %v", err)
 	}
 
 	clientManagers["postgres"] = s
+}
+
+func connectToPG() {
+	db, err := sqlx.Open("mysql", os.Getenv("TEST_MYSQL_URL"))
+	s := &SQLManager{DB: db}
+
+	if _, err := s.CreateSchemas(); err != nil {
+		log.Fatalf("Could not create postgres schema: %v", err)
+	}
+
+	clientManagers["mysql"] = s
 }
 
 func TestManagers(t *testing.T) {

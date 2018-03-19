@@ -20,10 +20,10 @@
 
 package roles
 
-// Group represents a warden group
+// Role represents a warden group
 //
 // swagger:model group
-type Group struct {
+type Role struct {
 	// ID is the groups id.
 	ID string `json:"id"`
 
@@ -32,13 +32,13 @@ type Group struct {
 }
 
 type Manager interface {
-	CreateGroup(*Group) error
-	GetGroup(id string) (*Group, error)
-	DeleteGroup(id string) error
+	CreateRole(*Role) error
+	GetRole(id string) (*Role, error)
+	DeleteRole(id string) error
 
-	AddGroupMembers(group string, members []string) error
-	RemoveGroupMembers(group string, members []string) error
+	AddRoleMembers(group string, members []string) error
+	RemoveRoleMembers(group string, members []string) error
 
-	FindGroupsByMember(subject string, limit, offset int) ([]Group, error)
-	ListGroups(limit, offset int) ([]Group, error)
+	FindRolesByMember(member string, limit, offset int) ([]Role, error)
+	ListRoles(limit, offset int) ([]Role, error)
 }
