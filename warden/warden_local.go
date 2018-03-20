@@ -30,13 +30,13 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/ory/hades/roles"
-	"github.com/ory/hydra/oauth2"
+	"github.com/ory/hades/role"
 )
 
 type LocalWarden struct {
 	Warden ladon.Warden
 	OAuth2 fosite.OAuth2Provider
-	Roles  roles.Manager
+	Roles  role.Manager
 
 	AccessTokenLifespan time.Duration
 	Issuer              string
@@ -68,45 +68,6 @@ func (w *LocalWarden) IsAllowed(ctx context.Context, a *AccessRequest) error {
 		"reason":  "The policy decision point allowed the request",
 	}).Infof("Access allowed")
 	return nil
-}
-
-func (w *LocalWarden) TokenAllowed(ctx context.Context, token string, a *TokenAccessRequest, scopes ...string) (*Context, error) {
-	var auth, err = w.OAuth2.IntrospectToken(ctx, token, fosite.AccessToken, oauth2.NewSession(""), scopes...)
-	if err != nil {
-		w.L.WithFields(logrus.Fields{
-			"request": a,
-			"scopes":  scopes,
-			"reason":  "Token is expired, malformed or missing",
-		}).WithError(err).Infof("Access denied")
-		return nil, err
-	}
-
-	session := auth.GetSession()
-	if err := w.isAllowed(ctx, &ladon.Request{
-		Resource: a.Resource,
-		Action:   a.Action,
-		Subject:  session.GetSubject(),
-		Context:  a.Context,
-	}); err != nil {
-		w.L.WithFields(logrus.Fields{
-			"scopes":    scopes,
-			"subject":   session.GetSubject(),
-			"client_id": auth.GetClient().GetID(),
-			"request":   a,
-			"reason":    "The policy decision point denied the request",
-		}).WithError(err).Infof("Access denied")
-		return nil, err
-	}
-
-	c := w.newContext(auth)
-	w.L.WithFields(logrus.Fields{
-		"subject":   c.Subject,
-		"client_id": auth.GetClient().GetID(),
-		"request":   auth,
-		"result":    c,
-	}).Infof("Access granted")
-
-	return c, nil
 }
 
 func (w *LocalWarden) isAllowed(ctx context.Context, a *ladon.Request) error {
@@ -145,25 +106,4 @@ func (w *LocalWarden) isAllowed(ctx context.Context, a *ladon.Request) error {
 	}
 
 	return errors.Wrap(fosite.ErrRequestForbidden, ladon.ErrRequestDenied.Error())
-}
-
-func (w *LocalWarden) newContext(auth fosite.AccessRequester) *Context {
-	session := auth.GetSession().(*oauth2.Session)
-
-	exp := auth.GetSession().GetExpiresAt(fosite.AccessToken)
-	if exp.IsZero() {
-		exp = auth.GetRequestedAt().Add(w.AccessTokenLifespan)
-	}
-
-	c := &Context{
-		Subject:       session.Subject,
-		GrantedScopes: auth.GetGrantedScopes(),
-		Issuer:        w.Issuer,
-		ClientID:      auth.GetClient().GetID(),
-		IssuedAt:      auth.GetRequestedAt(),
-		ExpiresAt:     exp,
-		Extra:         session.Extra,
-	}
-
-	return c
 }

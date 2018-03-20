@@ -18,7 +18,7 @@
  * @license 	Apache-2.0
  */
 
-package roles_test
+package role_test
 
 import (
 	"flag"

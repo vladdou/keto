@@ -22,7 +22,7 @@
 //
 // This endpoint is **experimental**, use it at your own risk.
 
-package roles
+package role
 
 // A list of groups the member is belonging to
 // swagger:response listGroupsResponse

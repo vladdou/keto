@@ -18,7 +18,7 @@
  * @license 	Apache-2.0
  */
 
-package roles
+package role
 
 // Role represents a warden group
 //
