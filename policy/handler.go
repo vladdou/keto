@@ -34,7 +34,7 @@ import (
 )
 
 const (
-	PolicyHandlerPath = "/policies"
+	handlerBasePath = "/policies"
 )
 
 type Handler struct {
@@ -56,11 +56,11 @@ func (h *Handler) PrefixResource(resource string) string {
 }
 
 func (h *Handler) SetRoutes(r *httprouter.Router) {
-	r.POST(PolicyHandlerPath, h.Create)
-	r.GET(PolicyHandlerPath, h.List)
-	r.GET(PolicyHandlerPath+"/:id", h.Get)
-	r.PUT(PolicyHandlerPath+"/:id", h.Update)
-	r.DELETE(PolicyHandlerPath+"/:id", h.Delete)
+	r.POST(handlerBasePath, h.Create)
+	r.GET(handlerBasePath, h.List)
+	r.GET(handlerBasePath+"/:id", h.Get)
+	r.PUT(handlerBasePath+"/:id", h.Update)
+	r.DELETE(handlerBasePath+"/:id", h.Delete)
 }
 
 // swagger:route GET /policies policy listPolicies

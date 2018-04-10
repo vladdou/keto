@@ -27,9 +27,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 	. "github.com/ory/hades/roles"
-	"github.com/jmoiron/sqlx"
 )
 
 var clientManagers = map[string]Manager{

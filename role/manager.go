@@ -20,14 +20,15 @@
 
 package role
 
-// Role represents a warden group
+// Role represents a group of users that share the same role. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
 //
-// swagger:model group
+// swagger:model role
 type Role struct {
-	// ID is the groups id.
+	// ID is the role's unique id.
 	ID string `json:"id"`
 
-	// Members is who belongs to the group.
+	// Members is who belongs to the role.
 	Members []string `json:"members"`
 }
 

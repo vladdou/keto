@@ -18,10 +18,11 @@ import (
 	"fmt"
 	"os"
 
+	"time"
+
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"time"
-	"github.com/sirupsen/logrus"
 )
 
 var cfgFile string
@@ -34,7 +35,7 @@ var (
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "hades",
+	Use: "hades",
 }
 
 var logger *logrus.Logger

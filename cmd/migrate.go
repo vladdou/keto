@@ -50,6 +50,7 @@ func init() {
 	// migrateCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 
 }
+
 //
 //
 //fmt.Printf("Applying `%s` SQL migrations...\n", "ladon")
@@ -60,9 +61,6 @@ func init() {
 //total += num
 //}
 //
-
-
-
 
 //func (h *MigrateHandler) MigrateLadon050To060(cmd *cobra.Command, args []string) {
 //	if len(args) != 2 {

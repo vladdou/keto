@@ -23,12 +23,13 @@ package role
 import (
 	"database/sql"
 
+	"fmt"
+
 	"github.com/jmoiron/sqlx"
 	"github.com/ory/hydra/pkg"
 	"github.com/pborman/uuid"
 	"github.com/pkg/errors"
 	"github.com/rubenv/sql-migrate"
-	"fmt"
 )
 
 var migrations = &migrate.MemoryMigrationSource{

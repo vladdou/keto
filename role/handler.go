@@ -41,21 +41,26 @@ type Handler struct {
 }
 
 const (
-	RolesPath = "/roles"
+	handlerBasePath = "/roles"
 )
 
 func (h *Handler) SetRoutes(r *httprouter.Router) {
-	r.POST(RolesPath, h.CreateGroup)
-	r.GET(RolesPath, h.ListGroupsHandler)
-	r.GET(RolesPath+"/:id", h.GetGroup)
-	r.DELETE(RolesPath+"/:id", h.DeleteGroup)
-	r.POST(RolesPath+"/:id/members", h.AddGroupMembers)
-	r.DELETE(RolesPath+"/:id/members", h.RemoveGroupMembers)
+	r.POST(handlerBasePath, h.CreateRole)
+	r.GET(handlerBasePath, h.ListRoles)
+	r.GET(handlerBasePath+"/:id", h.GetRole)
+	r.DELETE(handlerBasePath+"/:id", h.DeleteRole)
+	r.POST(handlerBasePath+"/:id/members", h.AddRoleMembers)
+	r.DELETE(handlerBasePath+"/:id/members", h.DeleteRoleMembers)
 }
 
-// swagger:route GET /warden/groups warden listGroups
+// swagger:route GET /roles role listRoles
 //
-// List groups
+// List all roles
+//
+// A Role represents a group of users that share the same role and thus permissions. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
+//
+// This endpoint allows you to retrieve all roles that are stored in the system.
 //
 //     Consumes:
 //     - application/json
@@ -66,11 +71,11 @@ func (h *Handler) SetRoutes(r *httprouter.Router) {
 //     Schemes: http, https
 //
 //     Responses:
-//       200: listGroupsResponse
+//       200: listRolesResponse
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func (h *Handler) ListGroupsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *Handler) ListRoles(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	limit, offset := pagination.Parse(r, 100, 0, 500)
 	if member := r.URL.Query().Get("member"); member != "" {
 		h.FindGroupNames(w, r, member, limit, offset)
@@ -101,9 +106,14 @@ func (h *Handler) FindGroupNames(w http.ResponseWriter, r *http.Request, member 
 	h.H.Write(w, r, groups)
 }
 
-// swagger:route POST /warden/groups warden createGroup
+// swagger:route POST /roles role createRole
 //
-// Create a group
+// Create a role
+//
+// A Role represents a group of users that share the same role and thus permissions. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
+//
+// This endpoint allows you to create a new role. You may define members as well but you don't have to.
 //
 //     Consumes:
 //     - application/json
@@ -114,13 +124,12 @@ func (h *Handler) FindGroupNames(w http.ResponseWriter, r *http.Request, member 
 //     Schemes: http, https
 //
 //     Responses:
-//       201: group
+//       201: role
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func (h *Handler) CreateGroup(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func (h *Handler) CreateRole(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var g Role
-	var ctx = r.Context()
 
 	if err := json.NewDecoder(r.Body).Decode(&g); err != nil {
 		h.H.WriteError(w, r, errors.WithStack(err))
@@ -132,12 +141,17 @@ func (h *Handler) CreateGroup(w http.ResponseWriter, r *http.Request, _ httprout
 		return
 	}
 
-	h.H.WriteCreated(w, r, RolesPath+"/"+g.ID, &g)
+	h.H.WriteCreated(w, r, handlerBasePath+"/"+g.ID, &g)
 }
 
-// swagger:route GET /warden/groups/{id} warden getGroup
+// swagger:route GET /roles/{id} role getRole
 //
-// Get a group by id
+// Get a role by its ID
+//
+// A Role represents a group of users that share the same role and thus permissions. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
+//
+// This endpoint allows you to retrieve an existing role. You have to know the role's ID.
 //
 //     Consumes:
 //     - application/json
@@ -148,12 +162,11 @@ func (h *Handler) CreateGroup(w http.ResponseWriter, r *http.Request, _ httprout
 //     Schemes: http, https
 //
 //     Responses:
-//       201: group
+//       201: role
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func (h *Handler) GetGroup(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	var ctx = r.Context()
+func (h *Handler) GetRole(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var id = ps.ByName("id")
 
 	g, err := h.Manager.GetRole(id)
@@ -165,9 +178,14 @@ func (h *Handler) GetGroup(w http.ResponseWriter, r *http.Request, ps httprouter
 	h.H.Write(w, r, g)
 }
 
-// swagger:route DELETE /warden/groups/{id} warden deleteGroup
+// swagger:route DELETE /roles/{id} role deleteRole
 //
-// Delete a group by id
+// Get a role by its ID
+//
+// A Role represents a group of users that share the same role and thus permissions. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
+//
+// This endpoint allows you to delete an existing role. You have to know the role's ID.
 //
 //     Consumes:
 //     - application/json
@@ -182,7 +200,7 @@ func (h *Handler) GetGroup(w http.ResponseWriter, r *http.Request, ps httprouter
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func (h *Handler) DeleteGroup(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *Handler) DeleteRole(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var id = ps.ByName("id")
 
 	if err := h.Manager.DeleteRole(id); err != nil {
@@ -193,9 +211,14 @@ func (h *Handler) DeleteGroup(w http.ResponseWriter, r *http.Request, ps httprou
 	w.WriteHeader(http.StatusNoContent)
 }
 
-// swagger:route POST /warden/groups/{id}/members warden addMembersToGroup
+// swagger:route POST /roles/{id}/members role addMembersToRole
 //
-// Add members to a group
+// Add members to a role
+//
+// A Role represents a group of users that share the same role and thus permissions. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
+//
+// This endpoint allows you to add members (users, applications, ...) to a specific role. You have to know the role's ID.
 //
 //     Consumes:
 //     - application/json
@@ -210,7 +233,7 @@ func (h *Handler) DeleteGroup(w http.ResponseWriter, r *http.Request, ps httprou
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func (h *Handler) AddGroupMembers(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *Handler) AddRoleMembers(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var id = ps.ByName("id")
 
 	var m membersRequest
@@ -227,9 +250,14 @@ func (h *Handler) AddGroupMembers(w http.ResponseWriter, r *http.Request, ps htt
 	w.WriteHeader(http.StatusNoContent)
 }
 
-// swagger:route DELETE /warden/groups/{id}/members warden removeMembersFromGroup
+// swagger:route DELETE /roles/{id}/members role removeMembersFromRole
 //
-// Remove members from a group
+// Remove members from a role
+//
+// A Role represents a group of users that share the same role and thus permissions. A role could be an administrator, a moderator, a regular
+// user or some other sort of role.
+//
+// This endpoint allows you to remove members (users, applications, ...) from a specific role. You have to know the role's ID.
 //
 //     Consumes:
 //     - application/json
@@ -244,7 +272,7 @@ func (h *Handler) AddGroupMembers(w http.ResponseWriter, r *http.Request, ps htt
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func (h *Handler) RemoveGroupMembers(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (h *Handler) DeleteRoleMembers(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	var id = ps.ByName("id")
 
 	var m membersRequest
@@ -252,7 +280,6 @@ func (h *Handler) RemoveGroupMembers(w http.ResponseWriter, r *http.Request, ps 
 		h.H.WriteError(w, r, errors.WithStack(err))
 		return
 	}
-
 
 	if err := h.Manager.RemoveRoleMembers(id, m.Members); err != nil {
 		h.H.WriteError(w, r, err)

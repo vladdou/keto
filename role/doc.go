@@ -25,8 +25,8 @@
 package role
 
 // A list of groups the member is belonging to
-// swagger:response listGroupsResponse
-type swaggerListGroupsResponse struct {
+// swagger:response listRolesResponse
+type swaggerlistRolesResponse struct {
 	// in: body
 	// type: array
 	Body []Role

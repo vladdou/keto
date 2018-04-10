@@ -26,11 +26,10 @@ import (
 	"time"
 
 	"github.com/ory/fosite"
+	"github.com/ory/hades/role"
 	"github.com/ory/ladon"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	"github.com/ory/hades/roles"
-	"github.com/ory/hades/role"
 )
 
 type LocalWarden struct {

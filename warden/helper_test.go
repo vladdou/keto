@@ -21,15 +21,14 @@
 package warden_test
 
 import (
+	"os"
 	"testing"
 	"time"
-	"os"
 
+	"github.com/ory/hades/role"
+	"github.com/ory/hades/warden"
 	"github.com/ory/ladon"
 	"github.com/sirupsen/logrus"
-	"github.com/ory/hades/warden"
-	"github.com/ory/hades/roles"
-	"github.com/ory/hades/role"
 )
 
 var (

@@ -26,26 +26,19 @@ import (
 	"github.com/ory/hydra/firewall"
 )
 
-// The warden access request response
-// swagger:model wardenAccessRequestResponse
-type swaggerWardenAccessRequestResponse struct {
-	// Allowed is true if the request is allowed and false otherwise.
-	Allowed bool `json:"allowed"`
-}
-
 // swagger:parameters doesWardenAllowAccessRequest
 type swaggerDoesWardenAllowAccessRequestParameters struct {
 	// in: body
 	Body firewall.AccessRequest
 }
 
-// swagger:parameters doesWardenAllowTokenAccessRequest
-type swaggerDoesWardenAllowTokenAccessRequestParameters struct {
+// swagger:parameters isSubjectAuthorized
+type swaggerDoesWardenAllowTokenAccessRqeuestParameters struct {
 	// in: body
 	Body swaggerWardenTokenAccessRequest
 }
 
-// swagger:model wardenTokenAccessRequest
+// swagger:model isTokenAuthorized
 type swaggerWardenTokenAccessRequest struct {
 	// Scopes is an array of scopes that are requried.
 	Scopes []string `json:"scopes"`
@@ -91,3 +84,55 @@ type swaggerWardenTokenAccessRequestResponsePayload struct {
 	// Allowed is true if the request is allowed and false otherwise.
 	Allowed bool `json:"allowed"`
 }
+
+// swagger:route POST /warden/tokens/authorized warden isTokenAuthorized
+//
+// Check if an OAuth 2.0 access token is authorized to access a resource
+//
+// Checks if a token is valid and if the token subject is allowed to perform an action on a resource.
+// This endpoint requires a token, a scope, a resource name, an action name and a context.
+//
+//
+// If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to
+// perform the action on the resource, this endpoint returns a 200 response with `{ "allowed": false }`.
+//
+//
+// This endpoint passes all data from the upstream OAuth 2.0 token introspection endpoint. If you use ORY Hydra as an
+// upstream OAuth 2.0 provider, data set through the `accessTokenExtra` field in the consent flow will be included in this
+// response as well.
+//
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+//
+//     Schemes: http, https
+//
+//     Responses:
+//       200: wardenTokenAccessRequestResponse
+//       401: genericError
+//       403: genericError
+//       500: genericError
+func swaggerTokenMock() {}
+
+// swagger:route POST /warden/subjects/authorized warden isSubjectAuthorized
+//
+// Check if a subject is authorized to access a resource
+//
+// Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain action on a resource.
+//
+//     Consumes:
+//     - application/json
+//
+//     Produces:
+//     - application/json
+//
+//     Schemes: http, https
+//
+//     Responses:
+//       200: authenticationDefaultSession
+//       401: genericError
+//       403: genericError
+//       500: genericError
+func swaggerSubjectMock() {}
