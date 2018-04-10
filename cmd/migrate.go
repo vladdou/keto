@@ -12,10 +12,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package main
+package cmd
 
-import "github.com/ory/hades/cmd"
+import (
+	"fmt"
 
-func main() {
-	cmd.Execute()
+	"github.com/spf13/cobra"
+)
+
+// migrateCmd represents the migrate command
+var migrateCmd = &cobra.Command{
+	Use:   "migrate",
+	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Print(cmd.UsageString())
+	},
+}
+
+func init() {
+	RootCmd.AddCommand(migrateCmd)
 }
