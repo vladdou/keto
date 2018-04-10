@@ -15,6 +15,7 @@
 package main
 
 // The standard error format
+//
 // swagger:response genericError
 type genericError struct {
 	// in: body
@@ -34,5 +35,6 @@ type genericError struct {
 }
 
 // An empty response
+//
 // swagger:response emptyResponse
 type emptyResponse struct{}
