@@ -19,7 +19,6 @@
  */
 
 // Package warden implements endpoints capable of making access control decisions based on Access Control Policies
-
 package warden
 
 import (

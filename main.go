@@ -14,8 +14,8 @@
 
 package main
 
-import "github.com/ory/hades/cmd"
+//import "github.com/ory/hades/cmd"
 
 func main() {
-	cmd.Execute()
+	//cmd.Execute()
 }
