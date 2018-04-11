@@ -29,7 +29,6 @@ import (
 	"github.com/ory/hades/authentication"
 	"github.com/ory/herodot"
 	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -55,13 +54,12 @@ type Handler struct {
 	authenticators map[string]authentication.Authenticator
 }
 
-func NewHandler(l *logrus.Logger, Warden Firewall, router *httprouter.Router, authenticators map[string]authentication.Authenticator) *Handler {
+func NewHandler(writer herodot.Writer, warden Firewall, authenticators map[string]authentication.Authenticator) *Handler {
 	h := &Handler{
-		H:              herodot.NewJSONWriter(l),
-		Warden:         Warden,
+		H:              writer,
+		Warden:         warden,
 		authenticators: authenticators,
 	}
-	h.SetRoutes(router)
 
 	return h
 }

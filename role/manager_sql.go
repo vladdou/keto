@@ -36,13 +36,13 @@ var migrations = &migrate.MemoryMigrationSource{
 	Migrations: []*migrate.Migration{
 		{
 			Id: "1",
-			Up: []string{`CREATE TABLE IF NOT EXISTS hydra_warden_group (
+			Up: []string{`CREATE TABLE IF NOT EXISTS hades_role (
 	id      	varchar(255) NOT NULL PRIMARY KEY
-)`, `CREATE TABLE IF NOT EXISTS hydra_warden_group_member (
+)`, `CREATE TABLE IF NOT EXISTS hades_role_member (
 	member		varchar(255) NOT NULL,
-	group_id	varchar(255) NOT NULL,
-	FOREIGN KEY (group_id) REFERENCES hydra_warden_group(id) ON DELETE CASCADE,
-	PRIMARY KEY (member, group_id)
+	role_id		varchar(255) NOT NULL,
+	FOREIGN KEY (role_id) REFERENCES hades_role(id) ON DELETE CASCADE,
+	PRIMARY KEY (member, role_id)
 )`},
 			Down: []string{
 				"DROP TABLE hydra_warden_group",
@@ -60,17 +60,13 @@ type SQLManager struct {
 	TableMigration string
 }
 
-func NewLegacySQLManager(db *sqlx.DB) *SQLManager {
+func NewSQLManager(db *sqlx.DB) *SQLManager {
 	return &SQLManager{
 		DB:             db,
-		TableRole:      "hydra_warden_group",
-		TableMember:    "hydra_warden_group_member",
-		TableMigration: "hydra_groups_migration",
+		TableRole:      "hades_role",
+		TableMember:    "hades_role_member",
+		TableMigration: "hades_role_migration",
 	}
-}
-
-func NewSQLManager(db *sqlx.DB) *SQLManager {
-
 }
 
 func (m *SQLManager) CreateSchemas() (int, error) {
@@ -101,7 +97,7 @@ func (m *SQLManager) GetRole(id string) (*Role, error) {
 	}
 
 	var q []string
-	if err := m.DB.Select(&q, m.DB.Rebind(fmt.Sprintf("SELECT member from %s WHERE group_id = ?", m.TableMember)), found); err == sql.ErrNoRows {
+	if err := m.DB.Select(&q, m.DB.Rebind(fmt.Sprintf("SELECT member from %s WHERE role_id = ?", m.TableMember)), found); err == sql.ErrNoRows {
 		return nil, errors.WithStack(pkg.ErrNotFound)
 	} else if err != nil {
 		return nil, errors.WithStack(err)
@@ -127,7 +123,7 @@ func (m *SQLManager) AddRoleMembers(group string, subjects []string) error {
 	}
 
 	for _, subject := range subjects {
-		if _, err := tx.Exec(m.DB.Rebind(fmt.Sprintf("INSERT INTO %s (group_id, member) VALUES (?, ?)", m.TableMember)), group, subject); err != nil {
+		if _, err := tx.Exec(m.DB.Rebind(fmt.Sprintf("INSERT INTO %s (role_id, member) VALUES (?, ?)", m.TableMember)), group, subject); err != nil {
 			if err := tx.Rollback(); err != nil {
 				return errors.WithStack(err)
 			}
@@ -150,7 +146,7 @@ func (m *SQLManager) RemoveRoleMembers(group string, subjects []string) error {
 		return errors.Wrap(err, "Could not begin transaction")
 	}
 	for _, subject := range subjects {
-		if _, err := m.DB.Exec(m.DB.Rebind(fmt.Sprintf("DELETE FROM %s WHERE member=? AND group_id=?", m.TableMember)), subject, group); err != nil {
+		if _, err := m.DB.Exec(m.DB.Rebind(fmt.Sprintf("DELETE FROM %s WHERE member=? AND role_id=?", m.TableMember)), subject, group); err != nil {
 			if err := tx.Rollback(); err != nil {
 				return errors.WithStack(err)
 			}
@@ -167,9 +163,9 @@ func (m *SQLManager) RemoveRoleMembers(group string, subjects []string) error {
 	return nil
 }
 
-func (m *SQLManager) FindRoleByMember(member string, limit, offset int) ([]Role, error) {
+func (m *SQLManager) FindRolesByMember(member string, limit, offset int) ([]Role, error) {
 	var ids []string
-	if err := m.DB.Select(&ids, m.DB.Rebind(fmt.Sprintf("SELECT group_id from %s WHERE member = ? GROUP BY group_id ORDER BY group_id LIMIT ? OFFSET ?", m.TableMember)), member, limit, offset); err == sql.ErrNoRows {
+	if err := m.DB.Select(&ids, m.DB.Rebind(fmt.Sprintf("SELECT role_id from %s WHERE member = ? GROUP BY role_id ORDER BY role_id LIMIT ? OFFSET ?", m.TableMember)), member, limit, offset); err == sql.ErrNoRows {
 		return nil, errors.WithStack(pkg.ErrNotFound)
 	} else if err != nil {
 		return nil, errors.WithStack(err)
@@ -190,7 +186,7 @@ func (m *SQLManager) FindRoleByMember(member string, limit, offset int) ([]Role,
 
 func (m *SQLManager) ListRoles(limit, offset int) ([]Role, error) {
 	var ids []string
-	if err := m.DB.Select(&ids, m.DB.Rebind(fmt.Sprintf("SELECT group_id from %s GROUP BY group_id ORDER BY group_id LIMIT ? OFFSET ?", m.TableMember)), limit, offset); err == sql.ErrNoRows {
+	if err := m.DB.Select(&ids, m.DB.Rebind(fmt.Sprintf("SELECT role_id from %s GROUP BY role_id ORDER BY role_id LIMIT ? OFFSET ?", m.TableMember)), limit, offset); err == sql.ErrNoRows {
 		return nil, errors.WithStack(pkg.ErrNotFound)
 	} else if err != nil {
 		return nil, errors.WithStack(err)

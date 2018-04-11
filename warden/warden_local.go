@@ -23,7 +23,6 @@ package warden
 import (
 	"context"
 	"net/http"
-	"time"
 
 	"github.com/ory/fosite"
 	"github.com/ory/hades/role"
@@ -32,21 +31,28 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-type LocalWarden struct {
-	Warden ladon.Warden
-	OAuth2 fosite.OAuth2Provider
-	Roles  role.Manager
-
-	AccessTokenLifespan time.Duration
-	Issuer              string
-	L                   logrus.FieldLogger
+func NewWarden(
+	warden ladon.Warden,
+	roles role.Manager,
+	l logrus.FieldLogger) *Warden {
+	return &Warden{
+		Warden: warden,
+		Roles:  roles,
+		L:      l,
+	}
 }
 
-func (w *LocalWarden) TokenFromRequest(r *http.Request) string {
+type Warden struct {
+	Warden ladon.Warden
+	Roles  role.Manager
+	L      logrus.FieldLogger
+}
+
+func (w *Warden) TokenFromRequest(r *http.Request) string {
 	return fosite.AccessTokenFromRequest(r)
 }
 
-func (w *LocalWarden) IsAllowed(ctx context.Context, a *AccessRequest) error {
+func (w *Warden) IsAllowed(ctx context.Context, a *AccessRequest) error {
 	if err := w.isAllowed(ctx, &ladon.Request{
 		Resource: a.Resource,
 		Action:   a.Action,
@@ -69,7 +75,7 @@ func (w *LocalWarden) IsAllowed(ctx context.Context, a *AccessRequest) error {
 	return nil
 }
 
-func (w *LocalWarden) isAllowed(ctx context.Context, a *ladon.Request) error {
+func (w *Warden) isAllowed(ctx context.Context, a *ladon.Request) error {
 	groups, err := w.Roles.FindRolesByMember(a.Subject, 10000, 0)
 	if err != nil {
 		return err

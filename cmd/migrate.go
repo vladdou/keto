@@ -22,7 +22,7 @@ import (
 
 // migrateCmd represents the migrate command
 var migrateCmd = &cobra.Command{
-	Use:   "migrate",
+	Use: "migrate",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print(cmd.UsageString())
 	},

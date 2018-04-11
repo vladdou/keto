@@ -38,21 +38,15 @@ const (
 )
 
 type Handler struct {
-	Manager        ladon.Manager
-	H              herodot.Writer
-	ResourcePrefix string
+	Manager ladon.Manager
+	H       herodot.Writer
 }
 
-func (h *Handler) PrefixResource(resource string) string {
-	if h.ResourcePrefix == "" {
-		h.ResourcePrefix = "rn:hydra"
+func NewHandler(manager ladon.Manager, writer herodot.Writer) *Handler {
+	return &Handler{
+		H:       writer,
+		Manager: manager,
 	}
-
-	if h.ResourcePrefix[len(h.ResourcePrefix)-1] == ':' {
-		h.ResourcePrefix = h.ResourcePrefix[:len(h.ResourcePrefix)-1]
-	}
-
-	return h.ResourcePrefix + ":" + resource
 }
 
 func (h *Handler) SetRoutes(r *httprouter.Router) {

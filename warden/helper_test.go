@@ -23,11 +23,11 @@ package warden_test
 import (
 	"os"
 	"testing"
-	"time"
 
 	"github.com/ory/hades/role"
 	"github.com/ory/hades/warden"
 	"github.com/ory/ladon"
+	"github.com/ory/ladon/manager/memory"
 	"github.com/sirupsen/logrus"
 )
 
@@ -64,12 +64,40 @@ var (
 			expectErr: false,
 		},
 	}
-	wardens = map[string]warden.Firewall{}
+	wardens     = map[string]warden.Firewall{}
+	ladonWarden = &ladon.Ladon{
+		Manager: &memory.MemoryManager{
+			Policies: map[string]ladon.Policy{
+				"1": &ladon.DefaultPolicy{
+					ID:        "1",
+					Subjects:  []string{"alice", "group1"},
+					Resources: []string{"matrix", "forbidden_matrix", "rn:hydra:token<.*>"},
+					Actions:   []string{"create", "decide"},
+					Effect:    ladon.AllowAccess,
+				},
+				"2": &ladon.DefaultPolicy{
+					ID:        "2",
+					Subjects:  []string{"siri"},
+					Resources: []string{"<.*>"},
+					Actions:   []string{"decide"},
+					Effect:    ladon.AllowAccess,
+				},
+				"3": &ladon.DefaultPolicy{
+					ID:        "3",
+					Subjects:  []string{"group1"},
+					Resources: []string{"forbidden_matrix", "rn:hydra:token<.*>"},
+					Actions:   []string{"create", "decide"},
+					Effect:    ladon.DenyAccess,
+				},
+			},
+		},
+	}
 )
 
 func TestMain(m *testing.M) {
-	wardens["local"] = &warden.LocalWarden{
-		L: logrus.New(),
+	wardens["local"] = &warden.Warden{
+		L:      logrus.New(),
+		Warden: ladonWarden,
 		Roles: &role.MemoryManager{
 			Roles: map[string]role.Role{
 				"group1": {
@@ -78,8 +106,6 @@ func TestMain(m *testing.M) {
 				},
 			},
 		},
-		Issuer:              "tests",
-		AccessTokenLifespan: time.Hour,
 	}
 
 	os.Exit(m.Run())

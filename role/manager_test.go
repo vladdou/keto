@@ -24,12 +24,12 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 	"testing"
 
-	"github.com/jmoiron/sqlx"
+	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
-	. "github.com/ory/hades/roles"
+	. "github.com/ory/hades/role"
+	"github.com/ory/sqlcon/dockertest"
 )
 
 var clientManagers = map[string]Manager{
@@ -39,37 +39,43 @@ var clientManagers = map[string]Manager{
 }
 
 func TestMain(m *testing.M) {
+	runner := dockertest.Register()
+
 	flag.Parse()
 	if !testing.Short() {
-		connectToPG()
+		connectToPostgres()
 		connectToMySQL()
 	}
 
-	os.Exit(m.Run())
+	runner.Exit(m.Run())
 }
 
 func connectToMySQL() {
-	db, err := sqlx.Open("postgres", os.Getenv("TEST_POSTGRES_URL"))
+	db, err := dockertest.ConnectToTestMySQL()
 	if err != nil {
 		panic(err)
 	}
+
+	s := &SQLManager{DB: db}
+	if _, err := s.CreateSchemas(); err != nil {
+		log.Fatalf("Could not create mysql schema: %v", err)
+	}
+
+	clientManagers["mysql"] = s
+}
+
+func connectToPostgres() {
+	db, err := dockertest.ConnectToTestMySQL()
+	if err != nil {
+		panic(err)
+	}
+
 	s := &SQLManager{DB: db}
 	if _, err := s.CreateSchemas(); err != nil {
 		log.Fatalf("Could not create postgres schema: %v", err)
 	}
 
 	clientManagers["postgres"] = s
-}
-
-func connectToPG() {
-	db, err := sqlx.Open("mysql", os.Getenv("TEST_MYSQL_URL"))
-	s := &SQLManager{DB: db}
-
-	if _, err := s.CreateSchemas(); err != nil {
-		log.Fatalf("Could not create postgres schema: %v", err)
-	}
-
-	clientManagers["mysql"] = s
 }
 
 func TestManagers(t *testing.T) {

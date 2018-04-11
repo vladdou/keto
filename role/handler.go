@@ -35,6 +35,13 @@ type membersRequest struct {
 	Members []string `json:"members"`
 }
 
+func NewHandler(manager Manager, writer herodot.Writer) *Handler {
+	return &Handler{
+		H:       writer,
+		Manager: manager,
+	}
+}
+
 type Handler struct {
 	Manager Manager
 	H       herodot.Writer
