@@ -29,8 +29,8 @@ type Configuration struct {
 	DefaultHeader map[string]string `json:"defaultHeader,omitempty"`
 	UserAgent     string            `json:"userAgent,omitempty"`
 	APIClient     *APIClient
-	Transport     *http.Transport
-	Timeout       *time.Duration `json:"timeout,omitempty"`
+	Transport     http.Transport
+	Timeout       *time.Duration    `json:"timeout,omitempty"`
 }
 
 func NewConfiguration() *Configuration {
