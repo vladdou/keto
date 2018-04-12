@@ -82,7 +82,6 @@ func (m *SQLManager) CreateRole(g *Role) error {
 	if g.ID == "" {
 		g.ID = uuid.New()
 	}
-
 	if _, err := m.DB.Exec(m.DB.Rebind(fmt.Sprintf("INSERT INTO %s (id) VALUES (?)", m.TableRole)), g.ID); err != nil {
 		return errors.WithStack(err)
 	}
@@ -92,7 +91,7 @@ func (m *SQLManager) CreateRole(g *Role) error {
 
 func (m *SQLManager) GetRole(id string) (*Role, error) {
 	var found string
-	if err := m.DB.Get(&found, m.DB.Rebind(fmt.Sprintf("SELECT id from %s WHERE id = ?)", m.TableRole)), id); err != nil {
+	if err := m.DB.Get(&found, m.DB.Rebind(fmt.Sprintf("SELECT id from %s WHERE id = ?", m.TableRole)), id); err != nil {
 		return nil, errors.WithStack(err)
 	}
 
@@ -122,8 +121,9 @@ func (m *SQLManager) AddRoleMembers(group string, subjects []string) error {
 		return errors.Wrap(err, "Could not begin transaction")
 	}
 
+	query := fmt.Sprintf("INSERT INTO %s (role_id, member) VALUES (?, ?)", m.TableMember)
 	for _, subject := range subjects {
-		if _, err := tx.Exec(m.DB.Rebind(fmt.Sprintf("INSERT INTO %s (role_id, member) VALUES (?, ?)", m.TableMember)), group, subject); err != nil {
+		if _, err := tx.Exec(m.DB.Rebind(query), group, subject); err != nil {
 			if err := tx.Rollback(); err != nil {
 				return errors.WithStack(err)
 			}

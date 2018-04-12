@@ -22,28 +22,24 @@
 package warden
 
 import (
+	"github.com/ory/hades/authentication"
 	"github.com/ory/hydra/firewall"
 )
 
-// swagger:parameters doesWardenAllowAccessRequest
+// swagger:parameters isSubjectAuthorized
 type swaggerDoesWardenAllowAccessRequestParameters struct {
 	// in: body
 	Body firewall.AccessRequest
 }
 
-// swagger:parameters isSubjectAuthorized
+// swagger:parameters isOAuth2AccessTokenAuthorized
 type swaggerDoesWardenAllowTokenAccessRqeuestParameters struct {
 	// in: body
 	Body swaggerWardenTokenAccessRequest
 }
 
-// swagger:model isTokenAuthorized
-type swaggerWardenTokenAccessRequest struct {
-	// Scopes is an array of scopes that are requried.
-	Scopes []string `json:"scopes"`
-
-	// Token is the token to introspect.
-	Token string `json:"token"`
+// swager:model authorizedBaseRequest
+type swaggerWardenBaseRequest struct {
 
 	// Resource is the resource that access is requested to.
 	Resource string `json:"resource"`
@@ -55,36 +51,13 @@ type swaggerWardenTokenAccessRequest struct {
 	Context map[string]interface{} `json:"context"`
 }
 
-// The warden access request (with token) response
-// swagger:model wardenTokenAccessRequestResponse
-type swaggerWardenTokenAccessRequestResponsePayload struct {
-	// Subject is the identity that authorized issuing the token, for example a user or an OAuth2 app.
-	// This is usually a uuid but you can choose a urn or some other id too.
-	Subject string `json:"subject"`
-
-	// GrantedScopes is a list of scopes that the subject authorized when asked for consent.
-	GrantedScopes []string `json:"grantedScopes"`
-
-	// Issuer is the id of the issuer, typically an hydra instance.
-	Issuer string `json:"issuer"`
-
-	// ClientID is the id of the OAuth2 client that requested the token.
-	ClientID string `json:"clientId"`
-
-	// IssuedAt is the token creation time stamp.
-	IssuedAt string `json:"issuedAt"`
-
-	// ExpiresAt is the expiry timestamp.
-	ExpiresAt string `json:"expiresAt"`
-
-	// Extra represents arbitrary session data.
-	Extra map[string]interface{} `json:"accessTokenExtra"`
-
-	// Allowed is true if the request is allowed and false otherwise.
-	Allowed bool `json:"allowed"`
+// swagger:model isOAuth2AccessTokenAuthorized
+type swaggerWardenTokenAccessRequest struct {
+	authentication.AuthenticationOAuth2IntrospectionRequest
+	swaggerWardenBaseRequest
 }
 
-// swagger:route POST /warden/tokens/authorized warden isTokenAuthorized
+// swagger:route POST /warden/oauth2/authorize warden isOAuth2AccessTokenAuthorized
 //
 // Check if an OAuth 2.0 access token is authorized to access a resource
 //
@@ -109,13 +82,13 @@ type swaggerWardenTokenAccessRequestResponsePayload struct {
 //     Schemes: http, https
 //
 //     Responses:
-//       200: wardenTokenAccessRequestResponse
+//       200: authenticationOAuth2Session
 //       401: genericError
 //       403: genericError
 //       500: genericError
-func swaggerTokenMock() {}
+func swaggerOAuth2Mock() {}
 
-// swagger:route POST /warden/subjects/authorized warden isSubjectAuthorized
+// swagger:route POST /warden/subjects/authorize warden isSubjectAuthorized
 //
 // Check if a subject is authorized to access a resource
 //

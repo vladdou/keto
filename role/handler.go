@@ -88,12 +88,12 @@ func (h *Handler) ListRoles(w http.ResponseWriter, r *http.Request, _ httprouter
 		h.FindGroupNames(w, r, member, limit, offset)
 		return
 	} else {
-		h.ListGroups(w, r, limit, offset)
+		h.listAllRoles(w, r, limit, offset)
 		return
 	}
 }
 
-func (h *Handler) ListGroups(w http.ResponseWriter, r *http.Request, limit, offset int) {
+func (h *Handler) listAllRoles(w http.ResponseWriter, r *http.Request, limit, offset int) {
 	groups, err := h.Manager.ListRoles(limit, offset)
 	if err != nil {
 		h.H.WriteError(w, r, err)

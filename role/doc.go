@@ -32,7 +32,7 @@ type swaggerlistRolesResponse struct {
 	Body []Role
 }
 
-// swagger:parameters listGroups
+// swagger:parameters listRoles
 type swaggerListGroupsParameters struct {
 	// The id of the member to look up.
 	// in: query
@@ -47,20 +47,20 @@ type swaggerListGroupsParameters struct {
 	Offset int `json:"offset"`
 }
 
-// swagger:parameters createGroup
+// swagger:parameters createRole
 type swaggerCreateGroupParameters struct {
 	// in: body
 	Body Role
 }
 
-// swagger:parameters getGroup deleteGroup
+// swagger:parameters getRole deleteRole
 type swaggerGetGroupParameters struct {
 	// The id of the group to look up.
 	// in: path
 	ID string `json:"id"`
 }
 
-// swagger:parameters removeMembersFromGroup addMembersToGroup
+// swagger:parameters removeMembersFromRole addMembersToRole
 type swaggerModifyMembersParameters struct {
 	// The id of the group to modify.
 	// in: path

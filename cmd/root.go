@@ -18,18 +18,17 @@ import (
 	"fmt"
 	"os"
 
-	"time"
-
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ory/hades/cmd/client"
 )
 
 var cfgFile string
 
 var (
 	Version   = "dev-master"
-	BuildTime = time.Now().String()
+	BuildTime = "undefined"
 	GitHash   = "undefined"
 )
 
@@ -39,6 +38,8 @@ var RootCmd = &cobra.Command{
 }
 
 var logger *logrus.Logger
+
+var cmdHandler = client.NewHandler()
 
 // Execute adds all child commands to the root command sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
@@ -73,11 +74,7 @@ func initConfig() {
 	viper.AutomaticEnv()          // read in environment variables that match
 
 	viper.SetDefault("LOG_LEVEL", "info")
-	viper.SetDefault("PROXY_PORT", "4455")
-	viper.SetDefault("MANAGEMENT_PORT", "4456")
-	viper.SetDefault("RULES_REFRESH_INTERVAL", "5s")
-	viper.SetDefault("HYDRA_JWK_SET_ID", "oathkeeper:id-token")
-	viper.SetDefault("DATABASE_URL", "")
+	viper.SetDefault("PORT", "4466")
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {

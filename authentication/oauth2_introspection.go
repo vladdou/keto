@@ -27,24 +27,42 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"strings"
+	"time"
+
 	"github.com/pkg/errors"
 	"golang.org/x/oauth2/clientcredentials"
 )
 
+// swagger:model authenticationOAuth2Session
 type OAuth2Session struct {
 	// Here, it's subject
 	*DefaultSession
-	Scope     string `json:"scope,omitempty"`
-	ClientID  string `json:"client_id,omitempty"`
-	ExpiresAt int64  `json:"exp,omitempty"`
-	IssuedAt  int64  `json:"iat,omitempty"`
-	NotBefore int64  `json:"nbf,omitempty"`
-	Username  string `json:"username,omitempty"`
-	Audience  string `json:"aud,omitempty"`
-	Issuer    string `json:"iss,omitempty"`
+
+	// GrantedScopes is a list of scopes that the subject authorized when asked for consent.
+	GrantedScopes []string `json:"grantedScopes"`
+
+	// Issuer is the id of the issuer, typically an hydra instance.
+	Issuer string `json:"issuer"`
+
+	// ClientID is the id of the OAuth2 client that requested the token.
+	ClientID string `json:"clientId"`
+
+	// IssuedAt is the token creation time stamp.
+	IssuedAt time.Time `json:"issuedAt"`
+
+	// ExpiresAt is the expiry timestamp.
+	ExpiresAt time.Time `json:"expiresAt"`
+
+	NotBefore time.Time `json:"notBefore,omitempty"`
+	Username  string    `json:"username,omitempty"`
+	Audience  string    `json:"audience,omitempty"`
+
+	// Extra represents arbitrary session data.
+	Extra map[string]interface{} `json:"accessTokenExtra"`
 }
 
-type introspectionResponse struct {
+type IntrospectionResponse struct {
 	Active   bool   `json:"active"`
 	Scope    string `json:"scope,omitempty"`
 	ClientID string `json:"client_id,omitempty"`
@@ -63,7 +81,8 @@ type OAuth2IntrospectionAuthentication struct {
 	introspectionURL string
 }
 
-type introspectionRequest struct {
+// swagger:model authenticationOAuth2IntrospectionRequest
+type AuthenticationOAuth2IntrospectionRequest struct {
 	// Token is the token to introspect.
 	Token string `json:"token"`
 
@@ -92,7 +111,7 @@ func NewOAuth2IntrospectionAuthentication(clientID, clientSecret, tokenURL, intr
 }
 
 func (a *OAuth2IntrospectionAuthentication) Authenticate(r *http.Request) (Session, error) {
-	var token introspectionRequest
+	var token AuthenticationOAuth2IntrospectionRequest
 
 	err := json.NewDecoder(r.Body).Decode(&token)
 	if err != nil || token.Token == "" {
@@ -119,7 +138,7 @@ func (a *OAuth2IntrospectionAuthentication) Authenticate(r *http.Request) (Sessi
 		return nil, errors.Errorf("Introspection returned status code %d but expected %d", resp.StatusCode, http.StatusOK)
 	}
 
-	var ir introspectionResponse
+	var ir IntrospectionResponse
 	if err := json.NewDecoder(resp.Body).Decode(&ir); err != nil {
 		return nil, errors.WithStack(err)
 	}
@@ -132,13 +151,13 @@ func (a *OAuth2IntrospectionAuthentication) Authenticate(r *http.Request) (Sessi
 		DefaultSession: &DefaultSession{
 			Subject: ir.Subject,
 		},
-		Scope:     ir.Scope,
-		ClientID:  ir.ClientID,
-		ExpiresAt: ir.ExpiresAt,
-		IssuedAt:  ir.IssuedAt,
-		NotBefore: ir.NotBefore,
-		Username:  ir.Username,
-		Audience:  ir.Audience,
-		Issuer:    ir.Issuer,
+		GrantedScopes: strings.Split(ir.Scope, " "),
+		ClientID:      ir.ClientID,
+		ExpiresAt:     time.Unix(ir.ExpiresAt, 0).UTC(),
+		IssuedAt:      time.Unix(ir.IssuedAt, 0).UTC(),
+		NotBefore:     time.Unix(ir.NotBefore, 0).UTC(),
+		Username:      ir.Username,
+		Audience:      ir.Audience,
+		Issuer:        ir.Issuer,
 	}, nil
 }

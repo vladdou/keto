@@ -1,4 +1,5 @@
-// Copyright © 2018 NAME HERE <EMAIL ADDRESS>
+//go:generate swagger generate spec
+// Copyright © 2017 Aeneas Rekkas <aeneas+oss@aeneas.io>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,8 +15,19 @@
 
 package main
 
-import "github.com/ory/hades/cmd"
+import (
+	"os"
+
+	"github.com/ory/hydra/cmd"
+	"github.com/pkg/profile"
+)
 
 func main() {
+	if os.Getenv("PROFILING") == "cpu" {
+		defer profile.Start(profile.CPUProfile).Stop()
+	} else if os.Getenv("PROFILING") == "memory" {
+		defer profile.Start(profile.MemProfile).Stop()
+	}
+
 	cmd.Execute()
 }

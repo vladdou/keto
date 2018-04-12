@@ -42,8 +42,12 @@ type Session interface {
 
 // swagger:model authenticationDefaultSession
 type DefaultSession struct {
+	// Subject is the identity that authorized issuing the token, for example a user or an OAuth2 app.
+	// This is usually a uuid but you can choose a urn or some other id too.
 	Subject string `json:"subject"`
-	Allowed bool   `json:"allowed"`
+
+	// Allowed is true if the request is allowed and false otherwise.
+	Allowed bool `json:"allowed"`
 }
 
 func (s *DefaultSession) GrantAccess() {

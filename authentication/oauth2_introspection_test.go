@@ -41,10 +41,10 @@ import (
 
 func TestOAuth2Introspection(t *testing.T) {
 	h := httprouter.New()
-	var cb func(w http.ResponseWriter, r *http.Request, req introspectionRequest) *introspectionResponse
+	var cb func(w http.ResponseWriter, r *http.Request, req AuthenticationOAuth2IntrospectionRequest) *IntrospectionResponse
 
 	h.POST("/oauth2/introspect", func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-		var req introspectionRequest
+		var req AuthenticationOAuth2IntrospectionRequest
 		err := json.NewDecoder(r.Body).Decode(&req)
 		require.Nil(t, err)
 
@@ -58,51 +58,53 @@ func TestOAuth2Introspection(t *testing.T) {
 		introspectionURL: ts.URL + "/oauth2/introspect",
 	}
 
+	now := time.Now().UTC().Round(time.Minute)
+
 	for k, tc := range []struct {
 		d               string
-		cb              func(w http.ResponseWriter, r *http.Request, req introspectionRequest) *introspectionResponse
-		req             *introspectionRequest
+		cb              func(w http.ResponseWriter, r *http.Request, req AuthenticationOAuth2IntrospectionRequest) *IntrospectionResponse
+		req             *AuthenticationOAuth2IntrospectionRequest
 		expectedErr     error
 		expectedSession *OAuth2Session
 	}{
 		{
-			cb: func(w http.ResponseWriter, r *http.Request, req introspectionRequest) *introspectionResponse {
+			cb: func(w http.ResponseWriter, r *http.Request, req AuthenticationOAuth2IntrospectionRequest) *IntrospectionResponse {
 				assert.Equal(t, "foo-token", req.Token)
 				assert.EqualValues(t, []string{"foo-scope", "foo-scope-a"}, req.Scopes)
-				return &introspectionResponse{Active: false}
+				return &IntrospectionResponse{Active: false}
 			},
-			req:         &introspectionRequest{Token: "foo-token", Scopes: []string{"foo-scope", "foo-scope-a"}},
+			req:         &AuthenticationOAuth2IntrospectionRequest{Token: "foo-token", Scopes: []string{"foo-scope", "foo-scope-a"}},
 			expectedErr: ErrUnauthorized,
 		},
 		{
-			cb: func(w http.ResponseWriter, r *http.Request, req introspectionRequest) *introspectionResponse {
-				return &introspectionResponse{
+			cb: func(w http.ResponseWriter, r *http.Request, req AuthenticationOAuth2IntrospectionRequest) *IntrospectionResponse {
+				return &IntrospectionResponse{
 					Active:    true,
 					Scope:     "scope",
 					ClientID:  "scope-ip",
 					Subject:   "subject",
-					ExpiresAt: time.Now().Unix(),
-					IssuedAt:  time.Now().Unix(),
-					NotBefore: time.Now().Unix(),
+					ExpiresAt: now.Unix(),
+					IssuedAt:  now.Unix(),
+					NotBefore: now.Unix(),
 					Username:  "username",
 					Audience:  "audience",
 					Issuer:    "issuer",
 				}
 			},
-			req: &introspectionRequest{Token: "foo-token", Scopes: []string{"foo-scope", "foo-scope-a"}},
+			req: &AuthenticationOAuth2IntrospectionRequest{Token: "foo-token", Scopes: []string{"foo-scope", "foo-scope-a"}},
 			expectedSession: &OAuth2Session{
 				DefaultSession: &DefaultSession{
 					Subject: "subject",
 					Allowed: false,
 				},
-				Scope:     "scope",
-				ClientID:  "scope-ip",
-				ExpiresAt: time.Now().Unix(),
-				IssuedAt:  time.Now().Unix(),
-				NotBefore: time.Now().Unix(),
-				Username:  "username",
-				Audience:  "audience",
-				Issuer:    "issuer",
+				GrantedScopes: []string{"scope"},
+				ClientID:      "scope-ip",
+				ExpiresAt:     now,
+				IssuedAt:      now,
+				NotBefore:     now,
+				Username:      "username",
+				Audience:      "audience",
+				Issuer:        "issuer",
 			},
 		},
 	} {

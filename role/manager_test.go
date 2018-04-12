@@ -56,7 +56,7 @@ func connectToMySQL() {
 		panic(err)
 	}
 
-	s := &SQLManager{DB: db}
+	s := NewSQLManager(db)
 	if _, err := s.CreateSchemas(); err != nil {
 		log.Fatalf("Could not create mysql schema: %v", err)
 	}
@@ -70,7 +70,7 @@ func connectToPostgres() {
 		panic(err)
 	}
 
-	s := &SQLManager{DB: db}
+	s := NewSQLManager(db)
 	if _, err := s.CreateSchemas(); err != nil {
 		log.Fatalf("Could not create postgres schema: %v", err)
 	}

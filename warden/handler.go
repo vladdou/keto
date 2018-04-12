@@ -25,10 +25,12 @@ import (
 	"fmt"
 	"net/http"
 
+	"bytes"
 	"github.com/julienschmidt/httprouter"
 	"github.com/ory/hades/authentication"
 	"github.com/ory/herodot"
 	"github.com/pkg/errors"
+	"io/ioutil"
 )
 
 const (
@@ -72,7 +74,14 @@ func (h *Handler) SetRoutes(r *httprouter.Router) {
 
 func (h *Handler) authorized(authenticator authentication.Authenticator) func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	return func(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+		all, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			h.H.WriteError(w, r, errors.WithStack(err))
+			return
+		}
+
 		var ctx = r.Context()
+		r.Body = ioutil.NopCloser(bytes.NewReader(all))
 		session, err := authenticator.Authenticate(r)
 		if err != nil {
 			h.H.WriteError(w, r, errors.WithStack(err))
@@ -80,7 +89,7 @@ func (h *Handler) authorized(authenticator authentication.Authenticator) func(w 
 		}
 
 		var access AccessRequest
-		if err := json.NewDecoder(r.Body).Decode(&access); err != nil {
+		if err := json.Unmarshal(all, &access); err != nil {
 			h.H.WriteError(w, r, errors.WithStack(err))
 			return
 		}

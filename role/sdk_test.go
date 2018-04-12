@@ -50,72 +50,71 @@ func TestGroupSDK(t *testing.T) {
 	handler.SetRoutes(router)
 	server := httptest.NewServer(router)
 
-	client := hades.NewWardenApiWithBasePath(server.URL)
-	client.Configuration.Transport = httpClient.Transport
+	client := hades.NewRoleApiWithBasePath(server.URL)
 
 	t.Run("flows", func(*testing.T) {
-		_, response, err := client.GetGroup("4321")
+		_, response, err := client.GetRole("4321")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusNotFound, response.StatusCode)
 
-		firstGroup := hydra.Group{Id: "1", Members: []string{"bar", "foo"}}
-		result, response, err := client.CreateGroup(firstGroup)
+		firstGroup := hades.Role{Id: "1", Members: []string{"bar", "foo"}}
+		result, response, err := client.CreateRole(firstGroup)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusCreated, response.StatusCode)
 		assert.EqualValues(t, firstGroup, *result)
 
-		secondGroup := hydra.Group{Id: "2", Members: []string{"foo"}}
-		result, response, err = client.CreateGroup(secondGroup)
+		secondGroup := hades.Role{Id: "2", Members: []string{"foo"}}
+		result, response, err = client.CreateRole(secondGroup)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusCreated, response.StatusCode)
 		assert.EqualValues(t, secondGroup, *result)
 
-		result, response, err = client.GetGroup("1")
+		result, response, err = client.GetRole("1")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.EqualValues(t, firstGroup, *result)
 
-		results, response, err := client.ListGroups("foo", 100, 0)
+		results, response, err := client.ListRoles("foo", 100, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 2)
 
-		results, response, err = client.ListGroups("", 100, 0)
+		results, response, err = client.ListRoles("", 100, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 2)
 
-		results, response, err = client.ListGroups("", 1, 0)
+		results, response, err = client.ListRoles("", 1, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 1)
 
-		results, response, err = client.ListGroups("foo", 1, 0)
+		results, response, err = client.ListRoles("foo", 1, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 1)
 
-		client.AddMembersToGroup("1", hydra.GroupMembers{Members: []string{"baz"}})
+		client.AddMembersToRole("1", hades.GroupMembers{Members: []string{"baz"}})
 
-		results, response, err = client.ListGroups("baz", 100, 0)
+		results, response, err = client.ListRoles("baz", 100, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 1)
 
-		response, err = client.RemoveMembersFromGroup("1", hydra.GroupMembers{Members: []string{"baz"}})
+		response, err = client.RemoveMembersFromRole("1", hades.GroupMembers{Members: []string{"baz"}})
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusNoContent, response.StatusCode)
 
-		results, response, err = client.ListGroups("baz", 100, 0)
+		results, response, err = client.ListRoles("baz", 100, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 0)
 
-		response, err = client.DeleteGroup("1")
+		response, err = client.DeleteRole("1")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusNoContent, response.StatusCode)
 
-		_, response, err = client.GetGroup("4321")
+		_, response, err = client.GetRole("4321")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusNotFound, response.StatusCode)
 	})

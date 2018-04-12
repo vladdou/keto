@@ -22,7 +22,6 @@ package warden
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/ory/fosite"
 	"github.com/ory/hades/role"
@@ -46,10 +45,6 @@ type Warden struct {
 	Warden ladon.Warden
 	Roles  role.Manager
 	L      logrus.FieldLogger
-}
-
-func (w *Warden) TokenFromRequest(r *http.Request) string {
-	return fosite.AccessTokenFromRequest(r)
 }
 
 func (w *Warden) IsAllowed(ctx context.Context, a *AccessRequest) error {

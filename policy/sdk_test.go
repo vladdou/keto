@@ -18,20 +18,18 @@
  * @license 	Apache-2.0
  */
 
-package policy
+package policy_test
 
 import (
+	"encoding/json"
+	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"encoding/json"
-	"net/http"
-
 	"github.com/julienschmidt/httprouter"
-	"github.com/ory/fosite"
+	. "github.com/ory/hades/policy"
+	hades "github.com/ory/hades/sdk/go/hades/swagger"
 	"github.com/ory/herodot"
-	"github.com/ory/hydra/compose"
-	hydra "github.com/ory/hydra/sdk/go/hydra/swagger"
 	"github.com/ory/ladon"
 	"github.com/ory/ladon/manager/memory"
 	"github.com/pborman/uuid"
@@ -39,7 +37,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func mockPolicy(t *testing.T) hydra.Policy {
+func mockPolicy(t *testing.T) hades.Policy {
 	originalPolicy := &ladon.DefaultPolicy{
 		ID:          uuid.New(),
 		Description: "description",
@@ -57,7 +55,7 @@ func mockPolicy(t *testing.T) hydra.Policy {
 	out, err := json.Marshal(originalPolicy)
 	require.NoError(t, err)
 
-	var apiPolicy hydra.Policy
+	var apiPolicy hades.Policy
 	require.NoError(t, json.Unmarshal(out, &apiPolicy))
 	out, err = json.Marshal(&apiPolicy)
 	require.NoError(t, err)
@@ -80,8 +78,7 @@ func TestPolicySDK(t *testing.T) {
 	handler.SetRoutes(router)
 	server := httptest.NewServer(router)
 
-	client := hydra.NewPolicyApiWithBasePath(server.URL)
-	client.Configuration.Transport = httpClient.Transport
+	client := hades.NewPolicyApiWithBasePath(server.URL)
 
 	p := mockPolicy(t)
 
