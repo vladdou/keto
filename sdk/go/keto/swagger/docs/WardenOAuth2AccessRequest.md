@@ -1,4 +1,4 @@
-# IsOAuth2AccessTokenAuthorized
+# WardenOAuth2AccessRequest
 
 ## Properties
 Name | Type | Description | Notes

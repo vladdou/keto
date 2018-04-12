@@ -22,14 +22,13 @@
 package warden
 
 import (
-	"github.com/ory/hydra/firewall"
 	"github.com/ory/keto/authentication"
 )
 
 // swagger:parameters isSubjectAuthorized
 type swaggerDoesWardenAllowAccessRequestParameters struct {
 	// in: body
-	Body firewall.AccessRequest
+	Body AccessRequest
 }
 
 // swagger:parameters isOAuth2AccessTokenAuthorized
@@ -51,7 +50,7 @@ type swaggerWardenBaseRequest struct {
 	Context map[string]interface{} `json:"context"`
 }
 
-// swagger:model isOAuth2AccessTokenAuthorized
+// swagger:model WardenOAuth2AccessRequest
 type swaggerWardenTokenAccessRequest struct {
 	authentication.AuthenticationOAuth2IntrospectionRequest
 	swaggerWardenBaseRequest

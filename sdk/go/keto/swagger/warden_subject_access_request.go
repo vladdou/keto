@@ -8,7 +8,7 @@
 
 package swagger
 
-type TokenAllowedRequest struct {
+type WardenSubjectAccessRequest struct {
 
 	// Action is the action that is requested on the resource.
 	Action string `json:"action,omitempty"`
@@ -18,4 +18,7 @@ type TokenAllowedRequest struct {
 
 	// Resource is the resource that access is requested to.
 	Resource string `json:"resource,omitempty"`
+
+	// Subejct is the subject that is requesting access.
+	Subject string `json:"subject,omitempty"`
 }

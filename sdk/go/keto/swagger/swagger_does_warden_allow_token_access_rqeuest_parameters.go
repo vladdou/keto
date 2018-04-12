@@ -9,5 +9,5 @@
 package swagger
 
 type SwaggerDoesWardenAllowTokenAccessRqeuestParameters struct {
-	Body IsOAuth2AccessTokenAuthorized `json:"Body,omitempty"`
+	Body WardenOAuth2AccessRequest `json:"Body,omitempty"`
 }

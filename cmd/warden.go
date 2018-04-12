@@ -15,13 +15,14 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
 	"fmt"
+
+	"github.com/spf13/cobra"
 )
 
 // wardenCmd represents the warden command
 var wardenCmd = &cobra.Command{
-	Use:   "warden",
+	Use: "warden",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print(cmd.UsageString())
 	},

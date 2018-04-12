@@ -1,6 +1,6 @@
 <?php
 /**
- * IsOAuth2AccessTokenAuthorized
+ * WardenOAuth2AccessRequest
  *
  * PHP version 5
  *
@@ -30,14 +30,14 @@ namespace keto\SDK\Model;
 use \ArrayAccess;
 
 /**
- * IsOAuth2AccessTokenAuthorized Class Doc Comment
+ * WardenOAuth2AccessRequest Class Doc Comment
  *
  * @category    Class
  * @package     keto\SDK
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class IsOAuth2AccessTokenAuthorized implements ArrayAccess
+class WardenOAuth2AccessRequest implements ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -45,7 +45,7 @@ class IsOAuth2AccessTokenAuthorized implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'isOAuth2AccessTokenAuthorized';
+    protected static $swaggerModelName = 'WardenOAuth2AccessRequest';
 
     /**
       * Array of property to type mappings. Used for (de)serialization

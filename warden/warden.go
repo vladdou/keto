@@ -28,7 +28,7 @@ import (
 
 // AccessRequest is the warden's request object.
 //
-// swagger:model wardenAccessRequest
+// swagger:model WardenSubjectAccessRequest
 type AccessRequest struct {
 	// Resource is the resource that access is requested to.
 	Resource string `json:"resource"`

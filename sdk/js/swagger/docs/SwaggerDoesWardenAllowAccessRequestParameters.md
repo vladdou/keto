@@ -3,6 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**body** | [**WardenAccessRequest**](WardenAccessRequest.md) |  | [optional] 
+**body** | [**WardenSubjectAccessRequest**](WardenSubjectAccessRequest.md) |  | [optional] 
 
 

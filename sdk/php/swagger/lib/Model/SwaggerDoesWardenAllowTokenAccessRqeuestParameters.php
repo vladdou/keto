@@ -52,7 +52,7 @@ class SwaggerDoesWardenAllowTokenAccessRqeuestParameters implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'body' => '\keto\SDK\Model\IsOAuth2AccessTokenAuthorized'
+        'body' => '\keto\SDK\Model\WardenOAuth2AccessRequest'
     ];
 
     /**
@@ -160,7 +160,7 @@ class SwaggerDoesWardenAllowTokenAccessRqeuestParameters implements ArrayAccess
 
     /**
      * Gets body
-     * @return \keto\SDK\Model\IsOAuth2AccessTokenAuthorized
+     * @return \keto\SDK\Model\WardenOAuth2AccessRequest
      */
     public function getBody()
     {
@@ -169,7 +169,7 @@ class SwaggerDoesWardenAllowTokenAccessRqeuestParameters implements ArrayAccess
 
     /**
      * Sets body
-     * @param \keto\SDK\Model\IsOAuth2AccessTokenAuthorized $body
+     * @param \keto\SDK\Model\WardenOAuth2AccessRequest $body
      * @return $this
      */
     public function setBody($body)

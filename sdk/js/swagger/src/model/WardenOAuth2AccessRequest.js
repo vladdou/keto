@@ -26,7 +26,7 @@
     if (!root.SwaggerJsClient) {
       root.SwaggerJsClient = {}
     }
-    root.SwaggerJsClient.IsOAuth2AccessTokenAuthorized = factory(
+    root.SwaggerJsClient.WardenOAuth2AccessRequest = factory(
       root.SwaggerJsClient.ApiClient
     )
   }
@@ -34,14 +34,14 @@
   'use strict'
 
   /**
-   * The IsOAuth2AccessTokenAuthorized model module.
-   * @module model/IsOAuth2AccessTokenAuthorized
+   * The WardenOAuth2AccessRequest model module.
+   * @module model/WardenOAuth2AccessRequest
    * @version Latest
    */
 
   /**
-   * Constructs a new <code>IsOAuth2AccessTokenAuthorized</code>.
-   * @alias module:model/IsOAuth2AccessTokenAuthorized
+   * Constructs a new <code>WardenOAuth2AccessRequest</code>.
+   * @alias module:model/WardenOAuth2AccessRequest
    * @class
    */
   var exports = function() {
@@ -49,11 +49,11 @@
   }
 
   /**
-   * Constructs a <code>IsOAuth2AccessTokenAuthorized</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>WardenOAuth2AccessRequest</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/IsOAuth2AccessTokenAuthorized} obj Optional instance to populate.
-   * @return {module:model/IsOAuth2AccessTokenAuthorized} The populated <code>IsOAuth2AccessTokenAuthorized</code> instance.
+   * @param {module:model/WardenOAuth2AccessRequest} obj Optional instance to populate.
+   * @return {module:model/WardenOAuth2AccessRequest} The populated <code>WardenOAuth2AccessRequest</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {

@@ -3,6 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**body** | [**IsOAuth2AccessTokenAuthorized**](IsOAuth2AccessTokenAuthorized.md) |  | [optional] 
+**body** | [**WardenOAuth2AccessRequest**](WardenOAuth2AccessRequest.md) |  | [optional] 
 
 

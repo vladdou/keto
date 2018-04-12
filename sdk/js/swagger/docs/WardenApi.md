@@ -23,7 +23,7 @@ var SwaggerJsClient = require('swagger-js-client');
 var apiInstance = new SwaggerJsClient.WardenApi();
 
 var opts = { 
-  'body': new SwaggerJsClient.IsOAuth2AccessTokenAuthorized() // IsOAuth2AccessTokenAuthorized | 
+  'body': new SwaggerJsClient.WardenOAuth2AccessRequest() // WardenOAuth2AccessRequest | 
 };
 
 var callback = function(error, data, response) {
@@ -40,7 +40,7 @@ apiInstance.isOAuth2AccessTokenAuthorized(opts, callback);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**IsOAuth2AccessTokenAuthorized**](IsOAuth2AccessTokenAuthorized.md)|  | [optional] 
+ **body** | [**WardenOAuth2AccessRequest**](WardenOAuth2AccessRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -70,7 +70,7 @@ var SwaggerJsClient = require('swagger-js-client');
 var apiInstance = new SwaggerJsClient.WardenApi();
 
 var opts = { 
-  'body': new SwaggerJsClient.WardenAccessRequest() // WardenAccessRequest | 
+  'body': new SwaggerJsClient.WardenSubjectAccessRequest() // WardenSubjectAccessRequest | 
 };
 
 var callback = function(error, data, response) {
@@ -87,7 +87,7 @@ apiInstance.isSubjectAuthorized(opts, callback);
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**WardenAccessRequest**](WardenAccessRequest.md)|  | [optional] 
+ **body** | [**WardenSubjectAccessRequest**](WardenSubjectAccessRequest.md)|  | [optional] 
 
 ### Return type
 

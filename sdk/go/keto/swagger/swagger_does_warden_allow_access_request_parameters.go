@@ -9,5 +9,5 @@
 package swagger
 
 type SwaggerDoesWardenAllowAccessRequestParameters struct {
-	Body WardenAccessRequest `json:"Body,omitempty"`
+	Body WardenSubjectAccessRequest `json:"Body,omitempty"`
 }

@@ -41,7 +41,7 @@ func NewWardenApiWithBasePath(basePath string) *WardenApi {
  * @param body
  * @return *AuthenticationOAuth2Session
  */
-func (a WardenApi) IsOAuth2AccessTokenAuthorized(body IsOAuth2AccessTokenAuthorized) (*AuthenticationOAuth2Session, *APIResponse, error) {
+func (a WardenApi) IsOAuth2AccessTokenAuthorized(body WardenOAuth2AccessRequest) (*AuthenticationOAuth2Session, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
@@ -103,7 +103,7 @@ func (a WardenApi) IsOAuth2AccessTokenAuthorized(body IsOAuth2AccessTokenAuthori
  * @param body
  * @return *AuthenticationDefaultSession
  */
-func (a WardenApi) IsSubjectAuthorized(body WardenAccessRequest) (*AuthenticationDefaultSession, *APIResponse, error) {
+func (a WardenApi) IsSubjectAuthorized(body WardenSubjectAccessRequest) (*AuthenticationDefaultSession, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables

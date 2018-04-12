@@ -1,4 +1,4 @@
-# SwaggerJsClient.IsOAuth2AccessTokenAuthorized
+# SwaggerJsClient.WardenOAuth2AccessRequest
 
 ## Properties
 Name | Type | Description | Notes

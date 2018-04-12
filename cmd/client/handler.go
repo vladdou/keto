@@ -24,6 +24,6 @@ func NewHandler() *Handler {
 	return &Handler{
 		Policies: newPolicyHandler(),
 		Roles:    newRoleHandler(),
-		Warden:    newWardenHandler(),
+		Warden:   newWardenHandler(),
 	}
 }

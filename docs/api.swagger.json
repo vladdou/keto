@@ -586,7 +586,7 @@
             "name": "Body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/isOAuth2AccessTokenAuthorized"
+              "$ref": "#/definitions/WardenOAuth2AccessRequest"
             }
           }
         ],
@@ -632,7 +632,7 @@
             "name": "Body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/wardenAccessRequest"
+              "$ref": "#/definitions/WardenSubjectAccessRequest"
             }
           }
         ],
@@ -661,60 +661,10 @@
       "type": "object",
       "x-go-package": "github.com/ory/keto/authentication"
     },
-    "Context": {
-      "description": "Context contains an access token's session data",
-      "type": "object",
-      "properties": {
-        "accessTokenExtra": {
-          "description": "Extra represents arbitrary session data.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          },
-          "x-go-name": "Extra"
-        },
-        "clientId": {
-          "description": "ClientID is id of the client the token was issued for..",
-          "type": "string",
-          "x-go-name": "ClientID"
-        },
-        "expiresAt": {
-          "description": "ExpiresAt is the expiry timestamp.",
-          "type": "string",
-          "format": "date-time",
-          "x-go-name": "ExpiresAt"
-        },
-        "grantedScopes": {
-          "description": "GrantedScopes is a list of scopes that the subject authorized when asked for consent.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "GrantedScopes"
-        },
-        "issuedAt": {
-          "description": "IssuedAt is the token creation time stamp.",
-          "type": "string",
-          "format": "date-time",
-          "x-go-name": "IssuedAt"
-        },
-        "issuer": {
-          "description": "Issuer is the id of the issuer, typically an hydra instance.",
-          "type": "string",
-          "x-go-name": "Issuer"
-        },
-        "subject": {
-          "description": "Subject is the identity that authorized issuing the token, for example a user or an OAuth2 app.\nThis is usually a uuid but you can choose a urn or some other id too.",
-          "type": "string",
-          "x-go-name": "Subject"
-        }
-      },
-      "x-go-package": "github.com/ory/keto/vendor/github.com/ory/hydra/firewall"
-    },
     "Firewall": {
       "type": "object",
       "title": "Firewall offers various validation strategies for access tokens.",
-      "x-go-package": "github.com/ory/keto/vendor/github.com/ory/hydra/firewall"
+      "x-go-package": "github.com/ory/keto/warden"
     },
     "Handler": {
       "type": "object",
@@ -794,6 +744,75 @@
         }
       },
       "x-go-package": "github.com/ory/keto/authentication"
+    },
+    "WardenOAuth2AccessRequest": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "description": "Action is the action that is requested on the resource.",
+          "type": "string",
+          "x-go-name": "Action"
+        },
+        "context": {
+          "description": "Context is the request's environmental context.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "x-go-name": "Context"
+        },
+        "resource": {
+          "description": "Resource is the resource that access is requested to.",
+          "type": "string",
+          "x-go-name": "Resource"
+        },
+        "scopes": {
+          "description": "Scopes is an array of scopes that are required.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Scopes"
+        },
+        "token": {
+          "description": "Token is the token to introspect.",
+          "type": "string",
+          "x-go-name": "Token"
+        }
+      },
+      "x-go-name": "swaggerWardenTokenAccessRequest",
+      "x-go-package": "github.com/ory/keto/warden"
+    },
+    "WardenSubjectAccessRequest": {
+      "type": "object",
+      "title": "AccessRequest is the warden's request object.",
+      "properties": {
+        "action": {
+          "description": "Action is the action that is requested on the resource.",
+          "type": "string",
+          "x-go-name": "Action"
+        },
+        "context": {
+          "description": "Context is the request's environmental context.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object"
+          },
+          "x-go-name": "Context"
+        },
+        "resource": {
+          "description": "Resource is the resource that access is requested to.",
+          "type": "string",
+          "x-go-name": "Resource"
+        },
+        "subject": {
+          "description": "Subejct is the subject that is requesting access.",
+          "type": "string",
+          "x-go-name": "Subject"
+        }
+      },
+      "x-go-name": "AccessRequest",
+      "x-go-package": "github.com/ory/keto/warden"
     },
     "Writer": {
       "description": "Writer is a helper to write arbitrary data to a ResponseWriter",
@@ -919,44 +938,6 @@
       "x-go-name": "membersRequest",
       "x-go-package": "github.com/ory/keto/role"
     },
-    "isOAuth2AccessTokenAuthorized": {
-      "type": "object",
-      "properties": {
-        "action": {
-          "description": "Action is the action that is requested on the resource.",
-          "type": "string",
-          "x-go-name": "Action"
-        },
-        "context": {
-          "description": "Context is the request's environmental context.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          },
-          "x-go-name": "Context"
-        },
-        "resource": {
-          "description": "Resource is the resource that access is requested to.",
-          "type": "string",
-          "x-go-name": "Resource"
-        },
-        "scopes": {
-          "description": "Scopes is an array of scopes that are required.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "x-go-name": "Scopes"
-        },
-        "token": {
-          "description": "Token is the token to introspect.",
-          "type": "string",
-          "x-go-name": "Token"
-        }
-      },
-      "x-go-name": "swaggerWardenTokenAccessRequest",
-      "x-go-package": "github.com/ory/keto/warden"
-    },
     "policy": {
       "type": "object",
       "properties": {
@@ -1058,7 +1039,7 @@
       "type": "object",
       "properties": {
         "Body": {
-          "$ref": "#/definitions/wardenAccessRequest"
+          "$ref": "#/definitions/WardenSubjectAccessRequest"
         }
       },
       "x-go-package": "github.com/ory/keto/warden"
@@ -1067,7 +1048,7 @@
       "type": "object",
       "properties": {
         "Body": {
-          "$ref": "#/definitions/isOAuth2AccessTokenAuthorized"
+          "$ref": "#/definitions/WardenOAuth2AccessRequest"
         }
       },
       "x-go-package": "github.com/ory/keto/warden"
@@ -1153,62 +1134,6 @@
         }
       },
       "x-go-package": "github.com/ory/keto/warden"
-    },
-    "tokenAllowedRequest": {
-      "type": "object",
-      "properties": {
-        "action": {
-          "description": "Action is the action that is requested on the resource.",
-          "type": "string",
-          "x-go-name": "Action"
-        },
-        "context": {
-          "description": "Context is the request's environmental context.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          },
-          "x-go-name": "Context"
-        },
-        "resource": {
-          "description": "Resource is the resource that access is requested to.",
-          "type": "string",
-          "x-go-name": "Resource"
-        }
-      },
-      "x-go-name": "TokenAccessRequest",
-      "x-go-package": "github.com/ory/keto/vendor/github.com/ory/hydra/firewall"
-    },
-    "wardenAccessRequest": {
-      "type": "object",
-      "title": "AccessRequest is the warden's request object.",
-      "properties": {
-        "action": {
-          "description": "Action is the action that is requested on the resource.",
-          "type": "string",
-          "x-go-name": "Action"
-        },
-        "context": {
-          "description": "Context is the request's environmental context.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "object"
-          },
-          "x-go-name": "Context"
-        },
-        "resource": {
-          "description": "Resource is the resource that access is requested to.",
-          "type": "string",
-          "x-go-name": "Resource"
-        },
-        "subject": {
-          "description": "Subejct is the subject that is requesting access.",
-          "type": "string",
-          "x-go-name": "Subject"
-        }
-      },
-      "x-go-name": "AccessRequest",
-      "x-go-package": "github.com/ory/keto/vendor/github.com/ory/hydra/firewall"
     }
   },
   "responses": {

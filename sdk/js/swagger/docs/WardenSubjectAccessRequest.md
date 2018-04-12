@@ -1,4 +1,4 @@
-# SwaggerJsClient.WardenAccessRequest
+# SwaggerJsClient.WardenSubjectAccessRequest
 
 ## Properties
 Name | Type | Description | Notes

@@ -26,7 +26,7 @@
     if (!root.SwaggerJsClient) {
       root.SwaggerJsClient = {}
     }
-    root.SwaggerJsClient.TokenAllowedRequest = factory(
+    root.SwaggerJsClient.WardenSubjectAccessRequest = factory(
       root.SwaggerJsClient.ApiClient
     )
   }
@@ -34,14 +34,14 @@
   'use strict'
 
   /**
-   * The TokenAllowedRequest model module.
-   * @module model/TokenAllowedRequest
+   * The WardenSubjectAccessRequest model module.
+   * @module model/WardenSubjectAccessRequest
    * @version Latest
    */
 
   /**
-   * Constructs a new <code>TokenAllowedRequest</code>.
-   * @alias module:model/TokenAllowedRequest
+   * Constructs a new <code>WardenSubjectAccessRequest</code>.
+   * @alias module:model/WardenSubjectAccessRequest
    * @class
    */
   var exports = function() {
@@ -49,11 +49,11 @@
   }
 
   /**
-   * Constructs a <code>TokenAllowedRequest</code> from a plain JavaScript object, optionally creating a new instance.
+   * Constructs a <code>WardenSubjectAccessRequest</code> from a plain JavaScript object, optionally creating a new instance.
    * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
    * @param {Object} data The plain JavaScript object bearing properties of interest.
-   * @param {module:model/TokenAllowedRequest} obj Optional instance to populate.
-   * @return {module:model/TokenAllowedRequest} The populated <code>TokenAllowedRequest</code> instance.
+   * @param {module:model/WardenSubjectAccessRequest} obj Optional instance to populate.
+   * @return {module:model/WardenSubjectAccessRequest} The populated <code>WardenSubjectAccessRequest</code> instance.
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
@@ -69,6 +69,9 @@
       }
       if (data.hasOwnProperty('resource')) {
         obj['resource'] = ApiClient.convertToType(data['resource'], 'String')
+      }
+      if (data.hasOwnProperty('subject')) {
+        obj['subject'] = ApiClient.convertToType(data['subject'], 'String')
       }
     }
     return obj
@@ -89,6 +92,11 @@
    * @member {String} resource
    */
   exports.prototype['resource'] = undefined
+  /**
+   * Subejct is the subject that is requesting access.
+   * @member {String} subject
+   */
+  exports.prototype['subject'] = undefined
 
   return exports
 })

@@ -22,7 +22,7 @@ import (
 var oauth2Cmd = &cobra.Command{
 	Use:   "oauth2",
 	Short: "Checks if an OAuth 2.0 Access Token is authorized to perform a certain request",
-	Run: cmdHandler.Warden.IsOAuth2AccessTokenAuthorized,
+	Run:   cmdHandler.Warden.IsOAuth2AccessTokenAuthorized,
 }
 
 func init() {

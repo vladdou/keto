@@ -22,7 +22,7 @@ import (
 var subjectCmd = &cobra.Command{
 	Use:   "subject",
 	Short: "Checks if a subject is authorized to perform a certain request",
-	Run: cmdHandler.Warden.IsSubjectAuthorized,
+	Run:   cmdHandler.Warden.IsSubjectAuthorized,
 }
 
 func init() {
@@ -37,7 +37,7 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 
-	subjectCmd.Flags().String("subject",  "", "The request's subject")
-	subjectCmd.Flags().String("action",  "", "The request's action")
-	subjectCmd.Flags().String("resource",  "", "The request's resource")
+	subjectCmd.Flags().String("subject", "", "The request's subject")
+	subjectCmd.Flags().String("action", "", "The request's action")
+	subjectCmd.Flags().String("resource", "", "The request's resource")
 }

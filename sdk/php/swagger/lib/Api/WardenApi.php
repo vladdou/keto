@@ -92,7 +92,7 @@ class WardenApi
      *
      * Client for keto
      *
-     * @param \keto\SDK\Model\IsOAuth2AccessTokenAuthorized $body  (optional)
+     * @param \keto\SDK\Model\WardenOAuth2AccessRequest $body  (optional)
      * @throws \keto\SDK\ApiException on non-2xx response
      * @return \keto\SDK\Model\AuthenticationOAuth2Session
      */
@@ -109,7 +109,7 @@ class WardenApi
      *
      * Client for keto
      *
-     * @param \keto\SDK\Model\IsOAuth2AccessTokenAuthorized $body  (optional)
+     * @param \keto\SDK\Model\WardenOAuth2AccessRequest $body  (optional)
      * @throws \keto\SDK\ApiException on non-2xx response
      * @return array of \keto\SDK\Model\AuthenticationOAuth2Session, HTTP status code, HTTP response headers (array of strings)
      */
@@ -183,7 +183,7 @@ class WardenApi
      *
      * Client for keto
      *
-     * @param \keto\SDK\Model\WardenAccessRequest $body  (optional)
+     * @param \keto\SDK\Model\WardenSubjectAccessRequest $body  (optional)
      * @throws \keto\SDK\ApiException on non-2xx response
      * @return \keto\SDK\Model\AuthenticationDefaultSession
      */
@@ -200,7 +200,7 @@ class WardenApi
      *
      * Client for keto
      *
-     * @param \keto\SDK\Model\WardenAccessRequest $body  (optional)
+     * @param \keto\SDK\Model\WardenSubjectAccessRequest $body  (optional)
      * @throws \keto\SDK\ApiException on non-2xx response
      * @return array of \keto\SDK\Model\AuthenticationDefaultSession, HTTP status code, HTTP response headers (array of strings)
      */

@@ -22,7 +22,7 @@ Checks if a token is valid and if the token subject is allowed to perform an act
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new keto\SDK\Api\WardenApi();
-$body = new \keto\SDK\Model\IsOAuth2AccessTokenAuthorized(); // \keto\SDK\Model\IsOAuth2AccessTokenAuthorized | 
+$body = new \keto\SDK\Model\WardenOAuth2AccessRequest(); // \keto\SDK\Model\WardenOAuth2AccessRequest | 
 
 try {
     $result = $api_instance->isOAuth2AccessTokenAuthorized($body);
@@ -37,7 +37,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\keto\SDK\Model\IsOAuth2AccessTokenAuthorized**](../Model/IsOAuth2AccessTokenAuthorized.md)|  | [optional]
+ **body** | [**\keto\SDK\Model\WardenOAuth2AccessRequest**](../Model/WardenOAuth2AccessRequest.md)|  | [optional]
 
 ### Return type
 
@@ -67,7 +67,7 @@ Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new keto\SDK\Api\WardenApi();
-$body = new \keto\SDK\Model\WardenAccessRequest(); // \keto\SDK\Model\WardenAccessRequest | 
+$body = new \keto\SDK\Model\WardenSubjectAccessRequest(); // \keto\SDK\Model\WardenSubjectAccessRequest | 
 
 try {
     $result = $api_instance->isSubjectAuthorized($body);
@@ -82,7 +82,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\keto\SDK\Model\WardenAccessRequest**](../Model/WardenAccessRequest.md)|  | [optional]
+ **body** | [**\keto\SDK\Model\WardenSubjectAccessRequest**](../Model/WardenSubjectAccessRequest.md)|  | [optional]
 
 ### Return type
 

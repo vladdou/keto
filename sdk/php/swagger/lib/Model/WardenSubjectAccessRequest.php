@@ -1,6 +1,6 @@
 <?php
 /**
- * Context
+ * WardenSubjectAccessRequest
  *
  * PHP version 5
  *
@@ -30,15 +30,14 @@ namespace keto\SDK\Model;
 use \ArrayAccess;
 
 /**
- * Context Class Doc Comment
+ * WardenSubjectAccessRequest Class Doc Comment
  *
  * @category    Class
- * @description Context contains an access token&#39;s session data
  * @package     keto\SDK
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class Context implements ArrayAccess
+class WardenSubjectAccessRequest implements ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -46,19 +45,16 @@ class Context implements ArrayAccess
       * The original name of the model.
       * @var string
       */
-    protected static $swaggerModelName = 'Context';
+    protected static $swaggerModelName = 'WardenSubjectAccessRequest';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'access_token_extra' => 'map[string,object]',
-        'client_id' => 'string',
-        'expires_at' => '\DateTime',
-        'granted_scopes' => 'string[]',
-        'issued_at' => '\DateTime',
-        'issuer' => 'string',
+        'action' => 'string',
+        'context' => 'map[string,object]',
+        'resource' => 'string',
         'subject' => 'string'
     ];
 
@@ -67,12 +63,9 @@ class Context implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'access_token_extra' => null,
-        'client_id' => null,
-        'expires_at' => 'date-time',
-        'granted_scopes' => null,
-        'issued_at' => 'date-time',
-        'issuer' => null,
+        'action' => null,
+        'context' => null,
+        'resource' => null,
         'subject' => null
     ];
 
@@ -91,12 +84,9 @@ class Context implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'access_token_extra' => 'accessTokenExtra',
-        'client_id' => 'clientId',
-        'expires_at' => 'expiresAt',
-        'granted_scopes' => 'grantedScopes',
-        'issued_at' => 'issuedAt',
-        'issuer' => 'issuer',
+        'action' => 'action',
+        'context' => 'context',
+        'resource' => 'resource',
         'subject' => 'subject'
     ];
 
@@ -106,12 +96,9 @@ class Context implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'access_token_extra' => 'setAccessTokenExtra',
-        'client_id' => 'setClientId',
-        'expires_at' => 'setExpiresAt',
-        'granted_scopes' => 'setGrantedScopes',
-        'issued_at' => 'setIssuedAt',
-        'issuer' => 'setIssuer',
+        'action' => 'setAction',
+        'context' => 'setContext',
+        'resource' => 'setResource',
         'subject' => 'setSubject'
     ];
 
@@ -121,12 +108,9 @@ class Context implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'access_token_extra' => 'getAccessTokenExtra',
-        'client_id' => 'getClientId',
-        'expires_at' => 'getExpiresAt',
-        'granted_scopes' => 'getGrantedScopes',
-        'issued_at' => 'getIssuedAt',
-        'issuer' => 'getIssuer',
+        'action' => 'getAction',
+        'context' => 'getContext',
+        'resource' => 'getResource',
         'subject' => 'getSubject'
     ];
 
@@ -161,12 +145,9 @@ class Context implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['access_token_extra'] = isset($data['access_token_extra']) ? $data['access_token_extra'] : null;
-        $this->container['client_id'] = isset($data['client_id']) ? $data['client_id'] : null;
-        $this->container['expires_at'] = isset($data['expires_at']) ? $data['expires_at'] : null;
-        $this->container['granted_scopes'] = isset($data['granted_scopes']) ? $data['granted_scopes'] : null;
-        $this->container['issued_at'] = isset($data['issued_at']) ? $data['issued_at'] : null;
-        $this->container['issuer'] = isset($data['issuer']) ? $data['issuer'] : null;
+        $this->container['action'] = isset($data['action']) ? $data['action'] : null;
+        $this->container['context'] = isset($data['context']) ? $data['context'] : null;
+        $this->container['resource'] = isset($data['resource']) ? $data['resource'] : null;
         $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
     }
 
@@ -196,127 +177,64 @@ class Context implements ArrayAccess
 
 
     /**
-     * Gets access_token_extra
+     * Gets action
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->container['action'];
+    }
+
+    /**
+     * Sets action
+     * @param string $action Action is the action that is requested on the resource.
+     * @return $this
+     */
+    public function setAction($action)
+    {
+        $this->container['action'] = $action;
+
+        return $this;
+    }
+
+    /**
+     * Gets context
      * @return map[string,object]
      */
-    public function getAccessTokenExtra()
+    public function getContext()
     {
-        return $this->container['access_token_extra'];
+        return $this->container['context'];
     }
 
     /**
-     * Sets access_token_extra
-     * @param map[string,object] $access_token_extra Extra represents arbitrary session data.
+     * Sets context
+     * @param map[string,object] $context Context is the request's environmental context.
      * @return $this
      */
-    public function setAccessTokenExtra($access_token_extra)
+    public function setContext($context)
     {
-        $this->container['access_token_extra'] = $access_token_extra;
+        $this->container['context'] = $context;
 
         return $this;
     }
 
     /**
-     * Gets client_id
+     * Gets resource
      * @return string
      */
-    public function getClientId()
+    public function getResource()
     {
-        return $this->container['client_id'];
+        return $this->container['resource'];
     }
 
     /**
-     * Sets client_id
-     * @param string $client_id ClientID is id of the client the token was issued for..
+     * Sets resource
+     * @param string $resource Resource is the resource that access is requested to.
      * @return $this
      */
-    public function setClientId($client_id)
+    public function setResource($resource)
     {
-        $this->container['client_id'] = $client_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets expires_at
-     * @return \DateTime
-     */
-    public function getExpiresAt()
-    {
-        return $this->container['expires_at'];
-    }
-
-    /**
-     * Sets expires_at
-     * @param \DateTime $expires_at ExpiresAt is the expiry timestamp.
-     * @return $this
-     */
-    public function setExpiresAt($expires_at)
-    {
-        $this->container['expires_at'] = $expires_at;
-
-        return $this;
-    }
-
-    /**
-     * Gets granted_scopes
-     * @return string[]
-     */
-    public function getGrantedScopes()
-    {
-        return $this->container['granted_scopes'];
-    }
-
-    /**
-     * Sets granted_scopes
-     * @param string[] $granted_scopes GrantedScopes is a list of scopes that the subject authorized when asked for consent.
-     * @return $this
-     */
-    public function setGrantedScopes($granted_scopes)
-    {
-        $this->container['granted_scopes'] = $granted_scopes;
-
-        return $this;
-    }
-
-    /**
-     * Gets issued_at
-     * @return \DateTime
-     */
-    public function getIssuedAt()
-    {
-        return $this->container['issued_at'];
-    }
-
-    /**
-     * Sets issued_at
-     * @param \DateTime $issued_at IssuedAt is the token creation time stamp.
-     * @return $this
-     */
-    public function setIssuedAt($issued_at)
-    {
-        $this->container['issued_at'] = $issued_at;
-
-        return $this;
-    }
-
-    /**
-     * Gets issuer
-     * @return string
-     */
-    public function getIssuer()
-    {
-        return $this->container['issuer'];
-    }
-
-    /**
-     * Sets issuer
-     * @param string $issuer Issuer is the id of the issuer, typically an hydra instance.
-     * @return $this
-     */
-    public function setIssuer($issuer)
-    {
-        $this->container['issuer'] = $issuer;
+        $this->container['resource'] = $resource;
 
         return $this;
     }
@@ -332,7 +250,7 @@ class Context implements ArrayAccess
 
     /**
      * Sets subject
-     * @param string $subject Subject is the identity that authorized issuing the token, for example a user or an OAuth2 app. This is usually a uuid but you can choose a urn or some other id too.
+     * @param string $subject Subejct is the subject that is requesting access.
      * @return $this
      */
     public function setSubject($subject)

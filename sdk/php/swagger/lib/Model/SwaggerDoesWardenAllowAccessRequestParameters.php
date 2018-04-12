@@ -52,7 +52,7 @@ class SwaggerDoesWardenAllowAccessRequestParameters implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'body' => '\keto\SDK\Model\WardenAccessRequest'
+        'body' => '\keto\SDK\Model\WardenSubjectAccessRequest'
     ];
 
     /**
@@ -160,7 +160,7 @@ class SwaggerDoesWardenAllowAccessRequestParameters implements ArrayAccess
 
     /**
      * Gets body
-     * @return \keto\SDK\Model\WardenAccessRequest
+     * @return \keto\SDK\Model\WardenSubjectAccessRequest
      */
     public function getBody()
     {
@@ -169,7 +169,7 @@ class SwaggerDoesWardenAllowAccessRequestParameters implements ArrayAccess
 
     /**
      * Sets body
-     * @param \keto\SDK\Model\WardenAccessRequest $body
+     * @param \keto\SDK\Model\WardenSubjectAccessRequest $body
      * @return $this
      */
     public function setBody($body)

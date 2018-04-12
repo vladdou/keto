@@ -20,7 +20,7 @@ Checks if a token is valid and if the token subject is allowed to perform an act
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**IsOAuth2AccessTokenAuthorized**](IsOAuth2AccessTokenAuthorized.md)|  | [optional] 
+ **body** | [**WardenOAuth2AccessRequest**](WardenOAuth2AccessRequest.md)|  | [optional] 
 
 ### Return type
 
@@ -49,7 +49,7 @@ Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**WardenAccessRequest**](WardenAccessRequest.md)|  | [optional] 
+ **body** | [**WardenSubjectAccessRequest**](WardenSubjectAccessRequest.md)|  | [optional] 
 
 ### Return type
 

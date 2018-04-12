@@ -24,13 +24,11 @@
         'model/AuthenticationOAuth2IntrospectionRequest',
         'model/AuthenticationOAuth2Session',
         'model/Authenticator',
-        'model/Context',
         'model/Firewall',
         'model/GroupMembers',
         'model/Handler',
         'model/InlineResponse401',
         'model/IntrospectionResponse',
-        'model/IsOAuth2AccessTokenAuthorized',
         'model/Manager',
         'model/OAuth2IntrospectionAuthentication',
         'model/Policy',
@@ -45,8 +43,8 @@
         'model/SwaggerListPolicyResponse',
         'model/SwaggerUpdatePolicyParameters',
         'model/SwaggerWardenBaseRequest',
-        'model/TokenAllowedRequest',
-        'model/WardenAccessRequest',
+        'model/WardenOAuth2AccessRequest',
+        'model/WardenSubjectAccessRequest',
         'model/Writer',
         'api/PolicyApi',
         'api/RoleApi',
@@ -62,13 +60,11 @@
       require('./model/AuthenticationOAuth2IntrospectionRequest'),
       require('./model/AuthenticationOAuth2Session'),
       require('./model/Authenticator'),
-      require('./model/Context'),
       require('./model/Firewall'),
       require('./model/GroupMembers'),
       require('./model/Handler'),
       require('./model/InlineResponse401'),
       require('./model/IntrospectionResponse'),
-      require('./model/IsOAuth2AccessTokenAuthorized'),
       require('./model/Manager'),
       require('./model/OAuth2IntrospectionAuthentication'),
       require('./model/Policy'),
@@ -83,8 +79,8 @@
       require('./model/SwaggerListPolicyResponse'),
       require('./model/SwaggerUpdatePolicyParameters'),
       require('./model/SwaggerWardenBaseRequest'),
-      require('./model/TokenAllowedRequest'),
-      require('./model/WardenAccessRequest'),
+      require('./model/WardenOAuth2AccessRequest'),
+      require('./model/WardenSubjectAccessRequest'),
       require('./model/Writer'),
       require('./api/PolicyApi'),
       require('./api/RoleApi'),
@@ -97,13 +93,11 @@
   AuthenticationOAuth2IntrospectionRequest,
   AuthenticationOAuth2Session,
   Authenticator,
-  Context,
   Firewall,
   GroupMembers,
   Handler,
   InlineResponse401,
   IntrospectionResponse,
-  IsOAuth2AccessTokenAuthorized,
   Manager,
   OAuth2IntrospectionAuthentication,
   Policy,
@@ -118,8 +112,8 @@
   SwaggerListPolicyResponse,
   SwaggerUpdatePolicyParameters,
   SwaggerWardenBaseRequest,
-  TokenAllowedRequest,
-  WardenAccessRequest,
+  WardenOAuth2AccessRequest,
+  WardenSubjectAccessRequest,
   Writer,
   PolicyApi,
   RoleApi,
@@ -185,11 +179,6 @@
      */
     Authenticator: Authenticator,
     /**
-     * The Context model constructor.
-     * @property {module:model/Context}
-     */
-    Context: Context,
-    /**
      * The Firewall model constructor.
      * @property {module:model/Firewall}
      */
@@ -214,11 +203,6 @@
      * @property {module:model/IntrospectionResponse}
      */
     IntrospectionResponse: IntrospectionResponse,
-    /**
-     * The IsOAuth2AccessTokenAuthorized model constructor.
-     * @property {module:model/IsOAuth2AccessTokenAuthorized}
-     */
-    IsOAuth2AccessTokenAuthorized: IsOAuth2AccessTokenAuthorized,
     /**
      * The Manager model constructor.
      * @property {module:model/Manager}
@@ -290,15 +274,15 @@
      */
     SwaggerWardenBaseRequest: SwaggerWardenBaseRequest,
     /**
-     * The TokenAllowedRequest model constructor.
-     * @property {module:model/TokenAllowedRequest}
+     * The WardenOAuth2AccessRequest model constructor.
+     * @property {module:model/WardenOAuth2AccessRequest}
      */
-    TokenAllowedRequest: TokenAllowedRequest,
+    WardenOAuth2AccessRequest: WardenOAuth2AccessRequest,
     /**
-     * The WardenAccessRequest model constructor.
-     * @property {module:model/WardenAccessRequest}
+     * The WardenSubjectAccessRequest model constructor.
+     * @property {module:model/WardenSubjectAccessRequest}
      */
-    WardenAccessRequest: WardenAccessRequest,
+    WardenSubjectAccessRequest: WardenSubjectAccessRequest,
     /**
      * The Writer model constructor.
      * @property {module:model/Writer}

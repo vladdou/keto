@@ -17,12 +17,12 @@
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/IsOAuth2AccessTokenAuthorized'], factory)
+    define(['ApiClient', 'model/WardenOAuth2AccessRequest'], factory)
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
     module.exports = factory(
       require('../ApiClient'),
-      require('./IsOAuth2AccessTokenAuthorized')
+      require('./WardenOAuth2AccessRequest')
     )
   } else {
     // Browser globals (root is window)
@@ -31,10 +31,10 @@
     }
     root.SwaggerJsClient.SwaggerDoesWardenAllowTokenAccessRqeuestParameters = factory(
       root.SwaggerJsClient.ApiClient,
-      root.SwaggerJsClient.IsOAuth2AccessTokenAuthorized
+      root.SwaggerJsClient.WardenOAuth2AccessRequest
     )
   }
-})(this, function(ApiClient, IsOAuth2AccessTokenAuthorized) {
+})(this, function(ApiClient, WardenOAuth2AccessRequest) {
   'use strict'
 
   /**
@@ -64,7 +64,7 @@
       obj = obj || new exports()
 
       if (data.hasOwnProperty('Body')) {
-        obj['Body'] = IsOAuth2AccessTokenAuthorized.constructFromObject(
+        obj['Body'] = WardenOAuth2AccessRequest.constructFromObject(
           data['Body']
         )
       }
@@ -73,7 +73,7 @@
   }
 
   /**
-   * @member {module:model/IsOAuth2AccessTokenAuthorized} Body
+   * @member {module:model/WardenOAuth2AccessRequest} Body
    */
   exports.prototype['Body'] = undefined
 

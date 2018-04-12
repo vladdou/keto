@@ -22,7 +22,7 @@ import (
 
 // authorizeCmd represents the authorize command
 var authorizeCmd = &cobra.Command{
-	Use:   "authorize",
+	Use: "authorize",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Print(cmd.UsageString())
 	},

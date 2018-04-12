@@ -26,9 +26,10 @@ import (
 	"fmt"
 	"os"
 
+	"strings"
+
 	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/spf13/cobra"
-	"strings"
 )
 
 func getBasePath(cmd *cobra.Command) string {

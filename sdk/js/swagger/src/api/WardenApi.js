@@ -23,8 +23,8 @@
         'model/AuthenticationDefaultSession',
         'model/AuthenticationOAuth2Session',
         'model/InlineResponse401',
-        'model/IsOAuth2AccessTokenAuthorized',
-        'model/WardenAccessRequest'
+        'model/WardenOAuth2AccessRequest',
+        'model/WardenSubjectAccessRequest'
       ],
       factory
     )
@@ -35,8 +35,8 @@
       require('../model/AuthenticationDefaultSession'),
       require('../model/AuthenticationOAuth2Session'),
       require('../model/InlineResponse401'),
-      require('../model/IsOAuth2AccessTokenAuthorized'),
-      require('../model/WardenAccessRequest')
+      require('../model/WardenOAuth2AccessRequest'),
+      require('../model/WardenSubjectAccessRequest')
     )
   } else {
     // Browser globals (root is window)
@@ -48,8 +48,8 @@
       root.SwaggerJsClient.AuthenticationDefaultSession,
       root.SwaggerJsClient.AuthenticationOAuth2Session,
       root.SwaggerJsClient.InlineResponse401,
-      root.SwaggerJsClient.IsOAuth2AccessTokenAuthorized,
-      root.SwaggerJsClient.WardenAccessRequest
+      root.SwaggerJsClient.WardenOAuth2AccessRequest,
+      root.SwaggerJsClient.WardenSubjectAccessRequest
     )
   }
 })(this, function(
@@ -57,8 +57,8 @@
   AuthenticationDefaultSession,
   AuthenticationOAuth2Session,
   InlineResponse401,
-  IsOAuth2AccessTokenAuthorized,
-  WardenAccessRequest
+  WardenOAuth2AccessRequest,
+  WardenSubjectAccessRequest
 ) {
   'use strict'
 
@@ -90,7 +90,7 @@
      * Check if an OAuth 2.0 access token is authorized to access a resource
      * Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with &#x60;{ \&quot;allowed\&quot;: false }&#x60;.   This endpoint passes all data from the upstream OAuth 2.0 token introspection endpoint. If you use ORY Hydra as an upstream OAuth 2.0 provider, data set through the &#x60;accessTokenExtra&#x60; field in the consent flow will be included in this response as well.
      * @param {Object} opts Optional parameters
-     * @param {module:model/IsOAuth2AccessTokenAuthorized} opts.body 
+     * @param {module:model/WardenOAuth2AccessRequest} opts.body 
      * @param {module:api/WardenApi~isOAuth2AccessTokenAuthorizedCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/AuthenticationOAuth2Session}
      */
@@ -136,7 +136,7 @@
      * Check if a subject is authorized to access a resource
      * Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain action on a resource.
      * @param {Object} opts Optional parameters
-     * @param {module:model/WardenAccessRequest} opts.body 
+     * @param {module:model/WardenSubjectAccessRequest} opts.body 
      * @param {module:api/WardenApi~isSubjectAuthorizedCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/AuthenticationDefaultSession}
      */

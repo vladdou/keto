@@ -8,7 +8,7 @@
 
 package swagger
 
-type WardenAccessRequest struct {
+type WardenOAuth2AccessRequest struct {
 
 	// Action is the action that is requested on the resource.
 	Action string `json:"action,omitempty"`
@@ -19,6 +19,9 @@ type WardenAccessRequest struct {
 	// Resource is the resource that access is requested to.
 	Resource string `json:"resource,omitempty"`
 
-	// Subejct is the subject that is requesting access.
-	Subject string `json:"subject,omitempty"`
+	// Scopes is an array of scopes that are required.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// Token is the token to introspect.
+	Token string `json:"token,omitempty"`
 }

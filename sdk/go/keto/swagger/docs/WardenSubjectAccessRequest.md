@@ -1,4 +1,4 @@
-# WardenAccessRequest
+# WardenSubjectAccessRequest
 
 ## Properties
 Name | Type | Description | Notes

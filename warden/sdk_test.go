@@ -105,7 +105,7 @@ func TestWardenSDK(t *testing.T) {
 	t.Run("IsSubjectAuthorized", func(t *testing.T) {
 		for k, c := range accessRequestTestCases {
 			t.Run(fmt.Sprintf("case=%d", k), func(t *testing.T) {
-				result, response, err := client.IsSubjectAuthorized(keto.WardenAccessRequest{
+				result, response, err := client.IsSubjectAuthorized(keto.WardenSubjectAccessRequest{
 					Action:   c.req.Action,
 					Resource: c.req.Resource,
 					Subject:  c.req.Subject,
@@ -120,7 +120,7 @@ func TestWardenSDK(t *testing.T) {
 	})
 
 	t.Run("IsTokenAuthorized", func(t *testing.T) {
-		result, response, err := client.IsOAuth2AccessTokenAuthorized(keto.IsOAuth2AccessTokenAuthorized{
+		result, response, err := client.IsOAuth2AccessTokenAuthorized(keto.WardenOAuth2AccessRequest{
 			Resource: "matrix",
 			Action:   "create",
 			Context:  ladon.Context{},
