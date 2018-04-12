@@ -1,6 +1,6 @@
 /**
  * 
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -14,53 +14,22 @@
  *
  */
 
-;(function(root, factory) {
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(
-      [
-        'ApiClient',
-        'model/AuthenticationDefaultSession',
-        'model/AuthenticationOAuth2Session',
-        'model/InlineResponse401',
-        'model/IsOAuth2AccessTokenAuthorized',
-        'model/WardenAccessRequest'
-      ],
-      factory
-    )
+    define(['ApiClient', 'model/Group', 'model/GroupMembers', 'model/InlineResponse401', 'model/WardenAccessRequest', 'model/WardenAccessRequestResponse', 'model/WardenTokenAccessRequest', 'model/WardenTokenAccessRequestResponse'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(
-      require('../ApiClient'),
-      require('../model/AuthenticationDefaultSession'),
-      require('../model/AuthenticationOAuth2Session'),
-      require('../model/InlineResponse401'),
-      require('../model/IsOAuth2AccessTokenAuthorized'),
-      require('../model/WardenAccessRequest')
-    )
+    module.exports = factory(require('../ApiClient'), require('../model/Group'), require('../model/GroupMembers'), require('../model/InlineResponse401'), require('../model/WardenAccessRequest'), require('../model/WardenAccessRequestResponse'), require('../model/WardenTokenAccessRequest'), require('../model/WardenTokenAccessRequestResponse'));
   } else {
     // Browser globals (root is window)
     if (!root.SwaggerJsClient) {
-      root.SwaggerJsClient = {}
+      root.SwaggerJsClient = {};
     }
-    root.SwaggerJsClient.WardenApi = factory(
-      root.SwaggerJsClient.ApiClient,
-      root.SwaggerJsClient.AuthenticationDefaultSession,
-      root.SwaggerJsClient.AuthenticationOAuth2Session,
-      root.SwaggerJsClient.InlineResponse401,
-      root.SwaggerJsClient.IsOAuth2AccessTokenAuthorized,
-      root.SwaggerJsClient.WardenAccessRequest
-    )
+    root.SwaggerJsClient.WardenApi = factory(root.SwaggerJsClient.ApiClient, root.SwaggerJsClient.Group, root.SwaggerJsClient.GroupMembers, root.SwaggerJsClient.InlineResponse401, root.SwaggerJsClient.WardenAccessRequest, root.SwaggerJsClient.WardenAccessRequestResponse, root.SwaggerJsClient.WardenTokenAccessRequest, root.SwaggerJsClient.WardenTokenAccessRequestResponse);
   }
-})(this, function(
-  ApiClient,
-  AuthenticationDefaultSession,
-  AuthenticationOAuth2Session,
-  InlineResponse401,
-  IsOAuth2AccessTokenAuthorized,
-  WardenAccessRequest
-) {
-  'use strict'
+}(this, function(ApiClient, Group, GroupMembers, InlineResponse401, WardenAccessRequest, WardenAccessRequestResponse, WardenTokenAccessRequest, WardenTokenAccessRequestResponse) {
+  'use strict';
 
   /**
    * Warden service.
@@ -76,100 +45,369 @@
    * default to {@link module:ApiClient#instance} if unspecified.
    */
   var exports = function(apiClient) {
-    this.apiClient = apiClient || ApiClient.instance
+    this.apiClient = apiClient || ApiClient.instance;
+
 
     /**
-     * Callback function to receive the result of the isOAuth2AccessTokenAuthorized operation.
-     * @callback module:api/WardenApi~isOAuth2AccessTokenAuthorizedCallback
+     * Callback function to receive the result of the addMembersToGroup operation.
+     * @callback module:api/WardenApi~addMembersToGroupCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/AuthenticationOAuth2Session} data The data returned by the service call.
+     * @param data This operation does not return a value.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Check if an OAuth 2.0 access token is authorized to access a resource
-     * Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with &#x60;{ \&quot;allowed\&quot;: false }&#x60;.   This endpoint passes all data from the upstream OAuth 2.0 token introspection endpoint. If you use ORY Hydra as an upstream OAuth 2.0 provider, data set through the &#x60;accessTokenExtra&#x60; field in the consent flow will be included in this response as well.
+     * Add members to a group
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:groups:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;members.add\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {String} id The id of the group to modify.
      * @param {Object} opts Optional parameters
-     * @param {module:model/IsOAuth2AccessTokenAuthorized} opts.body 
-     * @param {module:api/WardenApi~isOAuth2AccessTokenAuthorizedCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/AuthenticationOAuth2Session}
+     * @param {module:model/GroupMembers} opts.body 
+     * @param {module:api/WardenApi~addMembersToGroupCallback} callback The callback function, accepting three arguments: error, data, response
      */
-    this.isOAuth2AccessTokenAuthorized = function(opts, callback) {
-      opts = opts || {}
-      var postBody = opts['body']
+    this.addMembersToGroup = function(id, opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
 
-      var pathParams = {}
-      var queryParams = {}
-      var headerParams = {}
-      var formParams = {}
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling addMembersToGroup");
+      }
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = AuthenticationOAuth2Session
+
+      var pathParams = {
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
 
       return this.apiClient.callApi(
-        '/warden/oauth2/authorize',
-        'POST',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/warden/groups/{id}/members', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
 
     /**
-     * Callback function to receive the result of the isSubjectAuthorized operation.
-     * @callback module:api/WardenApi~isSubjectAuthorizedCallback
+     * Callback function to receive the result of the createGroup operation.
+     * @callback module:api/WardenApi~createGroupCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/AuthenticationDefaultSession} data The data returned by the service call.
+     * @param {module:model/Group} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Check if a subject is authorized to access a resource
-     * Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain action on a resource.
+     * Create a group
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:groups\&quot;], \&quot;actions\&quot;: [\&quot;create\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {Object} opts Optional parameters
+     * @param {module:model/Group} opts.body 
+     * @param {module:api/WardenApi~createGroupCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Group}
+     */
+    this.createGroup = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = Group;
+
+      return this.apiClient.callApi(
+        '/warden/groups', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the deleteGroup operation.
+     * @callback module:api/WardenApi~deleteGroupCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Delete a group by id
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:groups:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;delete\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {String} id The id of the group to look up.
+     * @param {module:api/WardenApi~deleteGroupCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.deleteGroup = function(id, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling deleteGroup");
+      }
+
+
+      var pathParams = {
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/warden/groups/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the doesWardenAllowAccessRequest operation.
+     * @callback module:api/WardenApi~doesWardenAllowAccessRequestCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/WardenAccessRequestResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Check if an access request is valid (without providing an access token)
+     * Checks if a subject (typically a user or a service) is allowed to perform an action on a resource. This endpoint requires a subject, a resource name, an action name and a context. If the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with &#x60;{ \&quot;allowed\&quot;: false}&#x60;, otherwise &#x60;{ \&quot;allowed\&quot;: true }&#x60; is returned.   The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:allowed\&quot;], \&quot;actions\&quot;: [\&quot;decide\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
      * @param {Object} opts Optional parameters
      * @param {module:model/WardenAccessRequest} opts.body 
-     * @param {module:api/WardenApi~isSubjectAuthorizedCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/AuthenticationDefaultSession}
+     * @param {module:api/WardenApi~doesWardenAllowAccessRequestCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/WardenAccessRequestResponse}
      */
-    this.isSubjectAuthorized = function(opts, callback) {
-      opts = opts || {}
-      var postBody = opts['body']
+    this.doesWardenAllowAccessRequest = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
 
-      var pathParams = {}
-      var queryParams = {}
-      var headerParams = {}
-      var formParams = {}
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = AuthenticationDefaultSession
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = WardenAccessRequestResponse;
 
       return this.apiClient.callApi(
-        '/warden/subjects/authorize',
-        'POST',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/warden/allowed', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
-  }
 
-  return exports
-})
+    /**
+     * Callback function to receive the result of the doesWardenAllowTokenAccessRequest operation.
+     * @callback module:api/WardenApi~doesWardenAllowTokenAccessRequestCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/WardenTokenAccessRequestResponse} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Check if an access request is valid (providing an access token)
+     * Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with &#x60;{ \&quot;allowed\&quot;: false}&#x60;.   Extra data set through the &#x60;accessTokenExtra&#x60; field in the consent flow will be included in the response.   The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:token:allowed\&quot;], \&quot;actions\&quot;: [\&quot;decide\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {Object} opts Optional parameters
+     * @param {module:model/WardenTokenAccessRequest} opts.body 
+     * @param {module:api/WardenApi~doesWardenAllowTokenAccessRequestCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/WardenTokenAccessRequestResponse}
+     */
+    this.doesWardenAllowTokenAccessRequest = function(opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = WardenTokenAccessRequestResponse;
+
+      return this.apiClient.callApi(
+        '/warden/token/allowed', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getGroup operation.
+     * @callback module:api/WardenApi~getGroupCallback
+     * @param {String} error Error message, if any.
+     * @param {module:model/Group} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get a group by id
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:groups:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;create\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {String} id The id of the group to look up.
+     * @param {module:api/WardenApi~getGroupCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link module:model/Group}
+     */
+    this.getGroup = function(id, callback) {
+      var postBody = null;
+
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getGroup");
+      }
+
+
+      var pathParams = {
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = Group;
+
+      return this.apiClient.callApi(
+        '/warden/groups/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the listGroups operation.
+     * @callback module:api/WardenApi~listGroupsCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<module:model/Group>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * List groups
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:groups\&quot;], \&quot;actions\&quot;: [\&quot;list\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.member The id of the member to look up.
+     * @param {Number} opts.limit The maximum amount of policies returned.
+     * @param {Number} opts.offset The offset from where to start looking.
+     * @param {module:api/WardenApi~listGroupsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<module:model/Group>}
+     */
+    this.listGroups = function(opts, callback) {
+      opts = opts || {};
+      var postBody = null;
+
+
+      var pathParams = {
+      };
+      var queryParams = {
+        'member': opts['member'],
+        'limit': opts['limit'],
+        'offset': opts['offset']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = [Group];
+
+      return this.apiClient.callApi(
+        '/warden/groups', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the removeMembersFromGroup operation.
+     * @callback module:api/WardenApi~removeMembersFromGroupCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Remove members from a group
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:warden:groups:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;members.remove\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
+     * @param {String} id The id of the group to modify.
+     * @param {Object} opts Optional parameters
+     * @param {module:model/GroupMembers} opts.body 
+     * @param {module:api/WardenApi~removeMembersFromGroupCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    this.removeMembersFromGroup = function(id, opts, callback) {
+      opts = opts || {};
+      var postBody = opts['body'];
+
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling removeMembersFromGroup");
+      }
+
+
+      var pathParams = {
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
+
+      return this.apiClient.callApi(
+        '/warden/groups/{id}/members', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
+    }
+  };
+
+  return exports;
+}));

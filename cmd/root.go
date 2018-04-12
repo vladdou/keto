@@ -70,8 +70,8 @@ func initConfig() {
 	}
 
 	viper.SetConfigName(".keto") // name of config file (without extension)
-	viper.AddConfigPath("$HOME")  // adding home directory as first search path
-	viper.AutomaticEnv()          // read in environment variables that match
+	viper.AddConfigPath("$HOME") // adding home directory as first search path
+	viper.AutomaticEnv()         // read in environment variables that match
 
 	viper.SetDefault("LOG_LEVEL", "info")
 	viper.SetDefault("PORT", "4466")

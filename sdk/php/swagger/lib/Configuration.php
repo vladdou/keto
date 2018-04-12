@@ -4,13 +4,13 @@
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -24,14 +24,14 @@
  * Do not edit the class manually.
  */
 
-namespace hades\SDK;
+namespace keto\SDK;
 
 /**
  * Configuration Class Doc Comment
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
@@ -722,7 +722,7 @@ class Configuration
      */
     public static function toDebugReport()
     {
-        $report  = 'PHP SDK (hades\SDK) Debug Report:' . PHP_EOL;
+        $report  = 'PHP SDK (keto\SDK) Debug Report:' . PHP_EOL;
         $report .= '    OS: ' . php_uname() . PHP_EOL;
         $report .= '    PHP Version: ' . PHP_VERSION . PHP_EOL;
         $report .= '    OpenAPI Spec Version: Latest' . PHP_EOL;

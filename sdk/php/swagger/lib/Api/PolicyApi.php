@@ -4,13 +4,13 @@
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -24,18 +24,18 @@
  * Do not edit the class manually.
  */
 
-namespace hades\SDK\Api;
+namespace keto\SDK\Api;
 
-use \hades\SDK\ApiClient;
-use \hades\SDK\ApiException;
-use \hades\SDK\Configuration;
-use \hades\SDK\ObjectSerializer;
+use \keto\SDK\ApiClient;
+use \keto\SDK\ApiException;
+use \keto\SDK\Configuration;
+use \keto\SDK\ObjectSerializer;
 
 /**
  * PolicyApi Class Doc Comment
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
@@ -44,16 +44,16 @@ class PolicyApi
     /**
      * API Client
      *
-     * @var \hades\SDK\ApiClient instance of the ApiClient
+     * @var \keto\SDK\ApiClient instance of the ApiClient
      */
     protected $apiClient;
 
     /**
      * Constructor
      *
-     * @param \hades\SDK\ApiClient|null $apiClient The api client to use
+     * @param \keto\SDK\ApiClient|null $apiClient The api client to use
      */
-    public function __construct(\hades\SDK\ApiClient $apiClient = null)
+    public function __construct(\keto\SDK\ApiClient $apiClient = null)
     {
         if ($apiClient === null) {
             $apiClient = new ApiClient();
@@ -65,7 +65,7 @@ class PolicyApi
     /**
      * Get API client
      *
-     * @return \hades\SDK\ApiClient get the API client
+     * @return \keto\SDK\ApiClient get the API client
      */
     public function getApiClient()
     {
@@ -75,11 +75,11 @@ class PolicyApi
     /**
      * Set the API client
      *
-     * @param \hades\SDK\ApiClient $apiClient set the API client
+     * @param \keto\SDK\ApiClient $apiClient set the API client
      *
      * @return PolicyApi
      */
-    public function setApiClient(\hades\SDK\ApiClient $apiClient)
+    public function setApiClient(\keto\SDK\ApiClient $apiClient)
     {
         $this->apiClient = $apiClient;
         return $this;
@@ -88,11 +88,13 @@ class PolicyApi
     /**
      * Operation createPolicy
      *
-     * Client for hades
+     * Create an Access Control Policy
      *
-     * @param \hades\SDK\Model\Policy $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return \hades\SDK\Model\Policy
+     * Client for keto
+     *
+     * @param \keto\SDK\Model\Policy $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Policy
      */
     public function createPolicy($body = null)
     {
@@ -103,11 +105,13 @@ class PolicyApi
     /**
      * Operation createPolicyWithHttpInfo
      *
-     * Client for hades
+     * Create an Access Control Policy
      *
-     * @param \hades\SDK\Model\Policy $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return array of \hades\SDK\Model\Policy, HTTP status code, HTTP response headers (array of strings)
+     * Client for keto
+     *
+     * @param \keto\SDK\Model\Policy $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Policy, HTTP status code, HTTP response headers (array of strings)
      */
     public function createPolicyWithHttpInfo($body = null)
     {
@@ -143,27 +147,27 @@ class PolicyApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\hades\SDK\Model\Policy',
+                '\keto\SDK\Model\Policy',
                 '/policies'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\hades\SDK\Model\Policy', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Policy', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 201:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\Policy', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Policy', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -175,10 +179,12 @@ class PolicyApi
     /**
      * Operation deletePolicy
      *
-     * Client for hades
+     * Delete an Access Control Policy
+     *
+     * Client for keto
      *
      * @param string $id The id of the policy. (required)
-     * @throws \hades\SDK\ApiException on non-2xx response
+     * @throws \keto\SDK\ApiException on non-2xx response
      * @return void
      */
     public function deletePolicy($id)
@@ -190,10 +196,12 @@ class PolicyApi
     /**
      * Operation deletePolicyWithHttpInfo
      *
-     * Client for hades
+     * Delete an Access Control Policy
+     *
+     * Client for keto
      *
      * @param string $id The id of the policy. (required)
-     * @throws \hades\SDK\ApiException on non-2xx response
+     * @throws \keto\SDK\ApiException on non-2xx response
      * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
     public function deletePolicyWithHttpInfo($id)
@@ -245,15 +253,15 @@ class PolicyApi
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -265,11 +273,13 @@ class PolicyApi
     /**
      * Operation getPolicy
      *
-     * Client for hades
+     * Get an Access Control Policy
+     *
+     * Client for keto
      *
      * @param string $id The id of the policy. (required)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return \hades\SDK\Model\Policy
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Policy
      */
     public function getPolicy($id)
     {
@@ -280,11 +290,13 @@ class PolicyApi
     /**
      * Operation getPolicyWithHttpInfo
      *
-     * Client for hades
+     * Get an Access Control Policy
+     *
+     * Client for keto
      *
      * @param string $id The id of the policy. (required)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return array of \hades\SDK\Model\Policy, HTTP status code, HTTP response headers (array of strings)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Policy, HTTP status code, HTTP response headers (array of strings)
      */
     public function getPolicyWithHttpInfo($id)
     {
@@ -327,27 +339,27 @@ class PolicyApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\hades\SDK\Model\Policy',
+                '\keto\SDK\Model\Policy',
                 '/policies/{id}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\hades\SDK\Model\Policy', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Policy', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\Policy', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Policy', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -359,12 +371,14 @@ class PolicyApi
     /**
      * Operation listPolicies
      *
-     * Client for hades
+     * List Access Control Policies
+     *
+     * Client for keto
      *
      * @param int $offset The offset from where to start looking. (optional)
      * @param int $limit The maximum amount of policies returned. (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return \hades\SDK\Model\Policy[]
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Policy[]
      */
     public function listPolicies($offset = null, $limit = null)
     {
@@ -375,12 +389,14 @@ class PolicyApi
     /**
      * Operation listPoliciesWithHttpInfo
      *
-     * Client for hades
+     * List Access Control Policies
+     *
+     * Client for keto
      *
      * @param int $offset The offset from where to start looking. (optional)
      * @param int $limit The maximum amount of policies returned. (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return array of \hades\SDK\Model\Policy[], HTTP status code, HTTP response headers (array of strings)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Policy[], HTTP status code, HTTP response headers (array of strings)
      */
     public function listPoliciesWithHttpInfo($offset = null, $limit = null)
     {
@@ -419,27 +435,27 @@ class PolicyApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\hades\SDK\Model\Policy[]',
+                '\keto\SDK\Model\Policy[]',
                 '/policies'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\hades\SDK\Model\Policy[]', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Policy[]', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\Policy[]', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Policy[]', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -451,12 +467,14 @@ class PolicyApi
     /**
      * Operation updatePolicy
      *
-     * Client for hades
+     * Update an Access Control Polic
+     *
+     * Client for keto
      *
      * @param string $id The id of the policy. (required)
-     * @param \hades\SDK\Model\Policy $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return \hades\SDK\Model\Policy
+     * @param \keto\SDK\Model\Policy $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Policy
      */
     public function updatePolicy($id, $body = null)
     {
@@ -467,12 +485,14 @@ class PolicyApi
     /**
      * Operation updatePolicyWithHttpInfo
      *
-     * Client for hades
+     * Update an Access Control Polic
+     *
+     * Client for keto
      *
      * @param string $id The id of the policy. (required)
-     * @param \hades\SDK\Model\Policy $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return array of \hades\SDK\Model\Policy, HTTP status code, HTTP response headers (array of strings)
+     * @param \keto\SDK\Model\Policy $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Policy, HTTP status code, HTTP response headers (array of strings)
      */
     public function updatePolicyWithHttpInfo($id, $body = null)
     {
@@ -520,27 +540,27 @@ class PolicyApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\hades\SDK\Model\Policy',
+                '\keto\SDK\Model\Policy',
                 '/policies/{id}'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\hades\SDK\Model\Policy', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Policy', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
                 case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\Policy', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Policy', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

@@ -1,6 +1,6 @@
 /**
  * 
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -14,30 +14,22 @@
  *
  */
 
-;(function(root, factory) {
+(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/InlineResponse401', 'model/Policy'], factory)
+    define(['ApiClient', 'model/InlineResponse401', 'model/Policy'], factory);
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(
-      require('../ApiClient'),
-      require('../model/InlineResponse401'),
-      require('../model/Policy')
-    )
+    module.exports = factory(require('../ApiClient'), require('../model/InlineResponse401'), require('../model/Policy'));
   } else {
     // Browser globals (root is window)
     if (!root.SwaggerJsClient) {
-      root.SwaggerJsClient = {}
+      root.SwaggerJsClient = {};
     }
-    root.SwaggerJsClient.PolicyApi = factory(
-      root.SwaggerJsClient.ApiClient,
-      root.SwaggerJsClient.InlineResponse401,
-      root.SwaggerJsClient.Policy
-    )
+    root.SwaggerJsClient.PolicyApi = factory(root.SwaggerJsClient.ApiClient, root.SwaggerJsClient.InlineResponse401, root.SwaggerJsClient.Policy);
   }
-})(this, function(ApiClient, InlineResponse401, Policy) {
-  'use strict'
+}(this, function(ApiClient, InlineResponse401, Policy) {
+  'use strict';
 
   /**
    * Policy service.
@@ -53,7 +45,8 @@
    * default to {@link module:ApiClient#instance} if unspecified.
    */
   var exports = function(apiClient) {
-    this.apiClient = apiClient || ApiClient.instance
+    this.apiClient = apiClient || ApiClient.instance;
+
 
     /**
      * Callback function to receive the result of the createPolicy operation.
@@ -65,39 +58,36 @@
 
     /**
      * Create an Access Control Policy
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies\&quot;], \&quot;actions\&quot;: [\&quot;create\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
      * @param {Object} opts Optional parameters
      * @param {module:model/Policy} opts.body 
      * @param {module:api/PolicyApi~createPolicyCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Policy}
      */
     this.createPolicy = function(opts, callback) {
-      opts = opts || {}
-      var postBody = opts['body']
+      opts = opts || {};
+      var postBody = opts['body'];
 
-      var pathParams = {}
-      var queryParams = {}
-      var headerParams = {}
-      var formParams = {}
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = Policy
+      var pathParams = {
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
+
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = Policy;
 
       return this.apiClient.callApi(
-        '/policies',
-        'POST',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/policies', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
 
     /**
@@ -110,45 +100,39 @@
 
     /**
      * Delete an Access Control Policy
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;delete\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
      * @param {String} id The id of the policy.
      * @param {module:api/PolicyApi~deletePolicyCallback} callback The callback function, accepting three arguments: error, data, response
      */
     this.deletePolicy = function(id, callback) {
-      var postBody = null
+      var postBody = null;
 
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error(
-          "Missing the required parameter 'id' when calling deletePolicy"
-        )
+        throw new Error("Missing the required parameter 'id' when calling deletePolicy");
       }
+
 
       var pathParams = {
-        id: id
-      }
-      var queryParams = {}
-      var headerParams = {}
-      var formParams = {}
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = null
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = null;
 
       return this.apiClient.callApi(
-        '/policies/{id}',
-        'DELETE',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/policies/{id}', 'DELETE',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
 
     /**
@@ -161,46 +145,40 @@
 
     /**
      * Get an Access Control Policy
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;get\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
      * @param {String} id The id of the policy.
      * @param {module:api/PolicyApi~getPolicyCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/Policy}
      */
     this.getPolicy = function(id, callback) {
-      var postBody = null
+      var postBody = null;
 
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error(
-          "Missing the required parameter 'id' when calling getPolicy"
-        )
+        throw new Error("Missing the required parameter 'id' when calling getPolicy");
       }
+
 
       var pathParams = {
-        id: id
-      }
-      var queryParams = {}
-      var headerParams = {}
-      var formParams = {}
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = Policy
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = Policy;
 
       return this.apiClient.callApi(
-        '/policies/{id}',
-        'GET',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/policies/{id}', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
 
     /**
@@ -213,6 +191,7 @@
 
     /**
      * List Access Control Policies
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies\&quot;], \&quot;actions\&quot;: [\&quot;list\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
      * @param {Object} opts Optional parameters
      * @param {Number} opts.offset The offset from where to start looking.
      * @param {Number} opts.limit The maximum amount of policies returned.
@@ -220,36 +199,31 @@
      * data is of type: {@link Array.<module:model/Policy>}
      */
     this.listPolicies = function(opts, callback) {
-      opts = opts || {}
-      var postBody = null
+      opts = opts || {};
+      var postBody = null;
 
-      var pathParams = {}
+
+      var pathParams = {
+      };
       var queryParams = {
-        offset: opts['offset'],
-        limit: opts['limit']
-      }
-      var headerParams = {}
-      var formParams = {}
+        'offset': opts['offset'],
+        'limit': opts['limit']
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = [Policy]
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = [Policy];
 
       return this.apiClient.callApi(
-        '/policies',
-        'GET',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/policies', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
 
     /**
@@ -261,7 +235,8 @@
      */
 
     /**
-     * Update an Access Control Policy
+     * Update an Access Control Polic
+     * The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies\&quot;], \&quot;actions\&quot;: [\&quot;update\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
      * @param {String} id The id of the policy.
      * @param {Object} opts Optional parameters
      * @param {module:model/Policy} opts.body 
@@ -269,44 +244,37 @@
      * data is of type: {@link module:model/Policy}
      */
     this.updatePolicy = function(id, opts, callback) {
-      opts = opts || {}
-      var postBody = opts['body']
+      opts = opts || {};
+      var postBody = opts['body'];
 
       // verify the required parameter 'id' is set
       if (id === undefined || id === null) {
-        throw new Error(
-          "Missing the required parameter 'id' when calling updatePolicy"
-        )
+        throw new Error("Missing the required parameter 'id' when calling updatePolicy");
       }
+
 
       var pathParams = {
-        id: id
-      }
-      var queryParams = {}
-      var headerParams = {}
-      var formParams = {}
+        'id': id
+      };
+      var queryParams = {
+      };
+      var headerParams = {
+      };
+      var formParams = {
+      };
 
-      var authNames = []
-      var contentTypes = ['application/json']
-      var accepts = ['application/json']
-      var returnType = Policy
+      var authNames = [];
+      var contentTypes = ['application/json'];
+      var accepts = ['application/json'];
+      var returnType = Policy;
 
       return this.apiClient.callApi(
-        '/policies/{id}',
-        'PUT',
-        pathParams,
-        queryParams,
-        headerParams,
-        formParams,
-        postBody,
-        authNames,
-        contentTypes,
-        accepts,
-        returnType,
-        callback
-      )
+        '/policies/{id}', 'PUT',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, callback
+      );
     }
-  }
+  };
 
-  return exports
-})
+  return exports;
+}));

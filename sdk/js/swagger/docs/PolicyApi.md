@@ -4,20 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createPolicy**](PolicyApi.md#createPolicy) | **POST** /policies | 
-[**deletePolicy**](PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | 
-[**getPolicy**](PolicyApi.md#getPolicy) | **GET** /policies/{id} | 
-[**listPolicies**](PolicyApi.md#listPolicies) | **GET** /policies | 
-[**updatePolicy**](PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | 
+[**createPolicy**](PolicyApi.md#createPolicy) | **POST** /policies | Create an Access Control Policy
+[**deletePolicy**](PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | Delete an Access Control Policy
+[**getPolicy**](PolicyApi.md#getPolicy) | **GET** /policies/{id} | Get an Access Control Policy
+[**listPolicies**](PolicyApi.md#listPolicies) | **GET** /policies | List Access Control Policies
+[**updatePolicy**](PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | Update an Access Control Polic
 
 
 <a name="createPolicy"></a>
 # **createPolicy**
 > Policy createPolicy(opts)
 
-
-
 Create an Access Control Policy
+
+The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies\&quot;], \&quot;actions\&quot;: [\&quot;create\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
 
 ### Example
 ```javascript
@@ -62,9 +62,9 @@ No authorization required
 # **deletePolicy**
 > deletePolicy(id)
 
-
-
 Delete an Access Control Policy
+
+The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;delete\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
 
 ### Example
 ```javascript
@@ -108,9 +108,9 @@ No authorization required
 # **getPolicy**
 > Policy getPolicy(id)
 
-
-
 Get an Access Control Policy
+
+The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies:&lt;id&gt;\&quot;], \&quot;actions\&quot;: [\&quot;get\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
 
 ### Example
 ```javascript
@@ -154,9 +154,9 @@ No authorization required
 # **listPolicies**
 > [Policy] listPolicies(opts)
 
-
-
 List Access Control Policies
+
+The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies\&quot;], \&quot;actions\&quot;: [\&quot;list\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
 
 ### Example
 ```javascript
@@ -203,9 +203,9 @@ No authorization required
 # **updatePolicy**
 > Policy updatePolicy(id, opts)
 
+Update an Access Control Polic
 
-
-Update an Access Control Policy
+The subject making the request needs to be assigned to a policy containing:  &#x60;&#x60;&#x60; { \&quot;resources\&quot;: [\&quot;rn:hydra:policies\&quot;], \&quot;actions\&quot;: [\&quot;update\&quot;], \&quot;effect\&quot;: \&quot;allow\&quot; } &#x60;&#x60;&#x60;
 
 ### Example
 ```javascript

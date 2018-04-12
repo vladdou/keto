@@ -4,13 +4,13 @@
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -24,18 +24,18 @@
  * Do not edit the class manually.
  */
 
-namespace hades\SDK\Api;
+namespace keto\SDK\Api;
 
-use \hades\SDK\ApiClient;
-use \hades\SDK\ApiException;
-use \hades\SDK\Configuration;
-use \hades\SDK\ObjectSerializer;
+use \keto\SDK\ApiClient;
+use \keto\SDK\ApiException;
+use \keto\SDK\Configuration;
+use \keto\SDK\ObjectSerializer;
 
 /**
  * WardenApi Class Doc Comment
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
@@ -44,16 +44,16 @@ class WardenApi
     /**
      * API Client
      *
-     * @var \hades\SDK\ApiClient instance of the ApiClient
+     * @var \keto\SDK\ApiClient instance of the ApiClient
      */
     protected $apiClient;
 
     /**
      * Constructor
      *
-     * @param \hades\SDK\ApiClient|null $apiClient The api client to use
+     * @param \keto\SDK\ApiClient|null $apiClient The api client to use
      */
-    public function __construct(\hades\SDK\ApiClient $apiClient = null)
+    public function __construct(\keto\SDK\ApiClient $apiClient = null)
     {
         if ($apiClient === null) {
             $apiClient = new ApiClient();
@@ -65,7 +65,7 @@ class WardenApi
     /**
      * Get API client
      *
-     * @return \hades\SDK\ApiClient get the API client
+     * @return \keto\SDK\ApiClient get the API client
      */
     public function getApiClient()
     {
@@ -75,48 +75,54 @@ class WardenApi
     /**
      * Set the API client
      *
-     * @param \hades\SDK\ApiClient $apiClient set the API client
+     * @param \keto\SDK\ApiClient $apiClient set the API client
      *
      * @return WardenApi
      */
-    public function setApiClient(\hades\SDK\ApiClient $apiClient)
+    public function setApiClient(\keto\SDK\ApiClient $apiClient)
     {
         $this->apiClient = $apiClient;
         return $this;
     }
 
     /**
-     * Operation isOAuth2AccessTokenAuthorized
+     * Operation addMembersToGroup
      *
-     * Check if an OAuth 2.0 access token is authorized to access a resource
+     * Add members to a group
      *
-     * Client for hades
+     * Client for keto
      *
-     * @param \hades\SDK\Model\IsOAuth2AccessTokenAuthorized $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return \hades\SDK\Model\AuthenticationOAuth2Session
+     * @param string $id The id of the group to modify. (required)
+     * @param \keto\SDK\Model\GroupMembers $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return void
      */
-    public function isOAuth2AccessTokenAuthorized($body = null)
+    public function addMembersToGroup($id, $body = null)
     {
-        list($response) = $this->isOAuth2AccessTokenAuthorizedWithHttpInfo($body);
+        list($response) = $this->addMembersToGroupWithHttpInfo($id, $body);
         return $response;
     }
 
     /**
-     * Operation isOAuth2AccessTokenAuthorizedWithHttpInfo
+     * Operation addMembersToGroupWithHttpInfo
      *
-     * Check if an OAuth 2.0 access token is authorized to access a resource
+     * Add members to a group
      *
-     * Client for hades
+     * Client for keto
      *
-     * @param \hades\SDK\Model\IsOAuth2AccessTokenAuthorized $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return array of \hades\SDK\Model\AuthenticationOAuth2Session, HTTP status code, HTTP response headers (array of strings)
+     * @param string $id The id of the group to modify. (required)
+     * @param \keto\SDK\Model\GroupMembers $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
      */
-    public function isOAuth2AccessTokenAuthorizedWithHttpInfo($body = null)
+    public function addMembersToGroupWithHttpInfo($id, $body = null)
     {
+        // verify the required parameter 'id' is set
+        if ($id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $id when calling addMembersToGroup');
+        }
         // parse inputs
-        $resourcePath = "/warden/oauth2/authorize";
+        $resourcePath = "/warden/groups/{id}/members";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -127,6 +133,14 @@ class WardenApi
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
 
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                "{" . "id" . "}",
+                $this->apiClient->getSerializer()->toPathValue($id),
+                $resourcePath
+            );
+        }
         // body params
         $_tempBody = null;
         if (isset($body)) {
@@ -147,27 +161,23 @@ class WardenApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\hades\SDK\Model\AuthenticationOAuth2Session',
-                '/warden/oauth2/authorize'
+                null,
+                '/warden/groups/{id}/members'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\hades\SDK\Model\AuthenticationOAuth2Session', $httpHeader), $statusCode, $httpHeader];
+            return [null, $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\AuthenticationOAuth2Session', $e->getResponseHeaders());
-                    $e->setResponseObject($data);
-                    break;
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }
@@ -177,37 +187,37 @@ class WardenApi
     }
 
     /**
-     * Operation isSubjectAuthorized
+     * Operation createGroup
      *
-     * Check if a subject is authorized to access a resource
+     * Create a group
      *
-     * Client for hades
+     * Client for keto
      *
-     * @param \hades\SDK\Model\WardenAccessRequest $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return \hades\SDK\Model\AuthenticationDefaultSession
+     * @param \keto\SDK\Model\Group $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Group
      */
-    public function isSubjectAuthorized($body = null)
+    public function createGroup($body = null)
     {
-        list($response) = $this->isSubjectAuthorizedWithHttpInfo($body);
+        list($response) = $this->createGroupWithHttpInfo($body);
         return $response;
     }
 
     /**
-     * Operation isSubjectAuthorizedWithHttpInfo
+     * Operation createGroupWithHttpInfo
      *
-     * Check if a subject is authorized to access a resource
+     * Create a group
      *
-     * Client for hades
+     * Client for keto
      *
-     * @param \hades\SDK\Model\WardenAccessRequest $body  (optional)
-     * @throws \hades\SDK\ApiException on non-2xx response
-     * @return array of \hades\SDK\Model\AuthenticationDefaultSession, HTTP status code, HTTP response headers (array of strings)
+     * @param \keto\SDK\Model\Group $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Group, HTTP status code, HTTP response headers (array of strings)
      */
-    public function isSubjectAuthorizedWithHttpInfo($body = null)
+    public function createGroupWithHttpInfo($body = null)
     {
         // parse inputs
-        $resourcePath = "/warden/subjects/authorize";
+        $resourcePath = "/warden/groups";
         $httpBody = '';
         $queryParams = [];
         $headerParams = [];
@@ -238,27 +248,604 @@ class WardenApi
                 $queryParams,
                 $httpBody,
                 $headerParams,
-                '\hades\SDK\Model\AuthenticationDefaultSession',
-                '/warden/subjects/authorize'
+                '\keto\SDK\Model\Group',
+                '/warden/groups'
             );
 
-            return [$this->apiClient->getSerializer()->deserialize($response, '\hades\SDK\Model\AuthenticationDefaultSession', $httpHeader), $statusCode, $httpHeader];
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Group', $httpHeader), $statusCode, $httpHeader];
         } catch (ApiException $e) {
             switch ($e->getCode()) {
-                case 200:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\AuthenticationDefaultSession', $e->getResponseHeaders());
+                case 201:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Group', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 401:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 403:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
                 case 500:
-                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\hades\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteGroup
+     *
+     * Delete a group by id
+     *
+     * Client for keto
+     *
+     * @param string $id The id of the group to look up. (required)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return void
+     */
+    public function deleteGroup($id)
+    {
+        list($response) = $this->deleteGroupWithHttpInfo($id);
+        return $response;
+    }
+
+    /**
+     * Operation deleteGroupWithHttpInfo
+     *
+     * Delete a group by id
+     *
+     * Client for keto
+     *
+     * @param string $id The id of the group to look up. (required)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteGroupWithHttpInfo($id)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $id when calling deleteGroup');
+        }
+        // parse inputs
+        $resourcePath = "/warden/groups/{id}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                "{" . "id" . "}",
+                $this->apiClient->getSerializer()->toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'DELETE',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                null,
+                '/warden/groups/{id}'
+            );
+
+            return [null, $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation doesWardenAllowAccessRequest
+     *
+     * Check if an access request is valid (without providing an access token)
+     *
+     * Client for keto
+     *
+     * @param \keto\SDK\Model\WardenAccessRequest $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\WardenAccessRequestResponse
+     */
+    public function doesWardenAllowAccessRequest($body = null)
+    {
+        list($response) = $this->doesWardenAllowAccessRequestWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation doesWardenAllowAccessRequestWithHttpInfo
+     *
+     * Check if an access request is valid (without providing an access token)
+     *
+     * Client for keto
+     *
+     * @param \keto\SDK\Model\WardenAccessRequest $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\WardenAccessRequestResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function doesWardenAllowAccessRequestWithHttpInfo($body = null)
+    {
+        // parse inputs
+        $resourcePath = "/warden/allowed";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'POST',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\keto\SDK\Model\WardenAccessRequestResponse',
+                '/warden/allowed'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\WardenAccessRequestResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\WardenAccessRequestResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation doesWardenAllowTokenAccessRequest
+     *
+     * Check if an access request is valid (providing an access token)
+     *
+     * Client for keto
+     *
+     * @param \keto\SDK\Model\WardenTokenAccessRequest $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\WardenTokenAccessRequestResponse
+     */
+    public function doesWardenAllowTokenAccessRequest($body = null)
+    {
+        list($response) = $this->doesWardenAllowTokenAccessRequestWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation doesWardenAllowTokenAccessRequestWithHttpInfo
+     *
+     * Check if an access request is valid (providing an access token)
+     *
+     * Client for keto
+     *
+     * @param \keto\SDK\Model\WardenTokenAccessRequest $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\WardenTokenAccessRequestResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function doesWardenAllowTokenAccessRequestWithHttpInfo($body = null)
+    {
+        // parse inputs
+        $resourcePath = "/warden/token/allowed";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'POST',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\keto\SDK\Model\WardenTokenAccessRequestResponse',
+                '/warden/token/allowed'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\WardenTokenAccessRequestResponse', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\WardenTokenAccessRequestResponse', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getGroup
+     *
+     * Get a group by id
+     *
+     * Client for keto
+     *
+     * @param string $id The id of the group to look up. (required)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Group
+     */
+    public function getGroup($id)
+    {
+        list($response) = $this->getGroupWithHttpInfo($id);
+        return $response;
+    }
+
+    /**
+     * Operation getGroupWithHttpInfo
+     *
+     * Get a group by id
+     *
+     * Client for keto
+     *
+     * @param string $id The id of the group to look up. (required)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Group, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getGroupWithHttpInfo($id)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $id when calling getGroup');
+        }
+        // parse inputs
+        $resourcePath = "/warden/groups/{id}";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                "{" . "id" . "}",
+                $this->apiClient->getSerializer()->toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\keto\SDK\Model\Group',
+                '/warden/groups/{id}'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Group', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 201:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Group', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation listGroups
+     *
+     * List groups
+     *
+     * Client for keto
+     *
+     * @param string $member The id of the member to look up. (optional)
+     * @param int $limit The maximum amount of policies returned. (optional)
+     * @param int $offset The offset from where to start looking. (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return \keto\SDK\Model\Group[]
+     */
+    public function listGroups($member = null, $limit = null, $offset = null)
+    {
+        list($response) = $this->listGroupsWithHttpInfo($member, $limit, $offset);
+        return $response;
+    }
+
+    /**
+     * Operation listGroupsWithHttpInfo
+     *
+     * List groups
+     *
+     * Client for keto
+     *
+     * @param string $member The id of the member to look up. (optional)
+     * @param int $limit The maximum amount of policies returned. (optional)
+     * @param int $offset The offset from where to start looking. (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of \keto\SDK\Model\Group[], HTTP status code, HTTP response headers (array of strings)
+     */
+    public function listGroupsWithHttpInfo($member = null, $limit = null, $offset = null)
+    {
+        // parse inputs
+        $resourcePath = "/warden/groups";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // query params
+        if ($member !== null) {
+            $queryParams['member'] = $this->apiClient->getSerializer()->toQueryValue($member);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = $this->apiClient->getSerializer()->toQueryValue($limit);
+        }
+        // query params
+        if ($offset !== null) {
+            $queryParams['offset'] = $this->apiClient->getSerializer()->toQueryValue($offset);
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'GET',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                '\keto\SDK\Model\Group[]',
+                '/warden/groups'
+            );
+
+            return [$this->apiClient->getSerializer()->deserialize($response, '\keto\SDK\Model\Group[]', $httpHeader), $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\Group[]', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation removeMembersFromGroup
+     *
+     * Remove members from a group
+     *
+     * Client for keto
+     *
+     * @param string $id The id of the group to modify. (required)
+     * @param \keto\SDK\Model\GroupMembers $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return void
+     */
+    public function removeMembersFromGroup($id, $body = null)
+    {
+        list($response) = $this->removeMembersFromGroupWithHttpInfo($id, $body);
+        return $response;
+    }
+
+    /**
+     * Operation removeMembersFromGroupWithHttpInfo
+     *
+     * Remove members from a group
+     *
+     * Client for keto
+     *
+     * @param string $id The id of the group to modify. (required)
+     * @param \keto\SDK\Model\GroupMembers $body  (optional)
+     * @throws \keto\SDK\ApiException on non-2xx response
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function removeMembersFromGroupWithHttpInfo($id, $body = null)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null) {
+            throw new \InvalidArgumentException('Missing the required parameter $id when calling removeMembersFromGroup');
+        }
+        // parse inputs
+        $resourcePath = "/warden/groups/{id}/members";
+        $httpBody = '';
+        $queryParams = [];
+        $headerParams = [];
+        $formParams = [];
+        $_header_accept = $this->apiClient->selectHeaderAccept(['application/json']);
+        if (!is_null($_header_accept)) {
+            $headerParams['Accept'] = $_header_accept;
+        }
+        $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(['application/json']);
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                "{" . "id" . "}",
+                $this->apiClient->getSerializer()->toPathValue($id),
+                $resourcePath
+            );
+        }
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            $httpBody = $_tempBody; // $_tempBody is the method argument, if present
+        } elseif (count($formParams) > 0) {
+            $httpBody = $formParams; // for HTTP post (form)
+        }
+        // make the API Call
+        try {
+            list($response, $statusCode, $httpHeader) = $this->apiClient->callApi(
+                $resourcePath,
+                'DELETE',
+                $queryParams,
+                $httpBody,
+                $headerParams,
+                null,
+                '/warden/groups/{id}/members'
+            );
+
+            return [null, $statusCode, $httpHeader];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 401:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = $this->apiClient->getSerializer()->deserialize($e->getResponseBody(), '\keto\SDK\Model\InlineResponse401', $e->getResponseHeaders());
                     $e->setResponseObject($data);
                     break;
             }

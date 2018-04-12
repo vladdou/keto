@@ -4,13 +4,13 @@
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -24,7 +24,7 @@
  * Do not edit the class manually.
  */
 
-namespace hades\SDK;
+namespace keto\SDK;
 
 use \Exception;
 
@@ -32,7 +32,7 @@ use \Exception;
  * ApiException Class Doc Comment
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */

@@ -5,13 +5,13 @@
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swaagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace hades\SDK\Model;
+namespace keto\SDK\Model;
 
 use \ArrayAccess;
 
@@ -33,7 +33,7 @@ use \ArrayAccess;
  * Policy Class Doc Comment
  *
  * @category    Class
- * @package     hades\SDK
+ * @package     keto\SDK
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
@@ -53,7 +53,7 @@ class Policy implements ArrayAccess
       */
     protected static $swaggerTypes = [
         'actions' => 'string[]',
-        'conditions' => 'map[string,\hades\SDK\Model\PolicyConditions]',
+        'conditions' => 'map[string,\keto\SDK\Model\PolicyConditions]',
         'description' => 'string',
         'effect' => 'string',
         'id' => 'string',
@@ -217,7 +217,7 @@ class Policy implements ArrayAccess
 
     /**
      * Gets conditions
-     * @return map[string,\hades\SDK\Model\PolicyConditions]
+     * @return map[string,\keto\SDK\Model\PolicyConditions]
      */
     public function getConditions()
     {
@@ -226,7 +226,7 @@ class Policy implements ArrayAccess
 
     /**
      * Sets conditions
-     * @param map[string,\hades\SDK\Model\PolicyConditions] $conditions Conditions under which the policy is active.
+     * @param map[string,\keto\SDK\Model\PolicyConditions] $conditions Conditions under which the policy is active.
      * @return $this
      */
     public function setConditions($conditions)
@@ -392,10 +392,10 @@ class Policy implements ArrayAccess
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\hades\SDK\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(\keto\SDK\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         }
 
-        return json_encode(\hades\SDK\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(\keto\SDK\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

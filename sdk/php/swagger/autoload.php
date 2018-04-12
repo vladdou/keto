@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -13,10 +13,10 @@
  * An example of a project-specific implementation.
  *
  * After registering this autoload function with SPL, the following line
- * would cause the function to attempt to load the \hades\SDK\Baz\Qux class
+ * would cause the function to attempt to load the \keto\SDK\Baz\Qux class
  * from /path/to/project/lib/Baz/Qux.php:
  *
- *      new \hades\SDK\Baz\Qux;
+ *      new \keto\SDK\Baz\Qux;
  *
  * @param string $class The fully-qualified class name.
  *
@@ -25,7 +25,7 @@
 spl_autoload_register(function ($class) {
 
     // project-specific namespace prefix
-    $prefix = 'hades\\SDK\\';
+    $prefix = 'keto\\SDK\\';
 
     // base directory for the namespace prefix
     $base_dir = __DIR__ . '/lib/';

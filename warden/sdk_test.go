@@ -31,10 +31,10 @@ import (
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/ory/herodot"
 	"github.com/ory/keto/authentication"
 	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/ory/keto/warden"
-	"github.com/ory/herodot"
 	"github.com/ory/ladon"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"

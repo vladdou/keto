@@ -5,13 +5,13 @@
  * PHP version 5
  *
  * @category Class
- * @package  hades\SDK
+ * @package  keto\SDK
  * @author   Swaagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
 
 /**
- * Package main ORY Hades
+ * Package main ORY Keto
  *
  * OpenAPI spec version: Latest
  * Contact: hi@ory.am
@@ -25,7 +25,7 @@
  * Do not edit the class manually.
  */
 
-namespace hades\SDK\Model;
+namespace keto\SDK\Model;
 
 use \ArrayAccess;
 
@@ -33,7 +33,7 @@ use \ArrayAccess;
  * Handler Class Doc Comment
  *
  * @category    Class
- * @package     hades\SDK
+ * @package     keto\SDK
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
@@ -52,8 +52,11 @@ class Handler implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'h' => '\hades\SDK\Model\Writer',
-        'manager' => '\hades\SDK\Model\Manager'
+        'generators' => 'map[string,\keto\SDK\Model\KeyGenerator]',
+        'h' => '\keto\SDK\Model\Writer',
+        'manager' => '\keto\SDK\Model\Manager',
+        'resource_prefix' => 'string',
+        'w' => '\keto\SDK\Model\Firewall'
     ];
 
     /**
@@ -61,8 +64,11 @@ class Handler implements ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
+        'generators' => null,
         'h' => null,
-        'manager' => null
+        'manager' => null,
+        'resource_prefix' => null,
+        'w' => null
     ];
 
     public static function swaggerTypes()
@@ -80,8 +86,11 @@ class Handler implements ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
+        'generators' => 'Generators',
         'h' => 'H',
-        'manager' => 'Manager'
+        'manager' => 'Manager',
+        'resource_prefix' => 'ResourcePrefix',
+        'w' => 'W'
     ];
 
 
@@ -90,8 +99,11 @@ class Handler implements ArrayAccess
      * @var string[]
      */
     protected static $setters = [
+        'generators' => 'setGenerators',
         'h' => 'setH',
-        'manager' => 'setManager'
+        'manager' => 'setManager',
+        'resource_prefix' => 'setResourcePrefix',
+        'w' => 'setW'
     ];
 
 
@@ -100,8 +112,11 @@ class Handler implements ArrayAccess
      * @var string[]
      */
     protected static $getters = [
+        'generators' => 'getGenerators',
         'h' => 'getH',
-        'manager' => 'getManager'
+        'manager' => 'getManager',
+        'resource_prefix' => 'getResourcePrefix',
+        'w' => 'getW'
     ];
 
     public static function attributeMap()
@@ -135,8 +150,11 @@ class Handler implements ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['generators'] = isset($data['generators']) ? $data['generators'] : null;
         $this->container['h'] = isset($data['h']) ? $data['h'] : null;
         $this->container['manager'] = isset($data['manager']) ? $data['manager'] : null;
+        $this->container['resource_prefix'] = isset($data['resource_prefix']) ? $data['resource_prefix'] : null;
+        $this->container['w'] = isset($data['w']) ? $data['w'] : null;
     }
 
     /**
@@ -165,8 +183,29 @@ class Handler implements ArrayAccess
 
 
     /**
+     * Gets generators
+     * @return map[string,\keto\SDK\Model\KeyGenerator]
+     */
+    public function getGenerators()
+    {
+        return $this->container['generators'];
+    }
+
+    /**
+     * Sets generators
+     * @param map[string,\keto\SDK\Model\KeyGenerator] $generators
+     * @return $this
+     */
+    public function setGenerators($generators)
+    {
+        $this->container['generators'] = $generators;
+
+        return $this;
+    }
+
+    /**
      * Gets h
-     * @return \hades\SDK\Model\Writer
+     * @return \keto\SDK\Model\Writer
      */
     public function getH()
     {
@@ -175,7 +214,7 @@ class Handler implements ArrayAccess
 
     /**
      * Sets h
-     * @param \hades\SDK\Model\Writer $h
+     * @param \keto\SDK\Model\Writer $h
      * @return $this
      */
     public function setH($h)
@@ -187,7 +226,7 @@ class Handler implements ArrayAccess
 
     /**
      * Gets manager
-     * @return \hades\SDK\Model\Manager
+     * @return \keto\SDK\Model\Manager
      */
     public function getManager()
     {
@@ -196,12 +235,54 @@ class Handler implements ArrayAccess
 
     /**
      * Sets manager
-     * @param \hades\SDK\Model\Manager $manager
+     * @param \keto\SDK\Model\Manager $manager
      * @return $this
      */
     public function setManager($manager)
     {
         $this->container['manager'] = $manager;
+
+        return $this;
+    }
+
+    /**
+     * Gets resource_prefix
+     * @return string
+     */
+    public function getResourcePrefix()
+    {
+        return $this->container['resource_prefix'];
+    }
+
+    /**
+     * Sets resource_prefix
+     * @param string $resource_prefix
+     * @return $this
+     */
+    public function setResourcePrefix($resource_prefix)
+    {
+        $this->container['resource_prefix'] = $resource_prefix;
+
+        return $this;
+    }
+
+    /**
+     * Gets w
+     * @return \keto\SDK\Model\Firewall
+     */
+    public function getW()
+    {
+        return $this->container['w'];
+    }
+
+    /**
+     * Sets w
+     * @param \keto\SDK\Model\Firewall $w
+     * @return $this
+     */
+    public function setW($w)
+    {
+        $this->container['w'] = $w;
 
         return $this;
     }
@@ -257,10 +338,10 @@ class Handler implements ArrayAccess
     public function __toString()
     {
         if (defined('JSON_PRETTY_PRINT')) { // use JSON pretty print
-            return json_encode(\hades\SDK\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
+            return json_encode(\keto\SDK\ObjectSerializer::sanitizeForSerialization($this), JSON_PRETTY_PRINT);
         }
 
-        return json_encode(\hades\SDK\ObjectSerializer::sanitizeForSerialization($this));
+        return json_encode(\keto\SDK\ObjectSerializer::sanitizeForSerialization($this));
     }
 }
 

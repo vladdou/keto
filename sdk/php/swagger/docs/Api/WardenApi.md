@@ -1,34 +1,40 @@
-# hades\SDK\WardenApi
-Client for hades
+# keto\SDK\WardenApi
+Client for keto
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**isOAuth2AccessTokenAuthorized**](WardenApi.md#isOAuth2AccessTokenAuthorized) | **POST** /warden/oauth2/authorize | Check if an OAuth 2.0 access token is authorized to access a resource
-[**isSubjectAuthorized**](WardenApi.md#isSubjectAuthorized) | **POST** /warden/subjects/authorize | Check if a subject is authorized to access a resource
+[**addMembersToGroup**](WardenApi.md#addMembersToGroup) | **POST** /warden/groups/{id}/members | Add members to a group
+[**createGroup**](WardenApi.md#createGroup) | **POST** /warden/groups | Create a group
+[**deleteGroup**](WardenApi.md#deleteGroup) | **DELETE** /warden/groups/{id} | Delete a group by id
+[**doesWardenAllowAccessRequest**](WardenApi.md#doesWardenAllowAccessRequest) | **POST** /warden/allowed | Check if an access request is valid (without providing an access token)
+[**doesWardenAllowTokenAccessRequest**](WardenApi.md#doesWardenAllowTokenAccessRequest) | **POST** /warden/token/allowed | Check if an access request is valid (providing an access token)
+[**getGroup**](WardenApi.md#getGroup) | **GET** /warden/groups/{id} | Get a group by id
+[**listGroups**](WardenApi.md#listGroups) | **GET** /warden/groups | List groups
+[**removeMembersFromGroup**](WardenApi.md#removeMembersFromGroup) | **DELETE** /warden/groups/{id}/members | Remove members from a group
 
 
-# **isOAuth2AccessTokenAuthorized**
-> \hades\SDK\Model\AuthenticationOAuth2Session isOAuth2AccessTokenAuthorized($body)
+# **addMembersToGroup**
+> addMembersToGroup($id, $body)
 
-Check if an OAuth 2.0 access token is authorized to access a resource
+Add members to a group
 
-Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with `{ \"allowed\": false }`.   This endpoint passes all data from the upstream OAuth 2.0 token introspection endpoint. If you use ORY Hydra as an upstream OAuth 2.0 provider, data set through the `accessTokenExtra` field in the consent flow will be included in this response as well.
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"members.add\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\WardenApi();
-$body = new \hades\SDK\Model\IsOAuth2AccessTokenAuthorized(); // \hades\SDK\Model\IsOAuth2AccessTokenAuthorized | 
+$api_instance = new keto\SDK\Api\WardenApi();
+$id = "id_example"; // string | The id of the group to modify.
+$body = new \keto\SDK\Model\GroupMembers(); // \keto\SDK\Model\GroupMembers | 
 
 try {
-    $result = $api_instance->isOAuth2AccessTokenAuthorized($body);
-    print_r($result);
+    $api_instance->addMembersToGroup($id, $body);
 } catch (Exception $e) {
-    echo 'Exception when calling WardenApi->isOAuth2AccessTokenAuthorized: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WardenApi->addMembersToGroup: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```
@@ -37,11 +43,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\hades\SDK\Model\IsOAuth2AccessTokenAuthorized**](../Model/IsOAuth2AccessTokenAuthorized.md)|  | [optional]
+ **id** | **string**| The id of the group to modify. |
+ **body** | [**\keto\SDK\Model\GroupMembers**](../Model/GroupMembers.md)|  | [optional]
 
 ### Return type
 
-[**\hades\SDK\Model\AuthenticationOAuth2Session**](../Model/AuthenticationOAuth2Session.md)
+void (empty response body)
 
 ### Authorization
 
@@ -54,26 +61,26 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
-# **isSubjectAuthorized**
-> \hades\SDK\Model\AuthenticationDefaultSession isSubjectAuthorized($body)
+# **createGroup**
+> \keto\SDK\Model\Group createGroup($body)
 
-Check if a subject is authorized to access a resource
+Create a group
 
-Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain action on a resource.
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\WardenApi();
-$body = new \hades\SDK\Model\WardenAccessRequest(); // \hades\SDK\Model\WardenAccessRequest | 
+$api_instance = new keto\SDK\Api\WardenApi();
+$body = new \keto\SDK\Model\Group(); // \keto\SDK\Model\Group | 
 
 try {
-    $result = $api_instance->isSubjectAuthorized($body);
+    $result = $api_instance->createGroup($body);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling WardenApi->isSubjectAuthorized: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling WardenApi->createGroup: ', $e->getMessage(), PHP_EOL;
 }
 ?>
 ```
@@ -82,11 +89,285 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\hades\SDK\Model\WardenAccessRequest**](../Model/WardenAccessRequest.md)|  | [optional]
+ **body** | [**\keto\SDK\Model\Group**](../Model/Group.md)|  | [optional]
 
 ### Return type
 
-[**\hades\SDK\Model\AuthenticationDefaultSession**](../Model/AuthenticationDefaultSession.md)
+[**\keto\SDK\Model\Group**](../Model/Group.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **deleteGroup**
+> deleteGroup($id)
+
+Delete a group by id
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"delete\"], \"effect\": \"allow\" } ```
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new keto\SDK\Api\WardenApi();
+$id = "id_example"; // string | The id of the group to look up.
+
+try {
+    $api_instance->deleteGroup($id);
+} catch (Exception $e) {
+    echo 'Exception when calling WardenApi->deleteGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**| The id of the group to look up. |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **doesWardenAllowAccessRequest**
+> \keto\SDK\Model\WardenAccessRequestResponse doesWardenAllowAccessRequest($body)
+
+Check if an access request is valid (without providing an access token)
+
+Checks if a subject (typically a user or a service) is allowed to perform an action on a resource. This endpoint requires a subject, a resource name, an action name and a context. If the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with `{ \"allowed\": false}`, otherwise `{ \"allowed\": true }` is returned.   The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:allowed\"], \"actions\": [\"decide\"], \"effect\": \"allow\" } ```
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new keto\SDK\Api\WardenApi();
+$body = new \keto\SDK\Model\WardenAccessRequest(); // \keto\SDK\Model\WardenAccessRequest | 
+
+try {
+    $result = $api_instance->doesWardenAllowAccessRequest($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling WardenApi->doesWardenAllowAccessRequest: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**\keto\SDK\Model\WardenAccessRequest**](../Model/WardenAccessRequest.md)|  | [optional]
+
+### Return type
+
+[**\keto\SDK\Model\WardenAccessRequestResponse**](../Model/WardenAccessRequestResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **doesWardenAllowTokenAccessRequest**
+> \keto\SDK\Model\WardenTokenAccessRequestResponse doesWardenAllowTokenAccessRequest($body)
+
+Check if an access request is valid (providing an access token)
+
+Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with `{ \"allowed\": false}`.   Extra data set through the `accessTokenExtra` field in the consent flow will be included in the response.   The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:token:allowed\"], \"actions\": [\"decide\"], \"effect\": \"allow\" } ```
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new keto\SDK\Api\WardenApi();
+$body = new \keto\SDK\Model\WardenTokenAccessRequest(); // \keto\SDK\Model\WardenTokenAccessRequest | 
+
+try {
+    $result = $api_instance->doesWardenAllowTokenAccessRequest($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling WardenApi->doesWardenAllowTokenAccessRequest: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**\keto\SDK\Model\WardenTokenAccessRequest**](../Model/WardenTokenAccessRequest.md)|  | [optional]
+
+### Return type
+
+[**\keto\SDK\Model\WardenTokenAccessRequestResponse**](../Model/WardenTokenAccessRequestResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **getGroup**
+> \keto\SDK\Model\Group getGroup($id)
+
+Get a group by id
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new keto\SDK\Api\WardenApi();
+$id = "id_example"; // string | The id of the group to look up.
+
+try {
+    $result = $api_instance->getGroup($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling WardenApi->getGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**| The id of the group to look up. |
+
+### Return type
+
+[**\keto\SDK\Model\Group**](../Model/Group.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **listGroups**
+> \keto\SDK\Model\Group[] listGroups($member, $limit, $offset)
+
+List groups
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups\"], \"actions\": [\"list\"], \"effect\": \"allow\" } ```
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new keto\SDK\Api\WardenApi();
+$member = "member_example"; // string | The id of the member to look up.
+$limit = 789; // int | The maximum amount of policies returned.
+$offset = 789; // int | The offset from where to start looking.
+
+try {
+    $result = $api_instance->listGroups($member, $limit, $offset);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling WardenApi->listGroups: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **member** | **string**| The id of the member to look up. | [optional]
+ **limit** | **int**| The maximum amount of policies returned. | [optional]
+ **offset** | **int**| The offset from where to start looking. | [optional]
+
+### Return type
+
+[**\keto\SDK\Model\Group[]**](../Model/Group.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **removeMembersFromGroup**
+> removeMembersFromGroup($id, $body)
+
+Remove members from a group
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"members.remove\"], \"effect\": \"allow\" } ```
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new keto\SDK\Api\WardenApi();
+$id = "id_example"; // string | The id of the group to modify.
+$body = new \keto\SDK\Model\GroupMembers(); // \keto\SDK\Model\GroupMembers | 
+
+try {
+    $api_instance->removeMembersFromGroup($id, $body);
+} catch (Exception $e) {
+    echo 'Exception when calling WardenApi->removeMembersFromGroup: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**| The id of the group to modify. |
+ **body** | [**\keto\SDK\Model\GroupMembers**](../Model/GroupMembers.md)|  | [optional]
+
+### Return type
+
+void (empty response body)
 
 ### Authorization
 

@@ -4,7 +4,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **actions** | **string[]** | Actions impacted by the policy. | [optional] 
-**conditions** | [**map[string,\hades\SDK\Model\PolicyConditions]**](PolicyConditions.md) | Conditions under which the policy is active. | [optional] 
+**conditions** | [**map[string,\keto\SDK\Model\PolicyConditions]**](PolicyConditions.md) | Conditions under which the policy is active. | [optional] 
 **description** | **string** | Description of the policy. | [optional] 
 **effect** | **string** | Effect of the policy | [optional] 
 **id** | **string** | ID of the policy. | [optional] 

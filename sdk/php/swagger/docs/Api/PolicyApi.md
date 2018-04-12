@@ -1,31 +1,31 @@
-# hades\SDK\PolicyApi
-Client for hades
+# keto\SDK\PolicyApi
+Client for keto
 
 All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createPolicy**](PolicyApi.md#createPolicy) | **POST** /policies | 
-[**deletePolicy**](PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | 
-[**getPolicy**](PolicyApi.md#getPolicy) | **GET** /policies/{id} | 
-[**listPolicies**](PolicyApi.md#listPolicies) | **GET** /policies | 
-[**updatePolicy**](PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | 
+[**createPolicy**](PolicyApi.md#createPolicy) | **POST** /policies | Create an Access Control Policy
+[**deletePolicy**](PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | Delete an Access Control Policy
+[**getPolicy**](PolicyApi.md#getPolicy) | **GET** /policies/{id} | Get an Access Control Policy
+[**listPolicies**](PolicyApi.md#listPolicies) | **GET** /policies | List Access Control Policies
+[**updatePolicy**](PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | Update an Access Control Polic
 
 
 # **createPolicy**
-> \hades\SDK\Model\Policy createPolicy($body)
-
-
+> \keto\SDK\Model\Policy createPolicy($body)
 
 Create an Access Control Policy
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\PolicyApi();
-$body = new \hades\SDK\Model\Policy(); // \hades\SDK\Model\Policy | 
+$api_instance = new keto\SDK\Api\PolicyApi();
+$body = new \keto\SDK\Model\Policy(); // \keto\SDK\Model\Policy | 
 
 try {
     $result = $api_instance->createPolicy($body);
@@ -40,11 +40,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\hades\SDK\Model\Policy**](../Model/Policy.md)|  | [optional]
+ **body** | [**\keto\SDK\Model\Policy**](../Model/Policy.md)|  | [optional]
 
 ### Return type
 
-[**\hades\SDK\Model\Policy**](../Model/Policy.md)
+[**\keto\SDK\Model\Policy**](../Model/Policy.md)
 
 ### Authorization
 
@@ -60,16 +60,16 @@ No authorization required
 # **deletePolicy**
 > deletePolicy($id)
 
-
-
 Delete an Access Control Policy
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies:<id>\"], \"actions\": [\"delete\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\PolicyApi();
+$api_instance = new keto\SDK\Api\PolicyApi();
 $id = "id_example"; // string | The id of the policy.
 
 try {
@@ -102,18 +102,18 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getPolicy**
-> \hades\SDK\Model\Policy getPolicy($id)
-
-
+> \keto\SDK\Model\Policy getPolicy($id)
 
 Get an Access Control Policy
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies:<id>\"], \"actions\": [\"get\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\PolicyApi();
+$api_instance = new keto\SDK\Api\PolicyApi();
 $id = "id_example"; // string | The id of the policy.
 
 try {
@@ -133,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\hades\SDK\Model\Policy**](../Model/Policy.md)
+[**\keto\SDK\Model\Policy**](../Model/Policy.md)
 
 ### Authorization
 
@@ -147,18 +147,18 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **listPolicies**
-> \hades\SDK\Model\Policy[] listPolicies($offset, $limit)
-
-
+> \keto\SDK\Model\Policy[] listPolicies($offset, $limit)
 
 List Access Control Policies
+
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"list\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\PolicyApi();
+$api_instance = new keto\SDK\Api\PolicyApi();
 $offset = 789; // int | The offset from where to start looking.
 $limit = 789; // int | The maximum amount of policies returned.
 
@@ -180,7 +180,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**\hades\SDK\Model\Policy[]**](../Model/Policy.md)
+[**\keto\SDK\Model\Policy[]**](../Model/Policy.md)
 
 ### Authorization
 
@@ -194,20 +194,20 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **updatePolicy**
-> \hades\SDK\Model\Policy updatePolicy($id, $body)
+> \keto\SDK\Model\Policy updatePolicy($id, $body)
 
+Update an Access Control Polic
 
-
-Update an Access Control Policy
+The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"update\"], \"effect\": \"allow\" } ```
 
 ### Example
 ```php
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new hades\SDK\Api\PolicyApi();
+$api_instance = new keto\SDK\Api\PolicyApi();
 $id = "id_example"; // string | The id of the policy.
-$body = new \hades\SDK\Model\Policy(); // \hades\SDK\Model\Policy | 
+$body = new \keto\SDK\Model\Policy(); // \keto\SDK\Model\Policy | 
 
 try {
     $result = $api_instance->updatePolicy($id, $body);
@@ -223,11 +223,11 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **string**| The id of the policy. |
- **body** | [**\hades\SDK\Model\Policy**](../Model/Policy.md)|  | [optional]
+ **body** | [**\keto\SDK\Model\Policy**](../Model/Policy.md)|  | [optional]
 
 ### Return type
 
-[**\hades\SDK\Model\Policy**](../Model/Policy.md)
+[**\keto\SDK\Model\Policy**](../Model/Policy.md)
 
 ### Authorization
 
