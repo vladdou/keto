@@ -18,10 +18,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/ory/keto/cmd/client"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"github.com/ory/hades/cmd/client"
 )
 
 var cfgFile string
@@ -34,7 +34,7 @@ var (
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use: "hades",
+	Use: "keto",
 }
 
 var logger *logrus.Logger
@@ -57,7 +57,7 @@ func init() {
 	// Cobra supports Persistent Flags, which, if defined here,
 	// will be global for your application.
 
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.hades.yaml)")
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.keto.yaml)")
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	RootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
@@ -69,7 +69,7 @@ func initConfig() {
 		viper.SetConfigFile(cfgFile)
 	}
 
-	viper.SetConfigName(".hades") // name of config file (without extension)
+	viper.SetConfigName(".keto") // name of config file (without extension)
 	viper.AddConfigPath("$HOME")  // adding home directory as first search path
 	viper.AutomaticEnv()          // read in environment variables that match
 
@@ -88,4 +88,10 @@ func initConfig() {
 
 	logger = logrus.New()
 	logger.Level = logLevel
+}
+
+func clientDefaultFlags(c *cobra.Command) {
+	c.PersistentFlags().String("bearer-token", os.Getenv("KETO_BEARER_TOKEN"), "Provide a token to be used if the server is protected by HTTP Bearer Authorization, defaults to environment variable KETO_BEARER_TOKEN.")
+	c.PersistentFlags().Bool("fake-tls-termination", false, `fake tls termination by adding "X-Forwarded-Proto: https"" to http headers`)
+	c.PersistentFlags().String("url", os.Getenv("KETO_URL"), "The URL of the ORY Keto server, defaults to environment variable KETO_URL.")
 }

@@ -22,7 +22,7 @@
 package warden
 
 import (
-	"github.com/ory/hades/authentication"
+	"github.com/ory/keto/authentication"
 	"github.com/ory/hydra/firewall"
 )
 

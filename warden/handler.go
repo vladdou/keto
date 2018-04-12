@@ -27,7 +27,7 @@ import (
 
 	"bytes"
 	"github.com/julienschmidt/httprouter"
-	"github.com/ory/hades/authentication"
+	"github.com/ory/keto/authentication"
 	"github.com/ory/herodot"
 	"github.com/pkg/errors"
 	"io/ioutil"

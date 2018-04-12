@@ -31,9 +31,9 @@ import (
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/ory/hades/authentication"
-	hades "github.com/ory/hades/sdk/go/hades/swagger"
-	"github.com/ory/hades/warden"
+	"github.com/ory/keto/authentication"
+	keto "github.com/ory/keto/sdk/go/keto/swagger"
+	"github.com/ory/keto/warden"
 	"github.com/ory/herodot"
 	"github.com/ory/ladon"
 	"github.com/pkg/errors"
@@ -100,12 +100,12 @@ func TestWardenSDK(t *testing.T) {
 	handler.SetRoutes(router)
 	server := httptest.NewServer(router)
 
-	client := hades.NewWardenApiWithBasePath(server.URL)
+	client := keto.NewWardenApiWithBasePath(server.URL)
 
 	t.Run("IsSubjectAuthorized", func(t *testing.T) {
 		for k, c := range accessRequestTestCases {
 			t.Run(fmt.Sprintf("case=%d", k), func(t *testing.T) {
-				result, response, err := client.IsSubjectAuthorized(hades.WardenAccessRequest{
+				result, response, err := client.IsSubjectAuthorized(keto.WardenAccessRequest{
 					Action:   c.req.Action,
 					Resource: c.req.Resource,
 					Subject:  c.req.Subject,
@@ -120,7 +120,7 @@ func TestWardenSDK(t *testing.T) {
 	})
 
 	t.Run("IsTokenAuthorized", func(t *testing.T) {
-		result, response, err := client.IsOAuth2AccessTokenAuthorized(hades.IsOAuth2AccessTokenAuthorized{
+		result, response, err := client.IsOAuth2AccessTokenAuthorized(keto.IsOAuth2AccessTokenAuthorized{
 			Resource: "matrix",
 			Action:   "create",
 			Context:  ladon.Context{},

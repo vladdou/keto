@@ -31,10 +31,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"github.com/meatballhat/negroni-logrus"
 	"github.com/ory/graceful"
-	"github.com/ory/hades/authentication"
-	"github.com/ory/hades/policy"
-	"github.com/ory/hades/role"
-	"github.com/ory/hades/warden"
+	"github.com/ory/keto/authentication"
+	"github.com/ory/keto/policy"
+	"github.com/ory/keto/role"
+	"github.com/ory/keto/warden"
 	"github.com/ory/herodot"
 	"github.com/ory/ladon"
 	"github.com/rs/cors"
@@ -97,7 +97,7 @@ func RunServe(logger *logrus.Logger) func(cmd *cobra.Command, args []string) {
 		wardenHandler.SetRoutes(router)
 
 		n := negroni.New()
-		n.Use(negronilogrus.NewMiddlewareFromLogger(logger, "hades"))
+		n.Use(negronilogrus.NewMiddlewareFromLogger(logger, "keto"))
 		n.UseHandler(router)
 		corsHandler := cors.New(parseCorsOptions()).Handler(n)
 

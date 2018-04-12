@@ -26,16 +26,15 @@ import (
 	"fmt"
 	"os"
 
-	hades "github.com/ory/hades/sdk/go/hades/swagger"
-	"github.com/spf13/viper"
+	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/spf13/cobra"
 )
 
 func getBasePath(cmd *cobra.Command) string {
-	location := viper.GetString("url")
-	if location == "" {
+	location, err := cmd.Flags().GetString("bearer-token")
+	if err != nil || location == "" {
 		fmt.Println(cmd.UsageString())
-		fatalf("Please set the location of ORY Hades by using the --url flag or the HADES_URL environment variable.")
+		fatalf("Please set the location of ORY Keto by using the --url flag or the KETO_URL environment variable.")
 		return ""
 	}
 	return location
@@ -50,8 +49,7 @@ func must(err error, message string, args ...interface{}) {
 	os.Exit(1)
 }
 
-
-func checkResponse(response *hades.APIResponse, err error, expectedStatusCode int) {
+func checkResponse(response *keto.APIResponse, err error, expectedStatusCode int) {
 	must(err, "Command failed because error \"%s\" occurred.\n", err)
 
 	if response.StatusCode != expectedStatusCode {

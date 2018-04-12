@@ -23,17 +23,15 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"os"
 )
 
 // policiesCmd represents the policies command
 var policiesCmd = &cobra.Command{
 	Use:   "policies",
-	Short: "Manage Access Control Policies",
+	Short: "Manage access control policies",
 }
 
 func init() {
 	RootCmd.AddCommand(policiesCmd)
-	policiesCmd.PersistentFlags().String("bearer-token", "", "Provide a token to be used if the server is protected by HTTP Bearer Authorization.")
-	policiesCmd.PersistentFlags().String("url", os.Getenv("HADES_URL"), "The URL of the ORY Hades server, defaults to environment variable HADES_URL.")
+	clientDefaultFlags(policiesCmd)
 }

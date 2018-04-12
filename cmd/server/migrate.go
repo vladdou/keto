@@ -24,7 +24,7 @@ package server
 import (
 	"net/url"
 
-	"github.com/ory/hades/role"
+	"github.com/ory/keto/role"
 	"github.com/ory/ladon/manager/sql"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -34,7 +34,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
-	"github.com/ory/hades/legacy"
+	"github.com/ory/keto/legacy"
 	"github.com/rubenv/sql-migrate"
 )
 
@@ -75,7 +75,7 @@ func RunMigrateSQL(logger *logrus.Logger) func(cmd *cobra.Command, args []string
 			logger.WithField("migrations", n).WithField("table", "role").Print("Successfully applied SQL migrations")
 		}
 
-		if n, err := sql.NewSQLManager(db, nil).CreateSchemas("", "hades_policy_migrations"); err != nil {
+		if n, err := sql.NewSQLManager(db, nil).CreateSchemas("", "keto_policy_migrations"); err != nil {
 			logger.WithError(err).WithField("migrations", n).WithField("table", "policies").Print("An error occurred while trying to apply SQL migrations")
 		} else {
 			logger.WithField("migrations", n).WithField("table", "policies").Print("Successfully applied SQL migrations")
@@ -94,7 +94,7 @@ func RunMigrateHydra(logger *logrus.Logger) func(cmd *cobra.Command, args []stri
 			logger.WithError(err).WithField("database_url", u.Scheme+"://*:*@"+u.Host+u.Path+"?"+u.RawQuery).Fatal("Unable to parse DATABASE_URL, make sure it has the right format")
 		}
 
-		migrate.SetTable("hades_legacy_hydra_migrations")
+		migrate.SetTable("keto_legacy_hydra_migrations")
 		n, err := migrate.Exec(db.DB, db.DriverName(), legacy.HydraLegacyMigrations[db.DriverName()], migrate.Up)
 		if err != nil {
 			logger.WithError(err).WithField("migrations", n).WithField("table", "policies").Print("An error occurred while trying to apply SQL migrations")

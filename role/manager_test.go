@@ -28,7 +28,7 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	_ "github.com/lib/pq"
-	. "github.com/ory/hades/role"
+	. "github.com/ory/keto/role"
 	"github.com/ory/sqlcon/dockertest"
 )
 

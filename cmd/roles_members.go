@@ -25,12 +25,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// policiesSubjectsCmd represents the subjects command
-var policiesSubjectsCmd = &cobra.Command{
-	Use:   "subjects",
-	Short: "Manage which subjects a policy applies to",
+var rolesMembersCmd = &cobra.Command{
+	Use:   "members",
+	Short: "Manage warden group members",
 }
 
 func init() {
-	policiesCmd.AddCommand(policiesSubjectsCmd)
+	rolesCmd.AddCommand(rolesMembersCmd)
 }

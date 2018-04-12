@@ -27,8 +27,8 @@ import (
 	"testing"
 
 	"github.com/julienschmidt/httprouter"
-	. "github.com/ory/hades/policy"
-	hades "github.com/ory/hades/sdk/go/hades/swagger"
+	. "github.com/ory/keto/policy"
+	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/ory/herodot"
 	"github.com/ory/ladon"
 	"github.com/ory/ladon/manager/memory"
@@ -37,7 +37,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func mockPolicy(t *testing.T) hades.Policy {
+func mockPolicy(t *testing.T) keto.Policy {
 	originalPolicy := &ladon.DefaultPolicy{
 		ID:          uuid.New(),
 		Description: "description",
@@ -55,7 +55,7 @@ func mockPolicy(t *testing.T) hades.Policy {
 	out, err := json.Marshal(originalPolicy)
 	require.NoError(t, err)
 
-	var apiPolicy hades.Policy
+	var apiPolicy keto.Policy
 	require.NoError(t, json.Unmarshal(out, &apiPolicy))
 	out, err = json.Marshal(&apiPolicy)
 	require.NoError(t, err)
@@ -78,7 +78,7 @@ func TestPolicySDK(t *testing.T) {
 	handler.SetRoutes(router)
 	server := httptest.NewServer(router)
 
-	client := hades.NewPolicyApiWithBasePath(server.URL)
+	client := keto.NewPolicyApiWithBasePath(server.URL)
 
 	p := mockPolicy(t)
 

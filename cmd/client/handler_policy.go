@@ -27,16 +27,24 @@ import (
 
 	"net/http"
 
-	hades "github.com/ory/hades/sdk/go/hades/swagger"
+	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/ory/ladon"
 	"github.com/spf13/cobra"
 	"github.com/square/go-jose/json"
 )
 
-type PolicyHandler struct {}
+type PolicyHandler struct{}
 
-func (h *PolicyHandler) newPolicyManager(cmd *cobra.Command) *hades.PolicyApi {
-	c := hades.NewPolicyApiWithBasePath(getBasePath(cmd))
+func (h *PolicyHandler) newPolicyManager(cmd *cobra.Command) *keto.PolicyApi {
+	c := keto.NewPolicyApiWithBasePath(getBasePath(cmd))
+
+	if token, err := cmd.Flags().GetString("bearer-token"); err == nil && token != "" {
+		c.Configuration.DefaultHeader["Authorization"] = "Bearer " + token
+	}
+
+	if term, _ := cmd.Flags().GetBool("fake-tls-termination"); term {
+		c.Configuration.DefaultHeader["X-Forwarded-Proto"] = "https"
+	}
 	return c
 }
 
@@ -56,7 +64,7 @@ func (h *PolicyHandler) ImportPolicy(cmd *cobra.Command, args []string) {
 		reader, err := os.Open(path)
 		must(err, "Could not open file %s: %s", path, err)
 
-		var p hades.Policy
+		var p keto.Policy
 		err = json.NewDecoder(reader).Decode(&p)
 		must(err, "Could not parse JSON: %s", err)
 
@@ -97,7 +105,7 @@ func (h *PolicyHandler) CreatePolicy(cmd *cobra.Command, args []string) {
 		effect = ladon.AllowAccess
 	}
 
-	result, response, err := m.CreatePolicy(hades.Policy{
+	result, response, err := m.CreatePolicy(keto.Policy{
 		Id:          id,
 		Description: description,
 		Subjects:    subjects,

@@ -25,12 +25,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// policiesSubjectsCmd represents the subjects command
-var policiesSubjectsCmd = &cobra.Command{
-	Use:   "subjects",
-	Short: "Manage which subjects a policy applies to",
+// rolesCreateCmd represents the create command
+var rolesCreateCmd = &cobra.Command{
+	Use:   "create <id>",
+	Short: "Create a warden group",
+	Long: `This command creates a warden group.
+
+Example:
+  hydra groups create my-group
+`,
+	Run: cmdHandler.Groups.CreateGroup,
 }
 
 func init() {
-	policiesCmd.AddCommand(policiesSubjectsCmd)
+	rolesCmd.AddCommand(rolesCreateCmd)
 }

@@ -27,8 +27,8 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
-	. "github.com/ory/hades/role"
-	hades "github.com/ory/hades/sdk/go/hades/swagger"
+	. "github.com/ory/keto/role"
+	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/ory/herodot"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -50,20 +50,20 @@ func TestGroupSDK(t *testing.T) {
 	handler.SetRoutes(router)
 	server := httptest.NewServer(router)
 
-	client := hades.NewRoleApiWithBasePath(server.URL)
+	client := keto.NewRoleApiWithBasePath(server.URL)
 
 	t.Run("flows", func(*testing.T) {
 		_, response, err := client.GetRole("4321")
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusNotFound, response.StatusCode)
 
-		firstGroup := hades.Role{Id: "1", Members: []string{"bar", "foo"}}
+		firstGroup := keto.Role{Id: "1", Members: []string{"bar", "foo"}}
 		result, response, err := client.CreateRole(firstGroup)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusCreated, response.StatusCode)
 		assert.EqualValues(t, firstGroup, *result)
 
-		secondGroup := hades.Role{Id: "2", Members: []string{"foo"}}
+		secondGroup := keto.Role{Id: "2", Members: []string{"foo"}}
 		result, response, err = client.CreateRole(secondGroup)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusCreated, response.StatusCode)
@@ -94,14 +94,14 @@ func TestGroupSDK(t *testing.T) {
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 1)
 
-		client.AddMembersToRole("1", hades.GroupMembers{Members: []string{"baz"}})
+		client.AddMembersToRole("1", keto.GroupMembers{Members: []string{"baz"}})
 
 		results, response, err = client.ListRoles("baz", 100, 0)
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusOK, response.StatusCode)
 		assert.Len(t, results, 1)
 
-		response, err = client.RemoveMembersFromRole("1", hades.GroupMembers{Members: []string{"baz"}})
+		response, err = client.RemoveMembersFromRole("1", keto.GroupMembers{Members: []string{"baz"}})
 		require.NoError(t, err)
 		assert.Equal(t, http.StatusNoContent, response.StatusCode)
 

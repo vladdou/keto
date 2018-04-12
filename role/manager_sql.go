@@ -36,12 +36,12 @@ var migrations = &migrate.MemoryMigrationSource{
 	Migrations: []*migrate.Migration{
 		{
 			Id: "1",
-			Up: []string{`CREATE TABLE IF NOT EXISTS hades_role (
+			Up: []string{`CREATE TABLE IF NOT EXISTS keto_role (
 	id      	varchar(255) NOT NULL PRIMARY KEY
-)`, `CREATE TABLE IF NOT EXISTS hades_role_member (
+)`, `CREATE TABLE IF NOT EXISTS keto_role_member (
 	member		varchar(255) NOT NULL,
 	role_id		varchar(255) NOT NULL,
-	FOREIGN KEY (role_id) REFERENCES hades_role(id) ON DELETE CASCADE,
+	FOREIGN KEY (role_id) REFERENCES keto_role(id) ON DELETE CASCADE,
 	PRIMARY KEY (member, role_id)
 )`},
 			Down: []string{
@@ -63,9 +63,9 @@ type SQLManager struct {
 func NewSQLManager(db *sqlx.DB) *SQLManager {
 	return &SQLManager{
 		DB:             db,
-		TableRole:      "hades_role",
-		TableMember:    "hades_role_member",
-		TableMigration: "hades_role_migration",
+		TableRole:      "keto_role",
+		TableMember:    "keto_role_member",
+		TableMigration: "keto_role_migration",
 	}
 }
 

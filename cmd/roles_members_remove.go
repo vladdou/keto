@@ -25,12 +25,17 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// policiesSubjectsCmd represents the subjects command
-var policiesSubjectsCmd = &cobra.Command{
-	Use:   "subjects",
-	Short: "Manage which subjects a policy applies to",
+var rolesMembersRemoveCmd = &cobra.Command{
+	Use:   "remove <group> <member> [<member>...]",
+	Short: "Remove members from a warden group",
+	Long: `This command removes members from a warden group.
+
+Example:
+  hydra groups members remove my-group peter julia
+`,
+	Run: cmdHandler.Groups.RemoveMembers,
 }
 
 func init() {
-	policiesCmd.AddCommand(policiesSubjectsCmd)
+	rolesMembersCmd.AddCommand(rolesMembersRemoveCmd)
 }

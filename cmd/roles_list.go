@@ -25,12 +25,29 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// policiesSubjectsCmd represents the subjects command
-var policiesSubjectsCmd = &cobra.Command{
-	Use:   "subjects",
-	Short: "Manage which subjects a policy applies to",
+// rolesListCmd represents the list command
+var rolesListCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List all groups",
+	Long: `This command lists all groups.
+
+Example:
+  hydra groups list
+`,
+	Run: cmdHandler.Groups.ListGroups,
 }
 
 func init() {
-	policiesCmd.AddCommand(policiesSubjectsCmd)
+	rolesCmd.AddCommand(rolesListCmd)
+
+	// Here you will define your flags and configuration settings.
+
+	// Cobra supports Persistent Flags which will work for this command
+	// and all subcommands, e.g.:
+	// rolesListCmd.PersistentFlags().String("foo", "", "A help for foo")
+
+	// Cobra supports local flags which will only run when this command
+	// is called directly, e.g.:
+	// rolesListCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+
 }

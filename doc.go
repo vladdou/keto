@@ -1,10 +1,10 @@
-// Package main ORY Hades
+// Package main ORY Keto
 //
 //     Schemes: http, https
 //     Host:
 //     BasePath: /
 //     Version: Latest
-//     License: Apache 2.0 https://github.com/ory/hades/blob/master/LICENSE
+//     License: Apache 2.0 https://github.com/ory/keto/blob/master/LICENSE
 //     Contact: ORY <hi@ory.am> https://www.ory.sh
 //
 //     Consumes:

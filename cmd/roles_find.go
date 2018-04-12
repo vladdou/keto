@@ -25,12 +25,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// policiesSubjectsCmd represents the subjects command
-var policiesSubjectsCmd = &cobra.Command{
-	Use:   "subjects",
-	Short: "Manage which subjects a policy applies to",
+// rolesFindCmd represents the find command
+var rolesFindCmd = &cobra.Command{
+	Use:   "find <subject>",
+	Short: "Find all groups a subject belongs to",
+	Long: `This command finds all groups a subject belongs to.
+
+Example:
+  hydra groups find peter
+`,
+	Run: cmdHandler.Groups.FindGroups,
 }
 
 func init() {
-	policiesCmd.AddCommand(policiesSubjectsCmd)
+	rolesCmd.AddCommand(rolesFindCmd)
 }

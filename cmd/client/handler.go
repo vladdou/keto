@@ -15,8 +15,8 @@
 package client
 
 type Handler struct {
-	Policies   *PolicyHandler
-	Groups     *RoleHandler
+	Policies *PolicyHandler
+	Groups   *RoleHandler
 }
 
 func NewHandler() *Handler {

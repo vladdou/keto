@@ -25,13 +25,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// groupsCmd represents the groups command
-var groupsCmd = &cobra.Command{
-	Use:   "groups",
-	Short: "Manage warden groups",
+// rolesCmd represents the groups command
+var rolesCmd = &cobra.Command{
+	Use:   "rolesCmd",
+	Short: "Manage roles",
 }
 
 func init() {
-	RootCmd.AddCommand(groupsCmd)
-	policiesCmd.PersistentFlags().String("bearer-token", "", "Provide a token to be used if the server is protected by HTTP Bearer Authorization")
+	RootCmd.AddCommand(rolesCmd)
+	clientDefaultFlags(rolesCmd)
 }
