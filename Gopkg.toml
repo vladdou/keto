@@ -26,6 +26,14 @@
 
 
 [[constraint]]
+  name = "github.com/akutz/gotil"
+  version = "0.1.0"
+
+[[constraint]]
+  name = "github.com/go-resty/resty"
+  version = "1.4.0"
+
+[[constraint]]
   name = "github.com/go-sql-driver/mysql"
   version = "1.3.0"
 
@@ -90,6 +98,10 @@
   version = "0.8.0"
 
 [[constraint]]
+  name = "github.com/pkg/profile"
+  version = "1.2.1"
+
+[[constraint]]
   name = "github.com/rs/cors"
   version = "1.3.0"
 
@@ -110,6 +122,10 @@
   version = "1.0.2"
 
 [[constraint]]
+  name = "github.com/square/go-jose"
+  version = "2.1.6"
+
+[[constraint]]
   name = "github.com/stretchr/testify"
   version = "1.2.1"
 
@@ -120,10 +136,6 @@
 [[constraint]]
   branch = "master"
   name = "golang.org/x/oauth2"
-
-[[constraint]]
-  name = "gopkg.in/go-resty/resty.v0"
-  version = "0.13.0"
 
 [prune]
   go-tests = true
