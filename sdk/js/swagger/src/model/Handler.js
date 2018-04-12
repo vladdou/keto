@@ -14,25 +14,35 @@
  *
  */
 
-(function(root, factory) {
+;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['ApiClient', 'model/Firewall', 'model/KeyGenerator', 'model/Manager', 'model/Writer'], factory);
+    define(
+      ['ApiClient', 'model/Firewall', 'model/Manager', 'model/Writer'],
+      factory
+    )
   } else if (typeof module === 'object' && module.exports) {
     // CommonJS-like environments that support module.exports, like Node.
-    module.exports = factory(require('../ApiClient'), require('./Firewall'), require('./KeyGenerator'), require('./Manager'), require('./Writer'));
+    module.exports = factory(
+      require('../ApiClient'),
+      require('./Firewall'),
+      require('./Manager'),
+      require('./Writer')
+    )
   } else {
     // Browser globals (root is window)
     if (!root.SwaggerJsClient) {
-      root.SwaggerJsClient = {};
+      root.SwaggerJsClient = {}
     }
-    root.SwaggerJsClient.Handler = factory(root.SwaggerJsClient.ApiClient, root.SwaggerJsClient.Firewall, root.SwaggerJsClient.KeyGenerator, root.SwaggerJsClient.Manager, root.SwaggerJsClient.Writer);
+    root.SwaggerJsClient.Handler = factory(
+      root.SwaggerJsClient.ApiClient,
+      root.SwaggerJsClient.Firewall,
+      root.SwaggerJsClient.Manager,
+      root.SwaggerJsClient.Writer
+    )
   }
-}(this, function(ApiClient, Firewall, KeyGenerator, Manager, Writer) {
-  'use strict';
-
-
-
+})(this, function(ApiClient, Firewall, Manager, Writer) {
+  'use strict'
 
   /**
    * The Handler model module.
@@ -46,14 +56,8 @@
    * @class
    */
   var exports = function() {
-    var _this = this;
-
-
-
-
-
-
-  };
+    var _this = this
+  }
 
   /**
    * Constructs a <code>Handler</code> from a plain JavaScript object, optionally creating a new instance.
@@ -64,51 +68,43 @@
    */
   exports.constructFromObject = function(data, obj) {
     if (data) {
-      obj = obj || new exports();
+      obj = obj || new exports()
 
-      if (data.hasOwnProperty('Generators')) {
-        obj['Generators'] = ApiClient.convertToType(data['Generators'], {'String': KeyGenerator});
-      }
       if (data.hasOwnProperty('H')) {
-        obj['H'] = Writer.constructFromObject(data['H']);
+        obj['H'] = Writer.constructFromObject(data['H'])
       }
       if (data.hasOwnProperty('Manager')) {
-        obj['Manager'] = Manager.constructFromObject(data['Manager']);
+        obj['Manager'] = Manager.constructFromObject(data['Manager'])
       }
       if (data.hasOwnProperty('ResourcePrefix')) {
-        obj['ResourcePrefix'] = ApiClient.convertToType(data['ResourcePrefix'], 'String');
+        obj['ResourcePrefix'] = ApiClient.convertToType(
+          data['ResourcePrefix'],
+          'String'
+        )
       }
       if (data.hasOwnProperty('W')) {
-        obj['W'] = Firewall.constructFromObject(data['W']);
+        obj['W'] = Firewall.constructFromObject(data['W'])
       }
     }
-    return obj;
+    return obj
   }
 
   /**
-   * @member {Object.<String, module:model/KeyGenerator>} Generators
-   */
-  exports.prototype['Generators'] = undefined;
-  /**
    * @member {module:model/Writer} H
    */
-  exports.prototype['H'] = undefined;
+  exports.prototype['H'] = undefined
   /**
    * @member {module:model/Manager} Manager
    */
-  exports.prototype['Manager'] = undefined;
+  exports.prototype['Manager'] = undefined
   /**
    * @member {String} ResourcePrefix
    */
-  exports.prototype['ResourcePrefix'] = undefined;
+  exports.prototype['ResourcePrefix'] = undefined
   /**
    * @member {module:model/Firewall} W
    */
-  exports.prototype['W'] = undefined;
+  exports.prototype['W'] = undefined
 
-
-
-  return exports;
-}));
-
-
+  return exports
+})
