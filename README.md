@@ -1,7 +1,7 @@
 # ORY Keto
 
 <h4 align="center">
-    <a href="https://gitter.im/ory-am/hydra">Chat</a> |
+    <a href="https://discord.gg/PAMQWkr">Chat</a> |
     <a href="https://community.ory.am/">Forums</a> |
     <a href="http://eepurl.com/bKT3N9">Newsletter</a><br/><br/>
 </h4>
@@ -11,7 +11,7 @@ This service is a policy decision point. It uses a set of access control policie
 a subject (user, application, service, car, ...) is authorized to perform a certain action on a resource.
 
 <p align="left">
-    <a href="https://circleci.com/gh/ory/keto/tree/master"><img src="https://circleci.com/gh/ory/hydra/keto/master.svg?style=shield" alt="Build Status"></a>
+    <a href="https://circleci.com/gh/ory/keto/tree/master"><img src="https://circleci.com/gh/ory/keto/tree/master.svg?style=shield" alt="Build Status"></a>
     <a href="https://coveralls.io/github/ory/keto?branch=master"><img src="https://coveralls.io/repos/ory/keto/badge.svg?branch=master&service=github" alt="Coverage Status"></a>
     <a href="https://goreportcard.com/report/github.com/ory/keto"><img src="https://goreportcard.com/badge/github.com/ory/keto" alt="Go Report Card"></a>
 </p>
