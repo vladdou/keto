@@ -26,14 +26,14 @@ import (
 )
 
 var rolesMembersRemoveCmd = &cobra.Command{
-	Use:   "remove <group> <member> [<member>...]",
-	Short: "Remove members from a warden group",
-	Long: `This command removes members from a warden group.
+	Use:   "remove <role> <member> [<member>...]",
+	Short: "Remove members from a role",
+	Long: `This command removes members from a role.
 
 Example:
-  hydra groups members remove my-group peter julia
+  keto roles members remove my-group peter julia
 `,
-	Run: cmdHandler.Groups.RemoveMembers,
+	Run: cmdHandler.Roles.RoleRemoveMembers,
 }
 
 func init() {

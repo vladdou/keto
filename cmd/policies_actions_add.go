@@ -25,7 +25,7 @@ var policyActionsAddCmd = &cobra.Command{
 	Long: `You can use regular expressions in your matches. Encapsulate them in < >.
 
 Example:
-  hydra policies actions add my-policy create delete <[get|update]>`,
+  keto policies actions add my-policy create delete <[get|update]>`,
 	Run: cmdHandler.Policies.AddActionToPolicy,
 }
 

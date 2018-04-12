@@ -28,16 +28,16 @@ import (
 
 	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/spf13/cobra"
+	"strings"
 )
 
 func getBasePath(cmd *cobra.Command) string {
-	location, err := cmd.Flags().GetString("bearer-token")
+	location, err := cmd.Flags().GetString("url")
 	if err != nil || location == "" {
 		fmt.Println(cmd.UsageString())
 		fatalf("Please set the location of ORY Keto by using the --url flag or the KETO_URL environment variable.")
-		return ""
 	}
-	return location
+	return strings.TrimRight(location, "/")
 }
 
 func must(err error, message string, args ...interface{}) {
@@ -65,7 +65,7 @@ func formatResponse(response interface{}) string {
 	return string(out)
 }
 
-func fatalf(message string, args ...string) {
+func fatalf(message string, args ...interface{}) {
 	fmt.Printf(message+"\n", args)
 	os.Exit(1)
 }

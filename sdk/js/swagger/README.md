@@ -96,7 +96,11 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```javascript
 var SwaggerJsClient = require('swagger-js-client');
 
-var api = new SwaggerJsClient.HealthApi()
+var api = new SwaggerJsClient.PolicyApi()
+
+var opts = { 
+  'body': new SwaggerJsClient.Policy() // {Policy} 
+};
 
 var callback = function(error, data, response) {
   if (error) {
@@ -105,7 +109,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getInstanceStatus(callback);
+api.createPolicy(opts, callback);
 
 ```
 
@@ -115,101 +119,50 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*SwaggerJsClient.HealthApi* | [**getInstanceStatus**](docs/HealthApi.md#getInstanceStatus) | **GET** /health/status | Check health status of this instance
-*SwaggerJsClient.JsonWebKeyApi* | [**createJsonWebKeySet**](docs/JsonWebKeyApi.md#createJsonWebKeySet) | **POST** /keys/{set} | Generate a new JSON Web Key
-*SwaggerJsClient.JsonWebKeyApi* | [**deleteJsonWebKey**](docs/JsonWebKeyApi.md#deleteJsonWebKey) | **DELETE** /keys/{set}/{kid} | Delete a JSON Web Key
-*SwaggerJsClient.JsonWebKeyApi* | [**deleteJsonWebKeySet**](docs/JsonWebKeyApi.md#deleteJsonWebKeySet) | **DELETE** /keys/{set} | Delete a JSON Web Key
-*SwaggerJsClient.JsonWebKeyApi* | [**getJsonWebKey**](docs/JsonWebKeyApi.md#getJsonWebKey) | **GET** /keys/{set}/{kid} | Retrieve a JSON Web Key
-*SwaggerJsClient.JsonWebKeyApi* | [**getJsonWebKeySet**](docs/JsonWebKeyApi.md#getJsonWebKeySet) | **GET** /keys/{set} | Retrieve a JSON Web Key Set
-*SwaggerJsClient.JsonWebKeyApi* | [**updateJsonWebKey**](docs/JsonWebKeyApi.md#updateJsonWebKey) | **PUT** /keys/{set}/{kid} | Update a JSON Web Key
-*SwaggerJsClient.JsonWebKeyApi* | [**updateJsonWebKeySet**](docs/JsonWebKeyApi.md#updateJsonWebKeySet) | **PUT** /keys/{set} | Update a JSON Web Key Set
-*SwaggerJsClient.OAuth2Api* | [**acceptOAuth2ConsentRequest**](docs/OAuth2Api.md#acceptOAuth2ConsentRequest) | **PATCH** /oauth2/consent/requests/{id}/accept | Accept a consent request
-*SwaggerJsClient.OAuth2Api* | [**createOAuth2Client**](docs/OAuth2Api.md#createOAuth2Client) | **POST** /clients | Create an OAuth 2.0 client
-*SwaggerJsClient.OAuth2Api* | [**deleteOAuth2Client**](docs/OAuth2Api.md#deleteOAuth2Client) | **DELETE** /clients/{id} | Deletes an OAuth 2.0 Client
-*SwaggerJsClient.OAuth2Api* | [**getOAuth2Client**](docs/OAuth2Api.md#getOAuth2Client) | **GET** /clients/{id} | Retrieve an OAuth 2.0 Client.
-*SwaggerJsClient.OAuth2Api* | [**getOAuth2ConsentRequest**](docs/OAuth2Api.md#getOAuth2ConsentRequest) | **GET** /oauth2/consent/requests/{id} | Receive consent request information
-*SwaggerJsClient.OAuth2Api* | [**getWellKnown**](docs/OAuth2Api.md#getWellKnown) | **GET** /.well-known/openid-configuration | Server well known configuration
-*SwaggerJsClient.OAuth2Api* | [**introspectOAuth2Token**](docs/OAuth2Api.md#introspectOAuth2Token) | **POST** /oauth2/introspect | Introspect OAuth2 tokens
-*SwaggerJsClient.OAuth2Api* | [**listOAuth2Clients**](docs/OAuth2Api.md#listOAuth2Clients) | **GET** /clients | List OAuth 2.0 Clients
-*SwaggerJsClient.OAuth2Api* | [**oauthAuth**](docs/OAuth2Api.md#oauthAuth) | **GET** /oauth2/auth | The OAuth 2.0 authorize endpoint
-*SwaggerJsClient.OAuth2Api* | [**oauthToken**](docs/OAuth2Api.md#oauthToken) | **POST** /oauth2/token | The OAuth 2.0 token endpoint
-*SwaggerJsClient.OAuth2Api* | [**rejectOAuth2ConsentRequest**](docs/OAuth2Api.md#rejectOAuth2ConsentRequest) | **PATCH** /oauth2/consent/requests/{id}/reject | Reject a consent request
-*SwaggerJsClient.OAuth2Api* | [**revokeOAuth2Token**](docs/OAuth2Api.md#revokeOAuth2Token) | **POST** /oauth2/revoke | Revoke OAuth2 tokens
-*SwaggerJsClient.OAuth2Api* | [**updateOAuth2Client**](docs/OAuth2Api.md#updateOAuth2Client) | **PUT** /clients/{id} | Update an OAuth 2.0 Client
-*SwaggerJsClient.OAuth2Api* | [**userinfo**](docs/OAuth2Api.md#userinfo) | **POST** /userinfo | OpenID Connect Userinfo
-*SwaggerJsClient.OAuth2Api* | [**wellKnown**](docs/OAuth2Api.md#wellKnown) | **GET** /.well-known/jwks.json | Get list of well known JSON Web Keys
-*SwaggerJsClient.PolicyApi* | [**createPolicy**](docs/PolicyApi.md#createPolicy) | **POST** /policies | Create an Access Control Policy
-*SwaggerJsClient.PolicyApi* | [**deletePolicy**](docs/PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | Delete an Access Control Policy
-*SwaggerJsClient.PolicyApi* | [**getPolicy**](docs/PolicyApi.md#getPolicy) | **GET** /policies/{id} | Get an Access Control Policy
-*SwaggerJsClient.PolicyApi* | [**listPolicies**](docs/PolicyApi.md#listPolicies) | **GET** /policies | List Access Control Policies
-*SwaggerJsClient.PolicyApi* | [**updatePolicy**](docs/PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | Update an Access Control Polic
-*SwaggerJsClient.WardenApi* | [**addMembersToGroup**](docs/WardenApi.md#addMembersToGroup) | **POST** /warden/groups/{id}/members | Add members to a group
-*SwaggerJsClient.WardenApi* | [**createGroup**](docs/WardenApi.md#createGroup) | **POST** /warden/groups | Create a group
-*SwaggerJsClient.WardenApi* | [**deleteGroup**](docs/WardenApi.md#deleteGroup) | **DELETE** /warden/groups/{id} | Delete a group by id
-*SwaggerJsClient.WardenApi* | [**doesWardenAllowAccessRequest**](docs/WardenApi.md#doesWardenAllowAccessRequest) | **POST** /warden/allowed | Check if an access request is valid (without providing an access token)
-*SwaggerJsClient.WardenApi* | [**doesWardenAllowTokenAccessRequest**](docs/WardenApi.md#doesWardenAllowTokenAccessRequest) | **POST** /warden/token/allowed | Check if an access request is valid (providing an access token)
-*SwaggerJsClient.WardenApi* | [**getGroup**](docs/WardenApi.md#getGroup) | **GET** /warden/groups/{id} | Get a group by id
-*SwaggerJsClient.WardenApi* | [**listGroups**](docs/WardenApi.md#listGroups) | **GET** /warden/groups | List groups
-*SwaggerJsClient.WardenApi* | [**removeMembersFromGroup**](docs/WardenApi.md#removeMembersFromGroup) | **DELETE** /warden/groups/{id}/members | Remove members from a group
+*SwaggerJsClient.PolicyApi* | [**createPolicy**](docs/PolicyApi.md#createPolicy) | **POST** /policies | 
+*SwaggerJsClient.PolicyApi* | [**deletePolicy**](docs/PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | 
+*SwaggerJsClient.PolicyApi* | [**getPolicy**](docs/PolicyApi.md#getPolicy) | **GET** /policies/{id} | 
+*SwaggerJsClient.PolicyApi* | [**listPolicies**](docs/PolicyApi.md#listPolicies) | **GET** /policies | 
+*SwaggerJsClient.PolicyApi* | [**updatePolicy**](docs/PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | 
+*SwaggerJsClient.RoleApi* | [**addMembersToRole**](docs/RoleApi.md#addMembersToRole) | **POST** /roles/{id}/members | Add members to a role
+*SwaggerJsClient.RoleApi* | [**createRole**](docs/RoleApi.md#createRole) | **POST** /roles | Create a role
+*SwaggerJsClient.RoleApi* | [**deleteRole**](docs/RoleApi.md#deleteRole) | **DELETE** /roles/{id} | Get a role by its ID
+*SwaggerJsClient.RoleApi* | [**getRole**](docs/RoleApi.md#getRole) | **GET** /roles/{id} | Get a role by its ID
+*SwaggerJsClient.RoleApi* | [**listRoles**](docs/RoleApi.md#listRoles) | **GET** /roles | List all roles
+*SwaggerJsClient.RoleApi* | [**removeMembersFromRole**](docs/RoleApi.md#removeMembersFromRole) | **DELETE** /roles/{id}/members | Remove members from a role
+*SwaggerJsClient.WardenApi* | [**isOAuth2AccessTokenAuthorized**](docs/WardenApi.md#isOAuth2AccessTokenAuthorized) | **POST** /warden/oauth2/authorize | Check if an OAuth 2.0 access token is authorized to access a resource
+*SwaggerJsClient.WardenApi* | [**isSubjectAuthorized**](docs/WardenApi.md#isSubjectAuthorized) | **POST** /warden/subjects/authorize | Check if a subject is authorized to access a resource
 
 
 ## Documentation for Models
 
- - [SwaggerJsClient.ConsentRequest](docs/ConsentRequest.md)
- - [SwaggerJsClient.ConsentRequestAcceptance](docs/ConsentRequestAcceptance.md)
- - [SwaggerJsClient.ConsentRequestManager](docs/ConsentRequestManager.md)
- - [SwaggerJsClient.ConsentRequestRejection](docs/ConsentRequestRejection.md)
+ - [SwaggerJsClient.AuthenticationDefaultSession](docs/AuthenticationDefaultSession.md)
+ - [SwaggerJsClient.AuthenticationOAuth2IntrospectionRequest](docs/AuthenticationOAuth2IntrospectionRequest.md)
+ - [SwaggerJsClient.AuthenticationOAuth2Session](docs/AuthenticationOAuth2Session.md)
+ - [SwaggerJsClient.Authenticator](docs/Authenticator.md)
  - [SwaggerJsClient.Context](docs/Context.md)
  - [SwaggerJsClient.Firewall](docs/Firewall.md)
- - [SwaggerJsClient.Group](docs/Group.md)
  - [SwaggerJsClient.GroupMembers](docs/GroupMembers.md)
  - [SwaggerJsClient.Handler](docs/Handler.md)
- - [SwaggerJsClient.InlineResponse200](docs/InlineResponse200.md)
- - [SwaggerJsClient.InlineResponse2001](docs/InlineResponse2001.md)
  - [SwaggerJsClient.InlineResponse401](docs/InlineResponse401.md)
- - [SwaggerJsClient.JoseWebKeySetRequest](docs/JoseWebKeySetRequest.md)
- - [SwaggerJsClient.JsonWebKey](docs/JsonWebKey.md)
- - [SwaggerJsClient.JsonWebKeySet](docs/JsonWebKeySet.md)
- - [SwaggerJsClient.JsonWebKeySetGeneratorRequest](docs/JsonWebKeySetGeneratorRequest.md)
- - [SwaggerJsClient.KeyGenerator](docs/KeyGenerator.md)
+ - [SwaggerJsClient.IntrospectionResponse](docs/IntrospectionResponse.md)
+ - [SwaggerJsClient.IsOAuth2AccessTokenAuthorized](docs/IsOAuth2AccessTokenAuthorized.md)
  - [SwaggerJsClient.Manager](docs/Manager.md)
- - [SwaggerJsClient.OAuth2Client](docs/OAuth2Client.md)
- - [SwaggerJsClient.OAuth2ConsentRequest](docs/OAuth2ConsentRequest.md)
- - [SwaggerJsClient.OAuth2TokenIntrospection](docs/OAuth2TokenIntrospection.md)
+ - [SwaggerJsClient.OAuth2IntrospectionAuthentication](docs/OAuth2IntrospectionAuthentication.md)
  - [SwaggerJsClient.Policy](docs/Policy.md)
  - [SwaggerJsClient.PolicyConditions](docs/PolicyConditions.md)
- - [SwaggerJsClient.RawMessage](docs/RawMessage.md)
- - [SwaggerJsClient.SwaggerAcceptConsentRequest](docs/SwaggerAcceptConsentRequest.md)
+ - [SwaggerJsClient.Role](docs/Role.md)
+ - [SwaggerJsClient.Session](docs/Session.md)
  - [SwaggerJsClient.SwaggerCreatePolicyParameters](docs/SwaggerCreatePolicyParameters.md)
  - [SwaggerJsClient.SwaggerDoesWardenAllowAccessRequestParameters](docs/SwaggerDoesWardenAllowAccessRequestParameters.md)
- - [SwaggerJsClient.SwaggerDoesWardenAllowTokenAccessRequestParameters](docs/SwaggerDoesWardenAllowTokenAccessRequestParameters.md)
+ - [SwaggerJsClient.SwaggerDoesWardenAllowTokenAccessRqeuestParameters](docs/SwaggerDoesWardenAllowTokenAccessRqeuestParameters.md)
  - [SwaggerJsClient.SwaggerGetPolicyParameters](docs/SwaggerGetPolicyParameters.md)
- - [SwaggerJsClient.SwaggerJsonWebKeyQuery](docs/SwaggerJsonWebKeyQuery.md)
- - [SwaggerJsClient.SwaggerJwkCreateSet](docs/SwaggerJwkCreateSet.md)
- - [SwaggerJsClient.SwaggerJwkSetQuery](docs/SwaggerJwkSetQuery.md)
- - [SwaggerJsClient.SwaggerJwkUpdateSet](docs/SwaggerJwkUpdateSet.md)
- - [SwaggerJsClient.SwaggerJwkUpdateSetKey](docs/SwaggerJwkUpdateSetKey.md)
  - [SwaggerJsClient.SwaggerListPolicyParameters](docs/SwaggerListPolicyParameters.md)
  - [SwaggerJsClient.SwaggerListPolicyResponse](docs/SwaggerListPolicyResponse.md)
- - [SwaggerJsClient.SwaggerOAuthConsentRequest](docs/SwaggerOAuthConsentRequest.md)
- - [SwaggerJsClient.SwaggerOAuthConsentRequestPayload](docs/SwaggerOAuthConsentRequestPayload.md)
- - [SwaggerJsClient.SwaggerOAuthIntrospectionRequest](docs/SwaggerOAuthIntrospectionRequest.md)
- - [SwaggerJsClient.SwaggerOAuthIntrospectionResponse](docs/SwaggerOAuthIntrospectionResponse.md)
- - [SwaggerJsClient.SwaggerOAuthTokenResponse](docs/SwaggerOAuthTokenResponse.md)
- - [SwaggerJsClient.SwaggerOAuthTokenResponseBody](docs/SwaggerOAuthTokenResponseBody.md)
- - [SwaggerJsClient.SwaggerRejectConsentRequest](docs/SwaggerRejectConsentRequest.md)
- - [SwaggerJsClient.SwaggerRevokeOAuth2TokenParameters](docs/SwaggerRevokeOAuth2TokenParameters.md)
  - [SwaggerJsClient.SwaggerUpdatePolicyParameters](docs/SwaggerUpdatePolicyParameters.md)
- - [SwaggerJsClient.SwaggerWardenAccessRequestResponseParameters](docs/SwaggerWardenAccessRequestResponseParameters.md)
- - [SwaggerJsClient.SwaggerWardenTokenAccessRequestResponse](docs/SwaggerWardenTokenAccessRequestResponse.md)
- - [SwaggerJsClient.SwaggeruserinfoResponse](docs/SwaggeruserinfoResponse.md)
- - [SwaggerJsClient.SwaggeruserinfoResponsePayload](docs/SwaggeruserinfoResponsePayload.md)
+ - [SwaggerJsClient.SwaggerWardenBaseRequest](docs/SwaggerWardenBaseRequest.md)
  - [SwaggerJsClient.TokenAllowedRequest](docs/TokenAllowedRequest.md)
  - [SwaggerJsClient.WardenAccessRequest](docs/WardenAccessRequest.md)
- - [SwaggerJsClient.WardenAccessRequestResponse](docs/WardenAccessRequestResponse.md)
- - [SwaggerJsClient.WardenTokenAccessRequest](docs/WardenTokenAccessRequest.md)
- - [SwaggerJsClient.WardenTokenAccessRequestResponse](docs/WardenTokenAccessRequestResponse.md)
- - [SwaggerJsClient.WellKnown](docs/WellKnown.md)
  - [SwaggerJsClient.Writer](docs/Writer.md)
 
 

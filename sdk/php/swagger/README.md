@@ -57,13 +57,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 <?php
 require_once(__DIR__ . '/vendor/autoload.php');
 
-$api_instance = new keto\SDK\Api\HealthApi();
+$api_instance = new keto\SDK\Api\PolicyApi();
+$body = new \keto\SDK\Model\Policy(); // \keto\SDK\Model\Policy | 
 
 try {
-    $result = $api_instance->getInstanceStatus();
+    $result = $api_instance->createPolicy($body);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling HealthApi->getInstanceStatus: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling PolicyApi->createPolicy: ', $e->getMessage(), PHP_EOL;
 }
 
 ?>
@@ -75,101 +76,50 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*HealthApi* | [**getInstanceStatus**](docs/Api/HealthApi.md#getinstancestatus) | **GET** /health/status | Check health status of this instance
-*JsonWebKeyApi* | [**createJsonWebKeySet**](docs/Api/JsonWebKeyApi.md#createjsonwebkeyset) | **POST** /keys/{set} | Generate a new JSON Web Key
-*JsonWebKeyApi* | [**deleteJsonWebKey**](docs/Api/JsonWebKeyApi.md#deletejsonwebkey) | **DELETE** /keys/{set}/{kid} | Delete a JSON Web Key
-*JsonWebKeyApi* | [**deleteJsonWebKeySet**](docs/Api/JsonWebKeyApi.md#deletejsonwebkeyset) | **DELETE** /keys/{set} | Delete a JSON Web Key
-*JsonWebKeyApi* | [**getJsonWebKey**](docs/Api/JsonWebKeyApi.md#getjsonwebkey) | **GET** /keys/{set}/{kid} | Retrieve a JSON Web Key
-*JsonWebKeyApi* | [**getJsonWebKeySet**](docs/Api/JsonWebKeyApi.md#getjsonwebkeyset) | **GET** /keys/{set} | Retrieve a JSON Web Key Set
-*JsonWebKeyApi* | [**updateJsonWebKey**](docs/Api/JsonWebKeyApi.md#updatejsonwebkey) | **PUT** /keys/{set}/{kid} | Update a JSON Web Key
-*JsonWebKeyApi* | [**updateJsonWebKeySet**](docs/Api/JsonWebKeyApi.md#updatejsonwebkeyset) | **PUT** /keys/{set} | Update a JSON Web Key Set
-*OAuth2Api* | [**acceptOAuth2ConsentRequest**](docs/Api/OAuth2Api.md#acceptoauth2consentrequest) | **PATCH** /oauth2/consent/requests/{id}/accept | Accept a consent request
-*OAuth2Api* | [**createOAuth2Client**](docs/Api/OAuth2Api.md#createoauth2client) | **POST** /clients | Create an OAuth 2.0 client
-*OAuth2Api* | [**deleteOAuth2Client**](docs/Api/OAuth2Api.md#deleteoauth2client) | **DELETE** /clients/{id} | Deletes an OAuth 2.0 Client
-*OAuth2Api* | [**getOAuth2Client**](docs/Api/OAuth2Api.md#getoauth2client) | **GET** /clients/{id} | Retrieve an OAuth 2.0 Client.
-*OAuth2Api* | [**getOAuth2ConsentRequest**](docs/Api/OAuth2Api.md#getoauth2consentrequest) | **GET** /oauth2/consent/requests/{id} | Receive consent request information
-*OAuth2Api* | [**getWellKnown**](docs/Api/OAuth2Api.md#getwellknown) | **GET** /.well-known/openid-configuration | Server well known configuration
-*OAuth2Api* | [**introspectOAuth2Token**](docs/Api/OAuth2Api.md#introspectoauth2token) | **POST** /oauth2/introspect | Introspect OAuth2 tokens
-*OAuth2Api* | [**listOAuth2Clients**](docs/Api/OAuth2Api.md#listoauth2clients) | **GET** /clients | List OAuth 2.0 Clients
-*OAuth2Api* | [**oauthAuth**](docs/Api/OAuth2Api.md#oauthauth) | **GET** /oauth2/auth | The OAuth 2.0 authorize endpoint
-*OAuth2Api* | [**oauthToken**](docs/Api/OAuth2Api.md#oauthtoken) | **POST** /oauth2/token | The OAuth 2.0 token endpoint
-*OAuth2Api* | [**rejectOAuth2ConsentRequest**](docs/Api/OAuth2Api.md#rejectoauth2consentrequest) | **PATCH** /oauth2/consent/requests/{id}/reject | Reject a consent request
-*OAuth2Api* | [**revokeOAuth2Token**](docs/Api/OAuth2Api.md#revokeoauth2token) | **POST** /oauth2/revoke | Revoke OAuth2 tokens
-*OAuth2Api* | [**updateOAuth2Client**](docs/Api/OAuth2Api.md#updateoauth2client) | **PUT** /clients/{id} | Update an OAuth 2.0 Client
-*OAuth2Api* | [**userinfo**](docs/Api/OAuth2Api.md#userinfo) | **POST** /userinfo | OpenID Connect Userinfo
-*OAuth2Api* | [**wellKnown**](docs/Api/OAuth2Api.md#wellknown) | **GET** /.well-known/jwks.json | Get list of well known JSON Web Keys
-*PolicyApi* | [**createPolicy**](docs/Api/PolicyApi.md#createpolicy) | **POST** /policies | Create an Access Control Policy
-*PolicyApi* | [**deletePolicy**](docs/Api/PolicyApi.md#deletepolicy) | **DELETE** /policies/{id} | Delete an Access Control Policy
-*PolicyApi* | [**getPolicy**](docs/Api/PolicyApi.md#getpolicy) | **GET** /policies/{id} | Get an Access Control Policy
-*PolicyApi* | [**listPolicies**](docs/Api/PolicyApi.md#listpolicies) | **GET** /policies | List Access Control Policies
-*PolicyApi* | [**updatePolicy**](docs/Api/PolicyApi.md#updatepolicy) | **PUT** /policies/{id} | Update an Access Control Polic
-*WardenApi* | [**addMembersToGroup**](docs/Api/WardenApi.md#addmemberstogroup) | **POST** /warden/groups/{id}/members | Add members to a group
-*WardenApi* | [**createGroup**](docs/Api/WardenApi.md#creategroup) | **POST** /warden/groups | Create a group
-*WardenApi* | [**deleteGroup**](docs/Api/WardenApi.md#deletegroup) | **DELETE** /warden/groups/{id} | Delete a group by id
-*WardenApi* | [**doesWardenAllowAccessRequest**](docs/Api/WardenApi.md#doeswardenallowaccessrequest) | **POST** /warden/allowed | Check if an access request is valid (without providing an access token)
-*WardenApi* | [**doesWardenAllowTokenAccessRequest**](docs/Api/WardenApi.md#doeswardenallowtokenaccessrequest) | **POST** /warden/token/allowed | Check if an access request is valid (providing an access token)
-*WardenApi* | [**getGroup**](docs/Api/WardenApi.md#getgroup) | **GET** /warden/groups/{id} | Get a group by id
-*WardenApi* | [**listGroups**](docs/Api/WardenApi.md#listgroups) | **GET** /warden/groups | List groups
-*WardenApi* | [**removeMembersFromGroup**](docs/Api/WardenApi.md#removemembersfromgroup) | **DELETE** /warden/groups/{id}/members | Remove members from a group
+*PolicyApi* | [**createPolicy**](docs/Api/PolicyApi.md#createpolicy) | **POST** /policies | 
+*PolicyApi* | [**deletePolicy**](docs/Api/PolicyApi.md#deletepolicy) | **DELETE** /policies/{id} | 
+*PolicyApi* | [**getPolicy**](docs/Api/PolicyApi.md#getpolicy) | **GET** /policies/{id} | 
+*PolicyApi* | [**listPolicies**](docs/Api/PolicyApi.md#listpolicies) | **GET** /policies | 
+*PolicyApi* | [**updatePolicy**](docs/Api/PolicyApi.md#updatepolicy) | **PUT** /policies/{id} | 
+*RoleApi* | [**addMembersToRole**](docs/Api/RoleApi.md#addmemberstorole) | **POST** /roles/{id}/members | Add members to a role
+*RoleApi* | [**createRole**](docs/Api/RoleApi.md#createrole) | **POST** /roles | Create a role
+*RoleApi* | [**deleteRole**](docs/Api/RoleApi.md#deleterole) | **DELETE** /roles/{id} | Get a role by its ID
+*RoleApi* | [**getRole**](docs/Api/RoleApi.md#getrole) | **GET** /roles/{id} | Get a role by its ID
+*RoleApi* | [**listRoles**](docs/Api/RoleApi.md#listroles) | **GET** /roles | List all roles
+*RoleApi* | [**removeMembersFromRole**](docs/Api/RoleApi.md#removemembersfromrole) | **DELETE** /roles/{id}/members | Remove members from a role
+*WardenApi* | [**isOAuth2AccessTokenAuthorized**](docs/Api/WardenApi.md#isoauth2accesstokenauthorized) | **POST** /warden/oauth2/authorize | Check if an OAuth 2.0 access token is authorized to access a resource
+*WardenApi* | [**isSubjectAuthorized**](docs/Api/WardenApi.md#issubjectauthorized) | **POST** /warden/subjects/authorize | Check if a subject is authorized to access a resource
 
 
 ## Documentation For Models
 
- - [ConsentRequest](docs/Model/ConsentRequest.md)
- - [ConsentRequestAcceptance](docs/Model/ConsentRequestAcceptance.md)
- - [ConsentRequestManager](docs/Model/ConsentRequestManager.md)
- - [ConsentRequestRejection](docs/Model/ConsentRequestRejection.md)
+ - [AuthenticationDefaultSession](docs/Model/AuthenticationDefaultSession.md)
+ - [AuthenticationOAuth2IntrospectionRequest](docs/Model/AuthenticationOAuth2IntrospectionRequest.md)
+ - [AuthenticationOAuth2Session](docs/Model/AuthenticationOAuth2Session.md)
+ - [Authenticator](docs/Model/Authenticator.md)
  - [Context](docs/Model/Context.md)
  - [Firewall](docs/Model/Firewall.md)
- - [Group](docs/Model/Group.md)
  - [GroupMembers](docs/Model/GroupMembers.md)
  - [Handler](docs/Model/Handler.md)
- - [InlineResponse200](docs/Model/InlineResponse200.md)
- - [InlineResponse2001](docs/Model/InlineResponse2001.md)
  - [InlineResponse401](docs/Model/InlineResponse401.md)
- - [JoseWebKeySetRequest](docs/Model/JoseWebKeySetRequest.md)
- - [JsonWebKey](docs/Model/JsonWebKey.md)
- - [JsonWebKeySet](docs/Model/JsonWebKeySet.md)
- - [JsonWebKeySetGeneratorRequest](docs/Model/JsonWebKeySetGeneratorRequest.md)
- - [KeyGenerator](docs/Model/KeyGenerator.md)
+ - [IntrospectionResponse](docs/Model/IntrospectionResponse.md)
+ - [IsOAuth2AccessTokenAuthorized](docs/Model/IsOAuth2AccessTokenAuthorized.md)
  - [Manager](docs/Model/Manager.md)
- - [OAuth2Client](docs/Model/OAuth2Client.md)
- - [OAuth2ConsentRequest](docs/Model/OAuth2ConsentRequest.md)
- - [OAuth2TokenIntrospection](docs/Model/OAuth2TokenIntrospection.md)
+ - [OAuth2IntrospectionAuthentication](docs/Model/OAuth2IntrospectionAuthentication.md)
  - [Policy](docs/Model/Policy.md)
  - [PolicyConditions](docs/Model/PolicyConditions.md)
- - [RawMessage](docs/Model/RawMessage.md)
- - [SwaggerAcceptConsentRequest](docs/Model/SwaggerAcceptConsentRequest.md)
+ - [Role](docs/Model/Role.md)
+ - [Session](docs/Model/Session.md)
  - [SwaggerCreatePolicyParameters](docs/Model/SwaggerCreatePolicyParameters.md)
  - [SwaggerDoesWardenAllowAccessRequestParameters](docs/Model/SwaggerDoesWardenAllowAccessRequestParameters.md)
- - [SwaggerDoesWardenAllowTokenAccessRequestParameters](docs/Model/SwaggerDoesWardenAllowTokenAccessRequestParameters.md)
+ - [SwaggerDoesWardenAllowTokenAccessRqeuestParameters](docs/Model/SwaggerDoesWardenAllowTokenAccessRqeuestParameters.md)
  - [SwaggerGetPolicyParameters](docs/Model/SwaggerGetPolicyParameters.md)
- - [SwaggerJsonWebKeyQuery](docs/Model/SwaggerJsonWebKeyQuery.md)
- - [SwaggerJwkCreateSet](docs/Model/SwaggerJwkCreateSet.md)
- - [SwaggerJwkSetQuery](docs/Model/SwaggerJwkSetQuery.md)
- - [SwaggerJwkUpdateSet](docs/Model/SwaggerJwkUpdateSet.md)
- - [SwaggerJwkUpdateSetKey](docs/Model/SwaggerJwkUpdateSetKey.md)
  - [SwaggerListPolicyParameters](docs/Model/SwaggerListPolicyParameters.md)
  - [SwaggerListPolicyResponse](docs/Model/SwaggerListPolicyResponse.md)
- - [SwaggerOAuthConsentRequest](docs/Model/SwaggerOAuthConsentRequest.md)
- - [SwaggerOAuthConsentRequestPayload](docs/Model/SwaggerOAuthConsentRequestPayload.md)
- - [SwaggerOAuthIntrospectionRequest](docs/Model/SwaggerOAuthIntrospectionRequest.md)
- - [SwaggerOAuthIntrospectionResponse](docs/Model/SwaggerOAuthIntrospectionResponse.md)
- - [SwaggerOAuthTokenResponse](docs/Model/SwaggerOAuthTokenResponse.md)
- - [SwaggerOAuthTokenResponseBody](docs/Model/SwaggerOAuthTokenResponseBody.md)
- - [SwaggerRejectConsentRequest](docs/Model/SwaggerRejectConsentRequest.md)
- - [SwaggerRevokeOAuth2TokenParameters](docs/Model/SwaggerRevokeOAuth2TokenParameters.md)
  - [SwaggerUpdatePolicyParameters](docs/Model/SwaggerUpdatePolicyParameters.md)
- - [SwaggerWardenAccessRequestResponseParameters](docs/Model/SwaggerWardenAccessRequestResponseParameters.md)
- - [SwaggerWardenTokenAccessRequestResponse](docs/Model/SwaggerWardenTokenAccessRequestResponse.md)
- - [SwaggeruserinfoResponse](docs/Model/SwaggeruserinfoResponse.md)
- - [SwaggeruserinfoResponsePayload](docs/Model/SwaggeruserinfoResponsePayload.md)
+ - [SwaggerWardenBaseRequest](docs/Model/SwaggerWardenBaseRequest.md)
  - [TokenAllowedRequest](docs/Model/TokenAllowedRequest.md)
  - [WardenAccessRequest](docs/Model/WardenAccessRequest.md)
- - [WardenAccessRequestResponse](docs/Model/WardenAccessRequestResponse.md)
- - [WardenTokenAccessRequest](docs/Model/WardenTokenAccessRequest.md)
- - [WardenTokenAccessRequestResponse](docs/Model/WardenTokenAccessRequestResponse.md)
- - [WellKnown](docs/Model/WellKnown.md)
  - [Writer](docs/Model/Writer.md)
 
 

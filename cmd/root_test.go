@@ -39,6 +39,7 @@ func TestExecute(t *testing.T) {
 	port := gotil.RandomTCPPort()
 	os.Setenv("DATABASE_URL", "memory")
 	os.Setenv("PORT", fmt.Sprintf("%d", port))
+
 	copy(osArgs, os.Args)
 
 	for _, c := range []struct {
@@ -53,9 +54,28 @@ func TestExecute(t *testing.T) {
 				return !gotil.IsTCPPortAvailable(port)
 			},
 		},
-		{args: []string{"roles", "list"}},
+		{args: []string{"roles", "list", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"roles", "create", "role-a", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"roles", "get", "role-a", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"roles", "members", "add", "role-a", "member-a", "member-b", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"roles", "members", "remove", "role-a", "member-a", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"roles", "find", "member-a", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"roles", "delete", "role-a", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "create", "-i", "foobar", "-s", "peter,max", "-r", "blog,users", "-a", "post,ban", "--allow", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "actions", "add", "foobar", "update|create", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "actions", "remove", "foobar", "update|create", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "resources", "add", "foobar", "printer", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "resources", "remove", "foobar", "printer", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "subjects", "add", "foobar", "ken", "tracy", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "subjects", "remove", "foobar", "ken", "tracy", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "get", "foobar", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"policies", "delete", "foobar", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"warden", "authorize", "subject", "--subject", "foo", "--action", "bar", "--resource", "baz", "--url", fmt.Sprintf("http://127.0.0.1:%d", port)}},
+		{args: []string{"help", "migrate", "sql"}},
+		{args: []string{"help", "migrate", "hydra"}},
+		{args: []string{"version"}},
 	} {
-		c.args = append(c.args, []string{"--url", fmt.Sprintf("http://127.0.0.1:%d", port), "--config", path}...)
+		c.args = append(c.args, []string{"--config", path}...)
 		RootCmd.SetArgs(c.args)
 
 		t.Run(fmt.Sprintf("command=%v", c.args), func(t *testing.T) {

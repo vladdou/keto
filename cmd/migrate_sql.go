@@ -36,5 +36,5 @@ Before running this command on an existing database, create a back up!
 func init() {
 	RootCmd.AddCommand(migrateSqlCmd)
 
-	migrateHydraCmd.Flags().Bool("read-from-env", false, "Instead of reading the database URL from the command line arguments, the value of environment variable DATABASE_URL will be used.")
+	migrateSqlCmd.Flags().Bool("read-from-env", false, "Instead of reading the database URL from the command line arguments, the value of environment variable DATABASE_URL will be used.")
 }

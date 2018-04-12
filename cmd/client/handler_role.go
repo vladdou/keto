@@ -25,95 +25,110 @@ import (
 	"fmt"
 	"net/http"
 
-	hydra "github.com/ory/hydra/sdk/go/hydra/swagger"
+	keto "github.com/ory/keto/sdk/go/keto/swagger"
 	"github.com/spf13/cobra"
 )
 
 type RoleHandler struct {
 }
 
-func (h *RoleHandler) newGroupManager(cmd *cobra.Command) *hydra.WardenApi {
-	client := hydra.NewWardenApiWithBasePath(h.Config.GetClusterURLWithoutTailingSlash())
-	client.Configuration.Transport = h.Config.OAuth2Client(cmd).Transport
-	if term, _ := cmd.Flags().GetBool("fake-tls-termination"); term {
-		client.Configuration.DefaultHeader["X-Forwarded-Proto"] = "https"
+func (h *RoleHandler) newPolicyManager(cmd *cobra.Command) *keto.RoleApi {
+	c := keto.NewRoleApiWithBasePath(getBasePath(cmd))
+
+	if token, err := cmd.Flags().GetString("bearer-token"); err == nil && token != "" {
+		c.Configuration.DefaultHeader["Authorization"] = "Bearer " + token
 	}
 
-	return client
+	if term, _ := cmd.Flags().GetBool("fake-tls-termination"); term {
+		c.Configuration.DefaultHeader["X-Forwarded-Proto"] = "https"
+	}
+	return c
 }
 
 func newRoleHandler() *RoleHandler {
 	return &RoleHandler{}
 }
 
-func (h *RoleHandler) CreateGroup(cmd *cobra.Command, args []string) {
+func (h *RoleHandler) CreateRole(cmd *cobra.Command, args []string) {
 	if len(args) != 1 {
 		fmt.Print(cmd.UsageString())
 		return
 	}
-	m := h.newGroupManager(cmd)
+	m := h.newPolicyManager(cmd)
 
-	_, response, err := m.CreateGroup(hydra.Group{Id: args[0]})
+	_, response, err := m.CreateRole(keto.Role{Id: args[0]})
 	checkResponse(response, err, http.StatusCreated)
 	fmt.Printf("Group %s created.\n", args[0])
 }
 
-func (h *RoleHandler) DeleteGroup(cmd *cobra.Command, args []string) {
+func (h *RoleHandler) DeleteRole(cmd *cobra.Command, args []string) {
 	if len(args) != 1 {
 		fmt.Print(cmd.UsageString())
 		return
 	}
 
-	m := h.newGroupManager(cmd)
-	response, err := m.DeleteGroup(args[0])
+	m := h.newPolicyManager(cmd)
+	response, err := m.DeleteRole(args[0])
 	checkResponse(response, err, http.StatusNoContent)
 	fmt.Printf("Group %s deleted.\n", args[0])
 }
 
-func (h *RoleHandler) AddMembers(cmd *cobra.Command, args []string) {
+func (h *RoleHandler) RoleAddMembers(cmd *cobra.Command, args []string) {
 	if len(args) < 2 {
 		fmt.Print(cmd.UsageString())
 		return
 	}
 
-	m := h.newGroupManager(cmd)
-	response, err := m.AddMembersToGroup(args[0], hydra.GroupMembers{Members: args[1:]})
+	m := h.newPolicyManager(cmd)
+	response, err := m.AddMembersToRole(args[0], keto.GroupMembers{Members: args[1:]})
 	checkResponse(response, err, http.StatusNoContent)
 	fmt.Printf("Members %v added to group %s.\n", args[1:], args[0])
 }
 
-func (h *RoleHandler) RemoveMembers(cmd *cobra.Command, args []string) {
+func (h *RoleHandler) RoleRemoveMembers(cmd *cobra.Command, args []string) {
 	if len(args) < 2 {
 		fmt.Print(cmd.UsageString())
 		return
 	}
 
-	m := h.newGroupManager(cmd)
-	response, err := m.RemoveMembersFromGroup(args[0], hydra.GroupMembers{Members: args[1:]})
+	m := h.newPolicyManager(cmd)
+	response, err := m.RemoveMembersFromRole(args[0], keto.GroupMembers{Members: args[1:]})
 	checkResponse(response, err, http.StatusNoContent)
 	fmt.Printf("Members %v removed from group %s.\n", args[1:], args[0])
 }
 
-func (h *RoleHandler) FindGroups(cmd *cobra.Command, args []string) {
+func (h *RoleHandler) FindRoles(cmd *cobra.Command, args []string) {
 	if len(args) != 1 {
 		fmt.Print(cmd.UsageString())
 		return
 	}
 
-	m := h.newGroupManager(cmd)
-	groups, response, err := m.ListGroups(args[0], 500, 0)
+	m := h.newPolicyManager(cmd)
+	groups, response, err := m.ListRoles(args[0], 500, 0)
 	checkResponse(response, err, http.StatusOK)
 	formatResponse(groups)
 }
 
-func (h *RoleHandler) ListGroups(cmd *cobra.Command, args []string) {
+func (h *RoleHandler) ListRoles(cmd *cobra.Command, args []string) {
+	if len(args) != 0 {
+		fmt.Print(cmd.UsageString())
+		return
+	}
+
+	m := h.newPolicyManager(cmd)
+	groups, response, err := m.ListRoles("", 500, 0)
+	checkResponse(response, err, http.StatusOK)
+	formatResponse(groups)
+}
+
+func (h *RoleHandler) GetRole(cmd *cobra.Command, args []string) {
 	if len(args) != 1 {
 		fmt.Print(cmd.UsageString())
 		return
 	}
 
-	m := h.newGroupManager(cmd)
-	groups, response, err := m.ListGroups("", 500, 0)
+	m := h.newPolicyManager(cmd)
+	groups, response, err := m.GetRole(args[0])
 	checkResponse(response, err, http.StatusOK)
 	formatResponse(groups)
 }

@@ -28,13 +28,13 @@ import (
 // rolesListCmd represents the list command
 var rolesListCmd = &cobra.Command{
 	Use:   "list",
-	Short: "List all groups",
-	Long: `This command lists all groups.
+	Short: "List all roles",
+	Long: `This command lists all roles.
 
 Example:
-  hydra groups list
+  keto roles list
 `,
-	Run: cmdHandler.Groups.ListGroups,
+	Run: cmdHandler.Roles.ListRoles,
 }
 
 func init() {

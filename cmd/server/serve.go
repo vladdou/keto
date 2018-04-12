@@ -107,13 +107,14 @@ func RunServe(logger *logrus.Logger) func(cmd *cobra.Command, args []string) {
 			Handler: context.ClearHandler(corsHandler),
 		})
 
-		err = graceful.Graceful(func() error {
+		if err := graceful.Graceful(func() error {
 			logger.Infof("Setting up http server on %s", address)
 			return srv.ListenAndServe()
-		}, srv.Shutdown)
+		}, srv.Shutdown); err != nil {
+			logger.
+				WithError(err).
+				Fatal("Could not gracefully run server")
+		}
 
-		logger.
-			WithError(err).
-			Fatal("Could not gracefully run server")
 	}
 }

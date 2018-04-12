@@ -18,7 +18,7 @@ package main
 import (
 	"os"
 
-	"github.com/ory/hydra/cmd"
+	"github.com/ory/keto/cmd"
 	"github.com/pkg/profile"
 )
 

@@ -37,7 +37,7 @@ var RootCmd = &cobra.Command{
 	Use: "keto",
 }
 
-var logger *logrus.Logger
+var logger = logrus.New()
 
 var cmdHandler = client.NewHandler()
 
@@ -51,6 +51,12 @@ func Execute() {
 }
 
 func init() {
+	logLevel, err := logrus.ParseLevel(os.Getenv("LOG_LEVEL"))
+	if err != nil {
+		logLevel = logrus.InfoLevel
+	}
+
+	logger.Level = logLevel
 	cobra.OnInitialize(initConfig)
 
 	// Here you will define your flags and configuration settings.
@@ -80,14 +86,6 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
-
-	logLevel, err := logrus.ParseLevel(viper.GetString("LOG_LEVEL"))
-	if err != nil {
-		logLevel = logrus.InfoLevel
-	}
-
-	logger = logrus.New()
-	logger.Level = logLevel
 }
 
 func clientDefaultFlags(c *cobra.Command) {

@@ -25,8 +25,8 @@ var policiesCreateCmd = &cobra.Command{
 	Long: `To create a policy, either specify the files flag or pass arguments to create it directly from the CLI.
 
 Example
-  hydra policies create -f policy-a.json,policy-b.json
-  hydra policies create -s peter,max -r blog,users -a post,ban --allow`,
+  keto policies create -f policy-a.json,policy-b.json
+  keto policies create -s peter,max -r blog,users -a post,ban --allow`,
 	Run: cmdHandler.Policies.CreatePolicy,
 }
 

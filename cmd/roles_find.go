@@ -28,13 +28,13 @@ import (
 // rolesFindCmd represents the find command
 var rolesFindCmd = &cobra.Command{
 	Use:   "find <subject>",
-	Short: "Find all groups a subject belongs to",
-	Long: `This command finds all groups a subject belongs to.
+	Short: "Find all roles a subject belongs to",
+	Long: `This command finds all roles a subject belongs to.
 
 Example:
-  hydra groups find peter
+  keto roles find peter
 `,
-	Run: cmdHandler.Groups.FindGroups,
+	Run: cmdHandler.Roles.FindRoles,
 }
 
 func init() {

@@ -27,7 +27,7 @@ import (
 
 // rolesCmd represents the groups command
 var rolesCmd = &cobra.Command{
-	Use:   "rolesCmd",
+	Use:   "roles",
 	Short: "Manage roles",
 }
 

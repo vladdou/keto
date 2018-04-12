@@ -88,8 +88,6 @@ class PolicyApi
     /**
      * Operation createPolicy
      *
-     * Create an Access Control Policy
-     *
      * Client for keto
      *
      * @param \keto\SDK\Model\Policy $body  (optional)
@@ -104,8 +102,6 @@ class PolicyApi
 
     /**
      * Operation createPolicyWithHttpInfo
-     *
-     * Create an Access Control Policy
      *
      * Client for keto
      *
@@ -179,8 +175,6 @@ class PolicyApi
     /**
      * Operation deletePolicy
      *
-     * Delete an Access Control Policy
-     *
      * Client for keto
      *
      * @param string $id The id of the policy. (required)
@@ -195,8 +189,6 @@ class PolicyApi
 
     /**
      * Operation deletePolicyWithHttpInfo
-     *
-     * Delete an Access Control Policy
      *
      * Client for keto
      *
@@ -273,8 +265,6 @@ class PolicyApi
     /**
      * Operation getPolicy
      *
-     * Get an Access Control Policy
-     *
      * Client for keto
      *
      * @param string $id The id of the policy. (required)
@@ -289,8 +279,6 @@ class PolicyApi
 
     /**
      * Operation getPolicyWithHttpInfo
-     *
-     * Get an Access Control Policy
      *
      * Client for keto
      *
@@ -371,8 +359,6 @@ class PolicyApi
     /**
      * Operation listPolicies
      *
-     * List Access Control Policies
-     *
      * Client for keto
      *
      * @param int $offset The offset from where to start looking. (optional)
@@ -388,8 +374,6 @@ class PolicyApi
 
     /**
      * Operation listPoliciesWithHttpInfo
-     *
-     * List Access Control Policies
      *
      * Client for keto
      *
@@ -467,8 +451,6 @@ class PolicyApi
     /**
      * Operation updatePolicy
      *
-     * Update an Access Control Polic
-     *
      * Client for keto
      *
      * @param string $id The id of the policy. (required)
@@ -484,8 +466,6 @@ class PolicyApi
 
     /**
      * Operation updatePolicyWithHttpInfo
-     *
-     * Update an Access Control Polic
      *
      * Client for keto
      *

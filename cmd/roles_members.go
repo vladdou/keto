@@ -27,7 +27,7 @@ import (
 
 var rolesMembersCmd = &cobra.Command{
 	Use:   "members",
-	Short: "Manage warden group members",
+	Short: "Manage role members",
 }
 
 func init() {

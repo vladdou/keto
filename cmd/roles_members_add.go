@@ -26,14 +26,14 @@ import (
 )
 
 var rolesMembersAdd = &cobra.Command{
-	Use:   "add <group> <member> [<member>...]",
-	Short: "Add members to a warden group",
-	Long: `This command adds members to a warden group.
+	Use:   "add <role> <member> [<member>...]",
+	Short: "Add members to a role",
+	Long: `This command adds members to a role.
 
 Example:
-  hydra groups members add my-group peter julia
+  keto roles members add my-group peter julia
 `,
-	Run: cmdHandler.Groups.AddMembers,
+	Run: cmdHandler.Roles.RoleAddMembers,
 }
 
 func init() {

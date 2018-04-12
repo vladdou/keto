@@ -16,12 +16,14 @@ package client
 
 type Handler struct {
 	Policies *PolicyHandler
-	Groups   *RoleHandler
+	Roles    *RoleHandler
+	Warden   *WardenHandler
 }
 
 func NewHandler() *Handler {
 	return &Handler{
 		Policies: newPolicyHandler(),
-		Groups:   newRoleHandler(),
+		Roles:    newRoleHandler(),
+		Warden:    newWardenHandler(),
 	}
 }

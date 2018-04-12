@@ -4,19 +4,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreatePolicy**](PolicyApi.md#CreatePolicy) | **Post** /policies | Create an Access Control Policy
-[**DeletePolicy**](PolicyApi.md#DeletePolicy) | **Delete** /policies/{id} | Delete an Access Control Policy
-[**GetPolicy**](PolicyApi.md#GetPolicy) | **Get** /policies/{id} | Get an Access Control Policy
-[**ListPolicies**](PolicyApi.md#ListPolicies) | **Get** /policies | List Access Control Policies
-[**UpdatePolicy**](PolicyApi.md#UpdatePolicy) | **Put** /policies/{id} | Update an Access Control Polic
+[**CreatePolicy**](PolicyApi.md#CreatePolicy) | **Post** /policies | 
+[**DeletePolicy**](PolicyApi.md#DeletePolicy) | **Delete** /policies/{id} | 
+[**GetPolicy**](PolicyApi.md#GetPolicy) | **Get** /policies/{id} | 
+[**ListPolicies**](PolicyApi.md#ListPolicies) | **Get** /policies | 
+[**UpdatePolicy**](PolicyApi.md#UpdatePolicy) | **Put** /policies/{id} | 
 
 
 # **CreatePolicy**
 > Policy CreatePolicy($body)
 
-Create an Access Control Policy
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
+
+Create an Access Control Policy
 
 
 ### Parameters
@@ -43,9 +43,9 @@ No authorization required
 # **DeletePolicy**
 > DeletePolicy($id)
 
-Delete an Access Control Policy
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies:<id>\"], \"actions\": [\"delete\"], \"effect\": \"allow\" } ```
+
+Delete an Access Control Policy
 
 
 ### Parameters
@@ -72,9 +72,9 @@ No authorization required
 # **GetPolicy**
 > Policy GetPolicy($id)
 
-Get an Access Control Policy
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies:<id>\"], \"actions\": [\"get\"], \"effect\": \"allow\" } ```
+
+Get an Access Control Policy
 
 
 ### Parameters
@@ -101,9 +101,9 @@ No authorization required
 # **ListPolicies**
 > []Policy ListPolicies($offset, $limit)
 
-List Access Control Policies
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"list\"], \"effect\": \"allow\" } ```
+
+List Access Control Policies
 
 
 ### Parameters
@@ -131,9 +131,9 @@ No authorization required
 # **UpdatePolicy**
 > Policy UpdatePolicy($id, $body)
 
-Update an Access Control Polic
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"update\"], \"effect\": \"allow\" } ```
+
+Update an Access Control Policy
 
 
 ### Parameters

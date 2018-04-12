@@ -28,13 +28,13 @@ import (
 // rolesDeleteCmd represents the delete command
 var rolesDeleteCmd = &cobra.Command{
 	Use:   "delete <id>",
-	Short: "Delete a warden group",
-	Long: `This command deletes a warden group.
+	Short: "Delete a role",
+	Long: `This command deletes a role.
 
 Example:
-  hydra groups delete my-group
+  keto roles delete my-group
 `,
-	Run: cmdHandler.Groups.DeleteGroup,
+	Run: cmdHandler.Roles.DeleteRole,
 }
 
 func init() {

@@ -4,34 +4,27 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**AddMembersToGroup**](WardenApi.md#AddMembersToGroup) | **Post** /warden/groups/{id}/members | Add members to a group
-[**CreateGroup**](WardenApi.md#CreateGroup) | **Post** /warden/groups | Create a group
-[**DeleteGroup**](WardenApi.md#DeleteGroup) | **Delete** /warden/groups/{id} | Delete a group by id
-[**DoesWardenAllowAccessRequest**](WardenApi.md#DoesWardenAllowAccessRequest) | **Post** /warden/allowed | Check if an access request is valid (without providing an access token)
-[**DoesWardenAllowTokenAccessRequest**](WardenApi.md#DoesWardenAllowTokenAccessRequest) | **Post** /warden/token/allowed | Check if an access request is valid (providing an access token)
-[**GetGroup**](WardenApi.md#GetGroup) | **Get** /warden/groups/{id} | Get a group by id
-[**ListGroups**](WardenApi.md#ListGroups) | **Get** /warden/groups | List groups
-[**RemoveMembersFromGroup**](WardenApi.md#RemoveMembersFromGroup) | **Delete** /warden/groups/{id}/members | Remove members from a group
+[**IsOAuth2AccessTokenAuthorized**](WardenApi.md#IsOAuth2AccessTokenAuthorized) | **Post** /warden/oauth2/authorize | Check if an OAuth 2.0 access token is authorized to access a resource
+[**IsSubjectAuthorized**](WardenApi.md#IsSubjectAuthorized) | **Post** /warden/subjects/authorize | Check if a subject is authorized to access a resource
 
 
-# **AddMembersToGroup**
-> AddMembersToGroup($id, $body)
+# **IsOAuth2AccessTokenAuthorized**
+> AuthenticationOAuth2Session IsOAuth2AccessTokenAuthorized($body)
 
-Add members to a group
+Check if an OAuth 2.0 access token is authorized to access a resource
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"members.add\"], \"effect\": \"allow\" } ```
+Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with `{ \"allowed\": false }`.   This endpoint passes all data from the upstream OAuth 2.0 token introspection endpoint. If you use ORY Hydra as an upstream OAuth 2.0 provider, data set through the `accessTokenExtra` field in the consent flow will be included in this response as well.
 
 
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **string**| The id of the group to modify. | 
- **body** | [**GroupMembers**](GroupMembers.md)|  | [optional] 
+ **body** | [**IsOAuth2AccessTokenAuthorized**](IsOAuth2AccessTokenAuthorized.md)|  | [optional] 
 
 ### Return type
 
-void (empty response body)
+[**AuthenticationOAuth2Session**](authenticationOAuth2Session.md)
 
 ### Authorization
 
@@ -44,70 +37,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **CreateGroup**
-> Group CreateGroup($body)
+# **IsSubjectAuthorized**
+> AuthenticationDefaultSession IsSubjectAuthorized($body)
 
-Create a group
+Check if a subject is authorized to access a resource
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**Group**](Group.md)|  | [optional] 
-
-### Return type
-
-[**Group**](group.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **DeleteGroup**
-> DeleteGroup($id)
-
-Delete a group by id
-
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"delete\"], \"effect\": \"allow\" } ```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **string**| The id of the group to look up. | 
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **DoesWardenAllowAccessRequest**
-> WardenAccessRequestResponse DoesWardenAllowAccessRequest($body)
-
-Check if an access request is valid (without providing an access token)
-
-Checks if a subject (typically a user or a service) is allowed to perform an action on a resource. This endpoint requires a subject, a resource name, an action name and a context. If the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with `{ \"allowed\": false}`, otherwise `{ \"allowed\": true }` is returned.   The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:allowed\"], \"actions\": [\"decide\"], \"effect\": \"allow\" } ```
+Checks if a subject (e.g. user ID, API key, ...) is allowed to perform a certain action on a resource.
 
 
 ### Parameters
@@ -118,126 +53,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**WardenAccessRequestResponse**](wardenAccessRequestResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **DoesWardenAllowTokenAccessRequest**
-> WardenTokenAccessRequestResponse DoesWardenAllowTokenAccessRequest($body)
-
-Check if an access request is valid (providing an access token)
-
-Checks if a token is valid and if the token subject is allowed to perform an action on a resource. This endpoint requires a token, a scope, a resource name, an action name and a context.   If a token is expired/invalid, has not been granted the requested scope or the subject is not allowed to perform the action on the resource, this endpoint returns a 200 response with `{ \"allowed\": false}`.   Extra data set through the `accessTokenExtra` field in the consent flow will be included in the response.   The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:token:allowed\"], \"actions\": [\"decide\"], \"effect\": \"allow\" } ```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**WardenTokenAccessRequest**](WardenTokenAccessRequest.md)|  | [optional] 
-
-### Return type
-
-[**WardenTokenAccessRequestResponse**](wardenTokenAccessRequestResponse.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **GetGroup**
-> Group GetGroup($id)
-
-Get a group by id
-
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **string**| The id of the group to look up. | 
-
-### Return type
-
-[**Group**](group.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **ListGroups**
-> []Group ListGroups($member, $limit, $offset)
-
-List groups
-
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups\"], \"actions\": [\"list\"], \"effect\": \"allow\" } ```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **member** | **string**| The id of the member to look up. | [optional] 
- **limit** | **int64**| The maximum amount of policies returned. | [optional] 
- **offset** | **int64**| The offset from where to start looking. | [optional] 
-
-### Return type
-
-[**[]Group**](group.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **RemoveMembersFromGroup**
-> RemoveMembersFromGroup($id, $body)
-
-Remove members from a group
-
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:warden:groups:<id>\"], \"actions\": [\"members.remove\"], \"effect\": \"allow\" } ```
-
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **string**| The id of the group to modify. | 
- **body** | [**GroupMembers**](GroupMembers.md)|  | [optional] 
-
-### Return type
-
-void (empty response body)
+[**AuthenticationDefaultSession**](authenticationDefaultSession.md)
 
 ### Authorization
 

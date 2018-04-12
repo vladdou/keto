@@ -28,13 +28,13 @@ import (
 // rolesCreateCmd represents the create command
 var rolesCreateCmd = &cobra.Command{
 	Use:   "create <id>",
-	Short: "Create a warden group",
-	Long: `This command creates a warden group.
+	Short: "Create a role",
+	Long: `This command creates a role.
 
 Example:
-  hydra groups create my-group
+  keto roles create my-role
 `,
-	Run: cmdHandler.Groups.CreateGroup,
+	Run: cmdHandler.Roles.CreateRole,
 }
 
 func init() {

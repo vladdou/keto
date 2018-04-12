@@ -5,19 +5,19 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createPolicy**](PolicyApi.md#createPolicy) | **POST** /policies | Create an Access Control Policy
-[**deletePolicy**](PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | Delete an Access Control Policy
-[**getPolicy**](PolicyApi.md#getPolicy) | **GET** /policies/{id} | Get an Access Control Policy
-[**listPolicies**](PolicyApi.md#listPolicies) | **GET** /policies | List Access Control Policies
-[**updatePolicy**](PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | Update an Access Control Polic
+[**createPolicy**](PolicyApi.md#createPolicy) | **POST** /policies | 
+[**deletePolicy**](PolicyApi.md#deletePolicy) | **DELETE** /policies/{id} | 
+[**getPolicy**](PolicyApi.md#getPolicy) | **GET** /policies/{id} | 
+[**listPolicies**](PolicyApi.md#listPolicies) | **GET** /policies | 
+[**updatePolicy**](PolicyApi.md#updatePolicy) | **PUT** /policies/{id} | 
 
 
 # **createPolicy**
 > \keto\SDK\Model\Policy createPolicy($body)
 
-Create an Access Control Policy
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"create\"], \"effect\": \"allow\" } ```
+
+Create an Access Control Policy
 
 ### Example
 ```php
@@ -60,9 +60,9 @@ No authorization required
 # **deletePolicy**
 > deletePolicy($id)
 
-Delete an Access Control Policy
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies:<id>\"], \"actions\": [\"delete\"], \"effect\": \"allow\" } ```
+
+Delete an Access Control Policy
 
 ### Example
 ```php
@@ -104,9 +104,9 @@ No authorization required
 # **getPolicy**
 > \keto\SDK\Model\Policy getPolicy($id)
 
-Get an Access Control Policy
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies:<id>\"], \"actions\": [\"get\"], \"effect\": \"allow\" } ```
+
+Get an Access Control Policy
 
 ### Example
 ```php
@@ -149,9 +149,9 @@ No authorization required
 # **listPolicies**
 > \keto\SDK\Model\Policy[] listPolicies($offset, $limit)
 
-List Access Control Policies
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"list\"], \"effect\": \"allow\" } ```
+
+List Access Control Policies
 
 ### Example
 ```php
@@ -196,9 +196,9 @@ No authorization required
 # **updatePolicy**
 > \keto\SDK\Model\Policy updatePolicy($id, $body)
 
-Update an Access Control Polic
 
-The subject making the request needs to be assigned to a policy containing:  ``` { \"resources\": [\"rn:hydra:policies\"], \"actions\": [\"update\"], \"effect\": \"allow\" } ```
+
+Update an Access Control Policy
 
 ### Example
 ```php
